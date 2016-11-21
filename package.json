@@ -1,0 +1,53 @@
+{
+  "name": "front-end-app",
+  "version": "1.0.0",
+  "description": "Webpack",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run server",
+    "server": "webpack-dev-server --history-api-fallback --inline --progress",
+    "build": "rimraf dist && webpack --bail --progress --profile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexzoul/algo.git"
+  },
+  "author": "Erick Alejandro Villanueva Molina",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexzoul/algo/issues",
+    "email": "ing.alejandrovillanueva@gmail.com"
+  },
+  "homepage": "https://github.com/alexzoul/algo#readme",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-ui-router": "^0.3.2",
+    "autoprefixer": "6.3.7",
+    "babel-core": "5.8.33",
+    "babel-loader": "5.3.3",
+    "bootstrap": "4.0.0-alpha.2",
+    "bootstrap-loader": "1.0.10",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "0.23.1",
+    "extract-text-webpack-plugin": "1.0.1",
+    "html-webpack-plugin": "^2.24.1",
+    "jscs": "^3.0.7",
+    "jscs-loader": "^0.3.0",
+    "jshint": "2.9.2",
+    "jshint-stylish": "2.2.0",
+    "node-sass": "3.8.0",
+    "postcss-import": "8.1.2",
+    "postcss-loader": "0.9.1",
+    "raw-loader": "^0.5.1",
+    "rimraf": "^2.5.4",
+    "sass-lint": "1.8.2",
+    "sass-loader": "4.0.0",
+    "sasslint-loader": "0.0.1",
+    "sasslint-webpack-plugin": "^1.0.4",
+    "sprite-webpack-plugin": "^0.3.6",
+    "style-loader": "0.13.1",
+    "webpack": "1.13.1",
+    "webpack-dev-server": "^1.16.2",
+    "webpack-manifest-plugin": "1.0.1"
+  }
+}
