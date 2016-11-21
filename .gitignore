@@ -1,0 +1,17 @@
+#OSX Files
+.DS_Store
+
+#Yarn Files
+yarn.lock
+
+#NodeJs Files
+/node_modules
+
+#NodeJs Files
+/node_modules
+
+#Bower Dependences
+app/lib
+
+#Dist Files
+/dist
