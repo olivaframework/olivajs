@@ -9,8 +9,9 @@
   1. npm install -g yarn
   2. yarn install
   3. npm run build
-  4. python -m SimpleHTTPServer 8000
-  5. open your browser on http://localhost:8000
+  4. cd dist
+  5. python -m SimpleHTTPServer 8000
+  6. open your browser on http://localhost:8000
 
 
 ### To run this project how develop mode you need:
