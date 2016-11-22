@@ -1,0 +1,65 @@
+.banner {
+  background: $banner-bg;
+
+  .image-section {
+    float: left;
+    width: 44%;
+  }
+
+  .info-section {
+    float: right;
+    padding: $space-xl 140px $space-xl 0;
+    width: 56%;
+
+    .title-section {
+      border-left: $border-lg $border-regular $light-white-color;
+      color: $dark-gray-color;
+      margin-bottom: $space-xl;
+      padding-left: $space-xsm;
+
+      h3 {
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+      }
+    }
+
+    .content-section {
+      color: $dark-gray-color;
+      float: left;
+
+      p {
+        font-size: 18px;
+        font-weight: $font-weight-normal;
+        letter-spacing: 1px;
+        line-height: 1.4;
+        margin-bottom: $space-xl;
+      }
+
+      a {
+        border: $border-md $border-regular $dark-gray-color;
+        color: $dark-gray-color;
+        display: block;
+        float: left;
+        font-size: 12px;
+        font-weight: $font-weight-bold;
+        padding: $space-xsm;
+        text-transform: uppercase;
+        width: 50%;
+
+        &::after {
+          margin: 0;
+        }
+      }
+
+      .social-share {
+        float: left;
+        font-size: 12px;
+        font-weight: $font-weight-bold;
+        padding: $space-xsm;
+        text-align: center;
+        text-transform: uppercase;
+        width: 50%;
+      }
+    }
+  }
+}

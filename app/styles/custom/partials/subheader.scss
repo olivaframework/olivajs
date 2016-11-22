@@ -1,0 +1,21 @@
+.subheader {
+  border-bottom: $border-md $border-regular $light-gray-color;
+  padding: $space-xsm;
+
+  .logo-section {
+    padding: $space-xsm 0;
+  }
+
+  .search-section {
+    float: right;
+    padding: $space-xsm;
+
+    input {
+      border: $border-sm $border-regular $dark-gray-color;
+      color: $dark-gray-color;
+      float: right;
+      padding: $space-xsm;
+      width: 100%;
+    }
+  }
+}

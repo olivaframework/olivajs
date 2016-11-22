@@ -1,0 +1,48 @@
+header {
+  background: $header-bg-primary;
+  color: $header-color;
+  padding: $space-xsm 0;
+
+  div {
+    display: inline-block;
+  }
+
+  .tab-menu {
+    border-right: $border-sm $header-color $border-regular;
+    font-weight: $font-weight-bold;
+    padding: $space-xs $space-xsm;
+    text-transform: uppercase;
+
+    div {
+      padding: 0 $space-xxs;
+    }
+
+    .active {
+      color: $tab-menu-active-color;
+    }
+  }
+
+  .contact {
+    padding: $space-xs 0;
+
+    div {
+      font-weight: 200;
+      padding: 0 $space-xs;
+      text-transform: capitalize;
+    }
+
+    span {
+      font-size: 12px;
+      font-weight: $font-weight-bold;
+
+      &:first-child {
+        border-right: $border-sm $header-color $border-regular;
+        padding-right: $space-xxs;
+      }
+    }
+  }
+
+  .customer-section {
+    float: right;
+  }
+}

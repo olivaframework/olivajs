@@ -1,0 +1,31 @@
+nav {
+  border-bottom: $border-sm $border-regular $light-gray-color;
+
+  .item {
+    border-right: $border-md $border-regular $light-gray-color;
+    float: left;
+    padding: $space-sm;
+    width: 20%;
+
+    &:last-of-type {
+      border-right: 0;
+    }
+
+    .icon {
+      border: $border-sm $border-regular $light-gray-color;
+      float: left;
+      height: 42px;
+      width: 42px;
+    }
+
+    div {
+      float: left;
+      font-size: 10px;
+      font-weight: $font-weight-bold;
+      margin-top: $space-sm;
+      padding-left: $space-xs;
+      text-transform: uppercase;
+      vertical-align: top;
+    }
+  }
+}
