@@ -1,0 +1,39 @@
+footer {
+  padding-top: $space-xl;
+}
+
+.footer-contact {
+  border-bottom: $border-md $border-regular $light-gray-color;
+  padding-bottom: $space-md;
+
+  .item {
+    border-right: $border-md $border-regular $light-gray-color;
+    float: right;
+    padding: 0 $space-sm;
+    text-align: center;
+
+    &:first-of-type {
+      border-right: 0;
+      padding-right: 0;
+    }
+
+    h5 {
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    span {
+      font-size: 18px;
+      font-weight: $font-weight-normal;
+    }
+  }
+
+  .fa {
+    font-size: 22px;
+    padding: $space-xs;
+
+    &:last-of-type {
+      padding-right: 0;
+    }
+  }
+}

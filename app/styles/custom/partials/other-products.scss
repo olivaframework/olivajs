@@ -1,0 +1,16 @@
+.other-products {
+  background: $other-products-bg;
+  padding: $space-md 0 $space-lg;
+  text-align: center;
+
+  h2 {
+    font-weight: $font-weight-bold;
+    margin-bottom: $space-md;
+  }
+
+  img {
+    height: 160px;
+    padding: 0 $space-xxs;
+    width: 100%;
+  }
+}

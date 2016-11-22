@@ -25,6 +25,10 @@
   >div {
     border-bottom: $border-md $border-regular $light-gray-color;
     padding: $space-xl 0;
+
+    &:last-of-type {
+      border-bottom: 0;
+    }
   }
 
   h4 {
