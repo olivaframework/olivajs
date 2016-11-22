@@ -1,11 +1,14 @@
 nav {
+  background-color: $navbar-bg;
   border-bottom: $border-sm $border-regular $light-gray-color;
+  box-shadow: $box-shadow-md;
 
   .item {
     border-right: $border-md $border-regular $light-gray-color;
     float: left;
-    padding: $space-sm;
+    padding: $space-lg;
     width: 20%;
+    position: relative;
 
     &:last-of-type {
       border-right: 0;
@@ -13,17 +16,19 @@ nav {
 
     .icon {
       border: $border-sm $border-regular $light-gray-color;
-      float: left;
-      height: 42px;
-      width: 42px;
+      top: 12px;
+      left: 10px;
+      height: 36px;
+      width: 36px;
+      position: absolute;
     }
 
     div {
-      float: left;
       font-size: 10px;
       font-weight: $font-weight-bold;
-      margin-top: $space-sm;
-      padding-left: $space-xs;
+      height: 10px;
+      overflow: hidden;
+      padding-left: $space-xl;
       text-transform: uppercase;
       vertical-align: top;
     }

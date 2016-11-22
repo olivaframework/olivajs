@@ -1,12 +1,12 @@
 .breadcrumb {
   border-bottom: $border-sm $border-regular $light-gray-color;
   margin: 0;
-  padding: $space-sm;
+  padding: $space-xsm;
 
   li {
     color: $breadcrumb-color;
     display: inline-block;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: $font-weight-bold;
 
     &::after {

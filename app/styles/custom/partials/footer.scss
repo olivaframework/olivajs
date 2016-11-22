@@ -4,8 +4,8 @@ footer {
 
 .footer-contact {
   border-bottom: $border-md $border-regular $light-gray-color;
-  padding-bottom: $space-md;
   margin-bottom: $space-md;
+  padding-bottom: $space-md;
 
   .item {
     border-right: $border-md $border-regular $light-gray-color;
@@ -40,6 +40,8 @@ footer {
 }
 
 .footer-info {
+  padding-bottom: $space-md;
+
   h5 {
     font-weight: $font-weight-bold;
     margin-bottom: $space-sm;
@@ -74,6 +76,10 @@ footer {
 
   .row {
     margin-bottom: $space-md;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
   }
 
   p {
@@ -83,6 +89,30 @@ footer {
 
     span {
       font-weight: $font-weight-bold;
+    }
+  }
+}
+
+.footer-links {
+  padding: $space-md 0;
+  border-top: $border-md $border-regular $light-gray-color;
+  font-size: 11px;
+  font-weight: $font-weight-bold;
+
+  a {
+    float: right;
+    color: $dark-gray-color;
+
+    &::before {
+      content: '|';
+      display: inline-block;
+      margin: 0 $space-xs;
+    }
+
+    &:last-of-type {
+      &::before {
+        content: '';
+      }
     }
   }
 }
