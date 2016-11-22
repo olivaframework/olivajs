@@ -1,0 +1,30 @@
+.tab-secondary-menu {
+  background-color: $light-gray-color;
+  text-align: center;
+
+  .item  {
+    color: $dark-gray-color;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: $font-weight-bold;
+    letter-spacing: 1px;
+    margin: 0 $space-sm;
+    padding-bottom: $space-sm;
+    padding-top: $space-md;
+    text-transform: uppercase;
+
+    &.active {
+      border-bottom: $border-md $border-regular $dark-yellow-color;
+    }
+  }
+}
+
+.tab-secondary-section {
+  border-bottom: $border-md $border-regular $light-gray-color;
+  padding: $space-xl 0;
+
+  h4 {
+    margin-bottom: $space-xsm;
+    text-transform: uppercase;
+  }
+}

@@ -1,6 +1,8 @@
 @import 'variables';
 
+@import 'badges';
 @import 'headings';
+@import 'lists';
 
 @import '/partials/body';
 @import '/partials/header';
@@ -8,4 +10,4 @@
 @import '/partials/navbar';
 @import '/partials/breadcrumb';
 @import '/partials/banner';
-@import '/partials/tab';
+@import '/partials/tab-secondary';
