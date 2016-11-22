@@ -4,19 +4,44 @@
   padding: $space-xsm;
 
   .logo-section {
-    padding: $space-xsm 0;
+
+    img {
+      height: 50px;
+    }
   }
 
   .search-section {
     float: right;
-    padding: $space-xsm;
+    padding: $space-xs $space-xxs;
+
+    span {
+      float: right;
+      position: relative;
+
+      &::after {
+        color: $dark-gray-color;
+        content: '\f002';
+        font-family: $icon-font;
+        font-size: 18px;
+        margin-right: $space-xs;
+        margin-top: $space-xs;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+    }
 
     input {
       border: $border-sm $border-regular $dark-gray-color;
       color: $dark-gray-color;
       float: right;
-      padding: $space-xsm;
-      width: 100%;
+      padding: $space-xs;
+      width: 240px;
+
+      &::placeholder {
+        color: $dark-color;
+        font-weight: $font-weight-bold;
+      }
     }
   }
 }

@@ -2,7 +2,6 @@ header {
   background: $header-bg-primary;
   color: $header-color;
   font-size: 12px;
-  padding: $space-xs 0;
 
   div {
     display: inline-block;
@@ -11,7 +10,7 @@ header {
   .tab-menu {
     border-right: $border-sm $header-color $border-regular;
     font-weight: $font-weight-bold;
-    padding: $space-xs $space-xsm;
+    padding: $space-sm $space-xsm;
     text-transform: uppercase;
 
     div {
@@ -60,12 +59,29 @@ header {
   }
 
   .customer-section {
-    float: right;
+    padding: 0;
+    text-align: right;
 
     div {
+      font-size: 12px;
+      font-weight: $font-weight-bold;
+      padding: $space-sm $space-sm $space-sm 42px;
+      position: relative;
+      text-transform: uppercase;
+
       &:last-child {
-        background: $dark-yellow-color;
+        background: $customer-section-bg;
         color: $dark-gray-color;
+        margin-right: -1px;
+      }
+
+      i {
+        font-size: 24px;
+        left: 2px;
+        margin-left: $space-xs;
+        margin-top: $space-xs;
+        position: absolute;
+        top: 2px;
       }
     }
   }

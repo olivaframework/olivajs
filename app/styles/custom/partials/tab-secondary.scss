@@ -36,6 +36,26 @@
     text-transform: uppercase;
   }
 
+  .item {
+    text-align: center;
+
+    i {
+      font-size: 60px;
+      margin-bottom: $space-sm;
+    }
+
+    h6 {
+      font-weight: $font-weight-bold;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-size: 22px;
+      font-weight: $font-weight-bold;
+      margin: 0;
+    }
+  }
+
   p {
     margin-bottom: $space-xl;
   }

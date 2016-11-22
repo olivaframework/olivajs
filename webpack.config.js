@@ -44,9 +44,12 @@ module.exports = function makeWebpackConfig () {
 				test: /\.js$/,
 			}, {
 				exclude: [/node_modules/],
-		  	loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader!sass-loader'),
+				loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader!sass-loader'),
 				test: /\.scss$/,
 			}, {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader'),
+      }, {
       	test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
       	loader: "url?limit=10000&mimetype=application/font-woff"
 		  }, {
@@ -62,31 +65,29 @@ module.exports = function makeWebpackConfig () {
 		    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
 		    loader: "url?limit=10000&mimetype=image/svg+xml"
 		  }, {
+			  test: /\.(png|jpg|jpeg|gif)$/,
+			  loader:'file'
+			}, {
 				exclude: [/node_modules/],
 				loader: 'raw',
 				test: /\.html$/,
 	    }
 		],
 		preLoaders: [{
-	     	test: /\.js$/,
-	     	exclude: [/node_modules/],
-	     	loader: 'jscs-loader',
-		 	}, {
-	      test: /\s[a|c]ss$/,
-	      exclude: [/node_modules/],
-	      loader: 'sasslint'
-	    }
-		],
+	    test: /\s[a|c]ss$/,
+	    exclude: [/node_modules/],
+	    loader: 'sasslint'
+		}],
 	};
 
 	config.postcss = [
 		autoprefixer({
-			browsers: ['last 2 version']
-		})
-	];
+      browsers: ['last 3 versions', '> 1%']
+    })
+  ];
 
 	config.devServer = {
-    contentBase: '/app',
+    contentBase: './app/public',
     stats: 'minimal'
   };
 
@@ -100,10 +101,10 @@ module.exports = function makeWebpackConfig () {
 
   config.plugins.push(
 		new HtmlWebpackPlugin({
-			template: 'app/index.html',
+			template: './app/public/index.html',
 			inject: 'body'
 		}),
-    new ExtractTextPlugin('[name].[hash].css', {disable: !isProd}),
+    new ExtractTextPlugin('[name].[hash].css'),
 		new sprite({
 			'source': path.resolve(__dirname, 'app/images/'),
 			'imgPath': path.resolve(__dirname, 'app/sprites/'),
@@ -131,7 +132,7 @@ module.exports = function makeWebpackConfig () {
 				}
 			}),
 			new CopyWebpackPlugin([{
-				from: __dirname + '/app/images/'
+				from: __dirname + '/app/public'
 			}])
     );
   }

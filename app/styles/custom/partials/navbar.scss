@@ -6,7 +6,7 @@ nav {
   .item {
     border-right: $border-md $border-regular $light-gray-color;
     float: left;
-    padding: $space-lg;
+    padding: $space-md $space-sm;
     position: relative;
     width: 20%;
 
@@ -14,12 +14,25 @@ nav {
       border-right: 0;
     }
 
-    .icon {
-      border: $border-sm $border-regular $light-gray-color;
-      height: 36px;
-      left: 10px;
+    &::after {
+      content: '\f078';
+      font-family: $icon-font;
+      font-size: 14px;
+      margin-right: $space-xs;
+      margin-top: $space-sm;
       position: absolute;
-      top: 12px;
+      right: 0;
+      top: 0;
+    }
+
+    i {
+      font-size: 28px;
+      height: 36px;
+      left: 0;
+      margin-left: 12px;
+      margin-top: 12px;
+      position: absolute;
+      top: 0;
       width: 36px;
     }
 

@@ -50,16 +50,26 @@
           margin: 0;
         }
       }
+    }
+  }
 
-      .social-share {
-        float: left;
-        font-size: 12px;
-        font-weight: $font-weight-bold;
-        padding: $space-xsm;
-        text-align: center;
-        text-transform: uppercase;
-        width: 50%;
-      }
+  .social-share {
+    float: left;
+    padding: $space-xsm;
+    width: 50%;
+
+    span {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: $font-weight-bold;
+      margin-top: 10px;
+      text-transform: uppercase;
+      vertical-align: top;
+    }
+
+    i {
+      font-size: 28px;
+      margin-left: $space-xs;
     }
   }
 }

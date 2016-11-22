@@ -7,6 +7,14 @@ footer {
   margin-bottom: $space-md;
   padding-bottom: $space-md;
 
+  .logo {
+    border: $border-sm $border-regular $dark-color;
+
+    img {
+      width: 100%;
+    }
+  }
+
   .item {
     border-right: $border-md $border-regular $light-gray-color;
     float: right;
