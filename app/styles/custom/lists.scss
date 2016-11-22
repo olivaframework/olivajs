@@ -1,4 +1,4 @@
-.checked-list {
+%checked-list {
   list-style: none;
   margin: 0;
 
@@ -12,14 +12,41 @@
     }
 
     &::before {
-      border: $border-sm $border-regular $light-gray-color;
+      border: $border-md $border-regular $white-color;
       border-radius: 50%;
-      content: '';
+      box-shadow: $box-shadow-sm;
+      content: '\f00c';
+      font-family: $icon-font;
+      font-size: 10px;
       height: 20px;
       left: 0;
+      line-height: 1.7;
+      padding-left: 3px;
       position: absolute;
       top: -2px;
       width: 20px;
+    }
+  }
+}
+
+.checked-list-yellow {
+  @extend %checked-list;
+
+  li {
+    &::before {
+      background: $dark-yellow-color;
+      color: $dark-gray-color;
+    }
+  }
+}
+
+.checked-list-gray {
+  @extend %checked-list;
+
+  li {
+    &::before {
+      background: $dark-gray-color;
+      color: $white-color;
     }
   }
 }

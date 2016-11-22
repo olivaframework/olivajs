@@ -1,6 +1,9 @@
+$white-color: #fff;
+$dark-color: #454546;
+$black-color: #000;
+
 $dark-gray-color: #59595b;
 $light-gray-color: #ebebeb;
-$light-white-color: #fff;
 $dark-yellow-color: #ffd668;
 
 $header-bg-primary: #4f4f51;
@@ -17,6 +20,9 @@ $border-md: 2px;
 $border-lg: 4px;
 $border-regular: solid;
 
+$box-shadow-sm: 0 1px 1px #888;
+$box-shadow-lg: 0 10px 6px -3px #ddd;
+
 $space-xxs: 4px;
 $space-xs: 8px;
 $space-xsm: 12px;
@@ -29,3 +35,5 @@ $font-size-root: 14px;
 $font-weight-bold: 500;
 $font-weight-semibold: 300;
 $font-weight-normal: 200;
+
+$icon-font: 'FontAwesome';
