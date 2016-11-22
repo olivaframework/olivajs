@@ -94,14 +94,14 @@ footer {
 }
 
 .footer-links {
-  padding: $space-md 0;
   border-top: $border-md $border-regular $light-gray-color;
   font-size: 11px;
   font-weight: $font-weight-bold;
+  padding: $space-md 0;
 
   a {
-    float: right;
     color: $dark-gray-color;
+    float: right;
 
     &::before {
       content: '|';

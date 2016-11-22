@@ -23,15 +23,15 @@ header {
       position: relative;
 
       &::after {
+        border-bottom: 5px $border-regular $body-bg-color;
+        border-left: 5px solid transparent;
         border-right: 5px solid transparent;
         border-top: 5px solid transparent;
-        border-left: 5px solid transparent;
-        border-bottom: 5px $border-regular $body-bg-color;
         content: '';
         height: 0;
         left: 50%;
-        margin-top: 6px;
         margin-left: -5px;
+        margin-top: 6px;
         position: absolute;
         top: 100%;
         width: 0;
@@ -61,5 +61,12 @@ header {
 
   .customer-section {
     float: right;
+
+    div {
+      &:last-child {
+        background: $dark-yellow-color;
+        color: $dark-gray-color;
+      }
+    }
   }
 }

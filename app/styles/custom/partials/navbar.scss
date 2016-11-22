@@ -7,8 +7,8 @@ nav {
     border-right: $border-md $border-regular $light-gray-color;
     float: left;
     padding: $space-lg;
-    width: 20%;
     position: relative;
+    width: 20%;
 
     &:last-of-type {
       border-right: 0;
@@ -16,11 +16,11 @@ nav {
 
     .icon {
       border: $border-sm $border-regular $light-gray-color;
-      top: 12px;
-      left: 10px;
       height: 36px;
-      width: 36px;
+      left: 10px;
       position: absolute;
+      top: 12px;
+      width: 36px;
     }
 
     div {
