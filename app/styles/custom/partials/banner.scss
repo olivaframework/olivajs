@@ -4,6 +4,12 @@
   .image-section {
     float: left;
     width: 44%;
+
+    img {
+      float: right;
+      max-height: 100%;
+      max-width: 100%;
+    }
   }
 
   .info-section {
@@ -56,13 +62,13 @@
   .social-share {
     float: left;
     padding: $space-xsm;
+    text-align: right;
     width: 50%;
 
     span {
       display: inline-block;
       font-size: 12px;
       font-weight: $font-weight-bold;
-      margin-top: 10px;
       text-transform: uppercase;
       vertical-align: top;
     }
@@ -70,6 +76,8 @@
     i {
       font-size: 28px;
       margin-left: $space-xs;
+      margin-top: -$space-xs;
+      vertical-align: top;
     }
   }
 }

@@ -32,6 +32,7 @@
     }
 
     input {
+      background-color: $navbar-bg;
       border: $border-sm $border-regular $dark-gray-color;
       color: $dark-gray-color;
       float: right;
