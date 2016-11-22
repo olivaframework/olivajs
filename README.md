@@ -15,7 +15,7 @@
 
 ### To run this project how develop mode you need:
 
-NodeJv v7.0 o sup
+NodeJs v7.0 o sup
 
 #### Steps:
   1. npm install -g yarn
