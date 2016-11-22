@@ -1,6 +1,6 @@
 header {
   background: $header-bg-primary;
-  color: $header-color;
+  color: $white-color;
   font-size: 12px;
 
   div {
@@ -18,7 +18,7 @@ header {
     }
 
     .active {
-      color: $tab-menu-active-color;
+      color: $dark-yellow-color;
       position: relative;
 
       &::after {
@@ -41,9 +41,21 @@ header {
   .contact {
     padding: $space-xs 0;
 
+    i {
+      color: $dark-yellow-color;
+      font-size: 20px;
+      left: 0;
+      margin-left: $space-xs;
+      margin-right: $space-xs;
+      margin-top: -$space-xxs;
+      position: absolute;
+      top: 0;
+    }
+
     div {
       font-weight: 200;
-      padding: 0 $space-xs;
+      padding: 0 $space-xs 0 $space-xl;
+      position: relative;
       text-transform: capitalize;
     }
 
@@ -70,7 +82,7 @@ header {
       text-transform: uppercase;
 
       &:last-child {
-        background: $customer-section-bg;
+        background: $dark-yellow-color;
         color: $dark-gray-color;
         margin-right: -1px;
       }
