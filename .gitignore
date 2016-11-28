@@ -7,11 +7,9 @@ yarn.lock
 #NodeJs Files
 /node_modules
 
-#NodeJs Files
-/node_modules
-
-#Bower Dependences
-app/lib
+#Sprites Files
+/app/sprites
+/app/styles/sprite-base.scss
 
 #Dist Files
 /dist
