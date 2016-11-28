@@ -27,7 +27,7 @@ module.exports = function makeWebpackConfig () {
 	config.output = {
 		path: __dirname + distPath,
 		publicPath: isProd ? '/' : 'http://127.0.0.1:8080/',
-		filename: '[name].[hash].js',
+		filename: 'js/[name].[hash].js',
 		chunkFilename: isProd ? '[name].[hash].js' : '[name].js'
 	};
 
@@ -50,23 +50,11 @@ module.exports = function makeWebpackConfig () {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader'),
       }, {
-      	test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-      	loader: "url?limit=10000&mimetype=application/font-woff"
-		  }, {
-		    test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-		    loader: "url?limit=10000&mimetype=application/font-woff"
-		  }, {
-		    test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-		    loader: "url?limit=10000&mimetype=application/octet-stream"
-		  }, {
-		    test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-		    loader: "file"
-		  }, {
-		    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-		    loader: "url?limit=10000&mimetype=image/svg+xml"
-		  }, {
+    		test: /\.(ttf|eot|svg|woff(2)?)(\S+)?$/,
+    		loader: 'file-loader?publicPath=/&name=fonts/[name].[ext]'
+			}, {
 			  test: /\.(png|jpg|jpeg|gif)$/,
-			  loader:'file'
+			  loader:'file?publicPath=/&name=images/[hash]-[name].[ext]'
 			}, {
 				exclude: [/node_modules/],
 				loader: 'raw',
@@ -104,19 +92,20 @@ module.exports = function makeWebpackConfig () {
 			template: './app/public/index.html',
 			inject: 'body'
 		}),
-    new ExtractTextPlugin('[name].[hash].css'),
 		new sprite({
 			'source': path.resolve(__dirname, 'app/images/'),
 			'imgPath': path.resolve(__dirname, 'app/sprites/'),
 			'format': 'png',
 			'spriteName': 'sprite',
 			'connector': '-',
+			'baseName': 'base',
 			'base': 'icon',
 			'cssPath': path.resolve(__dirname, 'app/styles/'),
 			'prefix': 'icon',
 			'processor': 'scss',
 			'bundleMode': 'one',
 		}),
+		new ExtractTextPlugin('css/[name].[hash].css'),
 		new sassLintPlugin({
 			context: ['app/styles/custom/'],
 		})
