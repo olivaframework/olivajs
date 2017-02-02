@@ -8,10 +8,10 @@ footer {
   padding-bottom: $space-md;
 
   .logo {
-    border: $border-sm $border-regular $dark-color;
+    padding: 0;
 
-    img {
-      width: 100%;
+    .icon-logo {
+      border: $border-sm $border-regular $dark-color;
     }
   }
 

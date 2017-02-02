@@ -1,7 +1,9 @@
-<div>
+{% extends "./layouts/base.njk" %}
+
+{% block content %}
   <div class="banner row">
     <div class="image-section">
-      <img src="images/banner.png"/>
+      <div class="icon-banner"></div>
     </div>
     <div class="info-section">
       <div class="title-section">
@@ -103,13 +105,13 @@
   <div class="other-products row">
     <h2 class="col-xs-12">Otros productos que te pueden interesar</h2>
     <div class="col-xs-4">
-      <img src="images/other-product-1.png"/>
+      <div class="icon-other-product-1"></div>
     </div>
     <div class="col-xs-4">
-      <img src="images/other-product-2.png"/>
+      <div class="icon-other-product-2"></div>
     </div>
     <div class="col-xs-4">
-      <img src="images/other-product-3.png"/>
+      <div class="icon-other-product-3"></div>
     </div>
   </div>
-</div>
+{% endblock %}

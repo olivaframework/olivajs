@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <base href="/">
+</head>
+<body ng-app="app">
+  <div class="container-fluid">
+    {% include "../partials/header.njk" %}
+    {% include "../partials/navbar.njk" %}
+    {% include "../partials/breadcrumb.njk" %}
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+    {% include "../partials/footer.njk" %}
+  </div>
+</body>
+</html>
