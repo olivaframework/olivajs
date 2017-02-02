@@ -88,7 +88,7 @@ module.exports = function makeWebpackConfig () {
   ];
 
 	config.devServer = {
-    contentBase: viewsPath,
+    contentBase: './app/',
     stats: 'minimal',
 		inline: true
   };
@@ -97,7 +97,7 @@ module.exports = function makeWebpackConfig () {
 
   config.plugins.push(
 		new sprite({
-			'source': path.resolve(__dirname, 'app/images/'),
+			'source': path.resolve(__dirname, 'app/images/sprites'),
 			'imgPath': path.resolve(__dirname, 'app/sprites/'),
 			'format': 'png',
 			'spriteName': 'sprite',
@@ -133,7 +133,13 @@ module.exports = function makeWebpackConfig () {
 
     config.plugins.push(
       new webpack.NoErrorsPlugin(),
-      new webpack.optimize.DedupePlugin()
+      new webpack.optimize.DedupePlugin(),
+			new CopyWebpackPlugin([{
+ 				from: __dirname + '/app/images/',
+				to: './images/',
+ 			}], {
+				ignore: ['sprites/**']
+			})
     );
 	} else {
 		config.devtool = 'eval';

@@ -8,10 +8,9 @@
     margin-bottom: $space-md;
   }
 
-  .icon-other-product-1,
-  .icon-other-product-2,
-  .icon-other-product-3,
-  .icon-other-product-4 {
+  img {
+    max-height: 100%;
     max-width: 100%;
+    padding: 0 $space-xxs;
   }
 }
