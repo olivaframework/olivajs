@@ -60,7 +60,7 @@ module.exports = function makeWebpackConfig () {
 				exclude: [/node_modules/],
 			}, {
         test: /\.ts$/,
-        loader: 'awesome-typescript-loader',
+        loader: 'awesome-typescript-loader!eslint-loader',
 				exclude: [/node_modules/],
 				include: path.join(__dirname, 'app')
       }, {
@@ -73,11 +73,8 @@ module.exports = function makeWebpackConfig () {
 		],
 		preLoaders: [{
 	    test: /\s[a|c]ss$/,
-	    exclude: [/node_modules/],
-	    loader: 'sasslint'
-		}, {
-			test: /\.ts$/,
-			loader: 'tslint-loader'
+	    loader: 'sasslint',
+			exclude: [/node_modules/],
 		}],
 	};
 
@@ -86,6 +83,10 @@ module.exports = function makeWebpackConfig () {
       browsers: ['last 3 versions', '> 1%']
     })
   ];
+
+	config.eslint = {
+    configFile: '.eslintrc'
+  };
 
 	config.devServer = {
     contentBase: './app/',

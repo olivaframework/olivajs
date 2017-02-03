@@ -6,6 +6,7 @@ yarn.lock
 
 #NodeJs Files
 /node_modules
+npm-debug.log
 
 #Sprites Files
 /app/sprites

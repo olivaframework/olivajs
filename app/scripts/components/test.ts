@@ -5,7 +5,7 @@ export class Test {
     this.message = message;
   }
 
-  public sendMenssage(): string {
+  public sendMessage(): string {
     return this.message + ' world';
   }
 }

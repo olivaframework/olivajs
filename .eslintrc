@@ -1,0 +1,126 @@
+{
+  "parser": "typescript-eslint-parser",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "modules": true
+    }
+  },
+  "rules": {
+    //Possible Errors & Best Practices
+    "indent": [
+      "error",
+      2
+    ],
+    "no-console": "warn",
+    "no-constant-condition": "error",
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "no-debugger": "warn",
+    "no-dupe-args": "error",
+    "no-dupe-keys": "error",
+    "no-duplicate-case": "error",
+    "no-empty": [
+      "error", {
+        "allowEmptyCatch": true
+      }
+    ],
+    "no-ex-assign": "error",
+    "no-extra-boolean-cast": "error",
+    "no-extra-semi": "error",
+    "no-inner-declarations": "error",
+    "no-irregular-whitespace": "error",
+    "no-mixed-spaces-and-tabs": [
+      "error",
+      "smart-tabs"
+    ],
+    "no-obj-calls": "error",
+    "no-trailing-spaces": "error",
+    "no-sparse-arrays": "error",
+    "no-whitespace-before-property": "error",
+    "space-in-parens": [
+      "error",
+      "never"
+    ],
+    "space-infix-ops": "error",
+    "space-before-blocks": [
+      "error", {
+        "functions": "always",
+        "keywords": "always",
+        "classes": "always"
+      }
+    ],
+    "space-before-function-paren": [
+      "error", {
+        "anonymous": "always",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ],
+    "space-unary-ops": "error",
+    "spaced-comment": [
+      "error",
+      "always"
+    ],
+    "use-isnan": "error",
+    "valid-typeof": "error",
+
+    //Best Practices
+    "accessor-pairs": "error",
+    "block-scoped-var": "error",
+    "class-methods-use-this": "error",
+    "curly": "error",
+    "default-case": "error",
+    "dot-location": [
+      "error",
+      "property"
+    ],
+    "dot-notation": "error",
+    "eqeqeq": [
+      "error",
+      "always"
+    ],
+    "no-alert": "warn",
+    "no-else-return": "error",
+    "no-empty-function": "error",
+    "no-extra-bind": "error",
+    "no-eval": "error",
+    "no-floating-decimal": "error",
+    "no-implicit-coercion": "error",
+    "no-implied-eval": "error",
+    "no-invalid-this": "error",
+    "no-lone-blocks": "error",
+    "no-multi-spaces": "error",
+    "no-multi-str": "error",
+    "no-new-func": "error",
+    "no-new-wrappers": "error",
+    "no-new": "error",
+    "no-octal-escape": "error",
+    "no-octal": "error",
+    "no-param-reassign": "error",
+    "no-redeclare": "error",
+    "no-return-assign": "error",
+    "no-self-compare": "error",
+    "no-throw-literal": "error",
+    "no-unused-expressions": "error",
+    "no-useless-concat": "error",
+    "no-useless-escape": "error",
+    "vars-on-top": "error",
+
+    //Variables
+    "no-shadow": "error",
+    "no-undef-init": "error",
+    "no-unused-vars": "error",
+    "no-use-before-define": "error",
+
+    /*
+      Stylistic ... missing implementation http://eslint.org/docs/rules/
+    */
+
+    //ECMAScript 6
+    "no-var": "error"
+  }
+}
