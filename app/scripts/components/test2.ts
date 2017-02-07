@@ -1,4 +1,4 @@
-export class Test2 {
+class Test2 {
   private num1: number;
   private num2: number;
 
@@ -11,3 +11,5 @@ export class Test2 {
     return this.num1 + this.num2;
   }
 }
+
+export { Test2 };
