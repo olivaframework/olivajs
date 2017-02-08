@@ -2,7 +2,7 @@
   background-color: $light-gray-color;
   text-align: center;
 
-  .item  {
+  .item {
     color: $dark-gray-color;
     display: inline-block;
     font-size: 12px;
@@ -22,7 +22,7 @@
 .tab-secondary-content {
   box-shadow: $box-shadow-lg;
 
-  >div {
+  > div {
     border-bottom: $border-md $border-regular $light-gray-color;
     padding: $space-xl 0;
 

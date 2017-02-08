@@ -7,7 +7,7 @@ var sprite = require('sprite-webpack-plugin');
 var path = require('path');
 var autoprefixer = require('autoprefixer');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var sassLintPlugin = require('sasslint-webpack-plugin');
+var StyleLintPlugin = require('stylelint-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var AwesomeTypescript = require('awesome-typescript-loader');
@@ -70,12 +70,7 @@ module.exports = function makeWebpackConfig () {
 				}),
 				exclude: [/node_modules/],
 			},
-		],
-		preLoaders: [{
-	    test: /\s[a|c]ss$/,
-	    loader: 'sasslint',
-			exclude: [/node_modules/],
-		}],
+		]
 	};
 
 	config.postcss = [
@@ -83,6 +78,10 @@ module.exports = function makeWebpackConfig () {
       browsers: ['last 3 versions', '> 1%']
     })
   ];
+
+	config.sasslint = {
+	  configFile: '.sass-lint.yml'
+	};
 
 	config.eslint = {
     configFile: '.eslintrc'
@@ -111,8 +110,14 @@ module.exports = function makeWebpackConfig () {
 			'bundleMode': 'one',
 		}),
 		new ExtractTextPlugin(isProd ? 'css/[name].[hash].css' : '[name].css'),
-		new sassLintPlugin({
-			context: ['app/styles/custom/'],
+		new StyleLintPlugin({
+			configFile: '.stylelintrc',
+			context: './app/styles/custom',
+			failOnError: false,
+			glob: '**/*.s?(a|c)ss',
+			ignoreFiles: [],
+			ignorePlugins: ['extract-text-webpack-plugin'],
+			quiet: true,
 		}),
 		new AwesomeTypescript.CheckerPlugin()
   );
