@@ -34,7 +34,7 @@ module.exports = function makeWebpackConfig () {
 	};
 
 	config.resolve = {
-		extensions: ['', '.ts', '.js', '.json'],
+		extensions: ['.ts', '.js', '.tsx', '.jsx', 'json', '']
 	};
 
 	config.module = {
@@ -61,8 +61,7 @@ module.exports = function makeWebpackConfig () {
 			}, {
         test: /\.ts$/,
         loader: 'awesome-typescript-loader!eslint-loader',
-				exclude: [/node_modules/],
-				include: path.join(__dirname, 'app')
+				exclude: [/node_modules/]
       }, {
 				test: /\.(njk|nunjucks)$/,
 				loader: 'nunjucks-html?' + JSON.stringify({
@@ -89,7 +88,7 @@ module.exports = function makeWebpackConfig () {
 
 	config.devServer = {
     contentBase: './app/',
-    stats: 'minimal',
+    stats: 'errors-only',
 		inline: true
   };
 
