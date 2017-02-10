@@ -10,7 +10,6 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var StyleLintPlugin = require('stylelint-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-var AwesomeTypescript = require('awesome-typescript-loader');
 var glob = require('glob');
 var distPath = '/dist/';
 var viewsPath = './app/views/';
@@ -131,8 +130,7 @@ module.exports = function makeWebpackConfig () {
 			ignoreFiles: [],
 			ignorePlugins: ['extract-text-webpack-plugin'],
 			quiet: true,
-		}),
-		new AwesomeTypescript.CheckerPlugin()
+		})
   );
 
 	for (var i = 0; i < views.length; i++) {
