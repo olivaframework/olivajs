@@ -1,21 +1,38 @@
+var ENV = process.env.npm_lifecycle_event;
+var isCoverage = ENV === 'coverage';
+var reporters = ['progress'];
+
+if (isCoverage) {
+  reporters.push('coverage');
+}
+
 var webpackConfig = require('./webpack.config.js');
+
+webpackConfig.module.postLoaders = [{
+    test: /\.ts$/,
+    loader: 'istanbul-instrumenter-loader',
+    exclude: [/node_modules/,/\.spec\.ts$/]
+  }
+];
 
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['mocha', 'chai', 'sinon'],
-    files: [
-      'app/scripts/test/**/*.ts'
-    ],
+    frameworks: ['mocha', 'chai', 'sinon', 'source-map-support'],
+    files: [{
+      pattern: 'app/scripts/tests/**/*.ts',
+      watched: false
+    }],
     exclude: [
     ],
     preprocessors: {
-      'app/scripts/test/**/*.ts': ['webpack']
+      'app/scripts/**/*.ts': ['webpack']
     },
     webpack: {
-      debug: true,
+      entry: {},
       module: webpackConfig.module,
-      resolve: webpackConfig.resolve
+      resolve: webpackConfig.resolve,
+      devtool: 'inline-source-map'
     },
     webpackMiddleware: {
       quiet: false,
@@ -27,13 +44,19 @@ module.exports = function (config) {
         cached: false
       }
     },
-    reporters: ['progress'],
+    reporters: reporters,
+    coverageReporter: {
+      type: 'json',
+      dir: 'app/scripts/tests/coverage',
+      subdir: '.'
+    },
     port: 9876,
     colors: true,
-    logLevel: config.LOG_INFO,
-    autoWatch: true,
+    logLevel: config.LOG_DISABLE,
+    autoWatch: !isCoverage,
+    autoWatchBatchDelay: 100,
     browsers: ['PhantomJS'],
-    singleRun: false,
+    singleRun: isCoverage,
     concurrency: Infinity
   })
 }

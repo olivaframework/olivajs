@@ -1,14 +1,11 @@
-//Reset
-@import 'reset';
-
 //Bootstrap
-@import 'bootstrap';
+@import 'lib/bootstrap/main';
 
 //Font Awesome
-@import 'font-awesome';
+@import 'lib/font-awesome/main';
 
 //Sprite
 @import 'sprite-base';
 
 //Custom
-@import 'custom/custom';
+@import 'custom/main';

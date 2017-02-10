@@ -17,3 +17,6 @@ npm-debug.log
 
 #Typing Files
 /typings
+
+#Coverage Test Files
+/app/scripts/tests/coverage

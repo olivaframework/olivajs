@@ -5,10 +5,7 @@ class Test {
     this.message = message;
   }
 
-  /**
-   * @returns {string} The sum of the two numbers.
-   */
-  public sendMessage(): string {
+  sendMessage(): string {
     return this.message + ' world';
   }
 }

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { Test } from '../components/test';
+import { Test } from '../../components/test';
 
 describe('should ... testing...', () => {
   const test = new Test('hello');

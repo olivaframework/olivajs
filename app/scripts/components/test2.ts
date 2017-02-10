@@ -10,6 +10,10 @@ class Test2 {
   public sum(): number {
     return this.num1 + this.num2;
   }
+
+  public subt(): number {
+    return this.num1 - this.num2;
+  }
 }
 
 export { Test2 };

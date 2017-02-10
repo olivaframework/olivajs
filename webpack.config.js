@@ -60,7 +60,7 @@ module.exports = function makeWebpackConfig () {
 				exclude: [/node_modules/],
 			}, {
         test: /\.ts$/,
-        loader: 'awesome-typescript-loader!eslint-loader',
+        loader: 'ts-loader!eslint-loader',
 				exclude: [/node_modules/]
       }, {
 				test: /\.(njk|nunjucks)$/,
@@ -88,7 +88,21 @@ module.exports = function makeWebpackConfig () {
 
 	config.devServer = {
     contentBase: './app/',
-    stats: 'errors-only',
+    stats: {
+	    hash: false,
+	    version: false,
+	    timings: true,
+	    assets: false,
+	    chunks: false,
+	    modules: false,
+	    reasons: true,
+	    children: false,
+	    source: false,
+	    errors: true,
+	    errorDetails: false,
+	    warnings: true,
+	    publicPath: false
+		},
 		inline: true
   };
 
