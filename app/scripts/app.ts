@@ -1,11 +1,17 @@
 import '../styles/main.scss';
-import { Test } from './components/test';
-import { Test2 } from './components/test2';
-
-const testing = new Test('123');
-const testing2 = new Test2(1, 3);
-
-testing.sendMessage();
-testing2.sum();
+import './components/Window';
+import { Http } from './components/Http';
 
 document.title = 'Banco Pichincha';
+
+let http: Http;
+
+http = new Http();
+
+http.get('https://jsonplaceholder.typicode.com/posts/1',
+function (data) {
+  return data;
+},
+function (error) {
+  return error;
+});

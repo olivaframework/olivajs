@@ -39,8 +39,11 @@ module.exports = function makeWebpackConfig () {
 	config.module = {
 		loaders: [{
 				test: /\.js$/,
-				exclude: [/node_modules/],
-				loader: 'babel',
+				exclude: [
+					/node_modules/,
+					/app\/scripts\/tests\/coverage/
+				],
+				loader: 'babel!eslint-loader',
 			}, {
 				test: /\.scss$/,
 				loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader!sass-loader'),
@@ -68,7 +71,10 @@ module.exports = function makeWebpackConfig () {
 				}),
 				exclude: [/node_modules/],
 			},
-		]
+		],
+		noParse: [
+      /node_modules\/sinon\//,
+    ]
 	};
 
 	config.postcss = [

@@ -38,7 +38,6 @@
     //Best Practices
     "accessor-pairs": "error",
     "block-scoped-var": "error",
-    "class-methods-use-this": "error",
     "curly": "error",
     "default-case": "error",
     "dot-location": [
@@ -52,7 +51,7 @@
     ],
     "no-alert": "warn",
     "no-else-return": "error",
-    "no-empty-function": "error",
+    "no-empty-function": "warn",
     "no-extra-bind": "error",
     "no-eval": "error",
     "no-floating-decimal": "error",
@@ -78,10 +77,10 @@
     "vars-on-top": "error",
 
     //Variables
-    "no-shadow": "error",
-    "no-undef-init": "error",
-    "no-unused-vars": "error",
-    "no-use-before-define": "error",
+    "no-shadow": "warn",
+    "no-undef-init": "warn",
+    "no-unused-vars": "warn",
+    "no-use-before-define": "warn",
 
     //Stylish
     "array-bracket-spacing": [
@@ -195,10 +194,6 @@
     ],
     "max-statements": [
       "warn", 15
-    ],
-    "multiline-ternary": [
-      "warn",
-      "never"
     ],
     "new-cap": [
       "warn", {
@@ -345,7 +340,6 @@
     "no-useless-constructor": "warn",
     "no-useless-rename": "warn",
     "no-var": "warn",
-    "prefer-const": "warn",
     "rest-spread-spacing": [
       "warn", "never"
     ],

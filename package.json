@@ -7,7 +7,7 @@
     "build": "rimraf dist && webpack --bail --progress --profile",
     "coverage": "karma start && remap-istanbul -i app/scripts/tests/coverage/coverage-final.json -o app/scripts/tests/coverage/html -t html",
     "postinstall": "typings install --overwrite --save",
-    "start": "webpack-dev-server --history-api-fallback --progress",
+    "start": "webpack-dev-server --history-api-fallback --progress --hot",
     "test": "karma start"
   },
   "repository": {
@@ -67,7 +67,7 @@
     "sass-loader": "4.0.0",
     "sasslint-loader": "0.0.1",
     "sasslint-webpack-plugin": "^1.0.4",
-    "sinon": "^1.17.3",
+    "sinon": "^1.17.7",
     "sprite-webpack-plugin": "^0.3.6",
     "style-loader": "0.13.1",
     "stylelint-order": "^0.2.2",
