@@ -18,7 +18,7 @@ function (error) {
   return error;
 });
 
-let iterator = new DOMIterator('[data-tab]');
+let iterator = new DOMIterator('[data-tab-content-id]');
 
 iterator.syncForEach(function (tabs) {
   new Tab(tabs);

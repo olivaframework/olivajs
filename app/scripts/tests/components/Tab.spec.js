@@ -23,8 +23,8 @@ describe('Tab component specification', () => {
     tabA.id = tabIdA;
     tabB.id = tabIdB;
 
-    tabA.setAttribute('data-tab-container-id', tabContentAId);
-    tabB.setAttribute('data-tab-container-id', tabContentBId);
+    tabA.setAttribute('data-tab-content-id', tabContentAId);
+    tabB.setAttribute('data-tab-content-id', tabContentBId);
 
     tabsContainer.appendChild(tabA);
     tabsContainer.appendChild(tabB);

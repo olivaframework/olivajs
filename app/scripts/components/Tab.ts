@@ -1,6 +1,6 @@
 class Tab {
   static readonly STYLE_ACTIVE_CLASS = 'active';
-  static readonly TAB_ATTR = 'data-tab-container-id';
+  static readonly TAB_ATTR = 'data-tab-content-id';
   static readonly TAB_EVENT = 'click';
 
   private handler: HTMLAnchorElement;
