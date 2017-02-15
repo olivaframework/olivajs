@@ -22,7 +22,8 @@
 .tab-secondary-content {
   box-shadow: $box-shadow-lg;
 
-  > div {
+  .col-xs-10,
+  .col-xs-12 {
     border-bottom: $border-md $border-regular $light-gray-color;
     padding: $space-xl 0;
 

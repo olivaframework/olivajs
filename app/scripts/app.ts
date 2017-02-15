@@ -1,6 +1,8 @@
 import '../styles/main.scss';
 import './components/Window';
+import { DOMIterator } from './components/DOMIterator';
 import { Http } from './components/Http';
+import { Tab } from './components/Tab';
 
 document.title = 'Banco Pichincha';
 
@@ -14,4 +16,10 @@ function (data) {
 },
 function (error) {
   return error;
+});
+
+let iterator = new DOMIterator('[data-tab]');
+
+iterator.syncForEach(function (tabs) {
+  new Tab(tabs);
 });

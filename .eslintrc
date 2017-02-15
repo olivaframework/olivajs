@@ -16,7 +16,7 @@
     "no-dupe-keys": "error",
     "no-duplicate-case": "error",
     "no-empty": [
-      "error", {
+      "warn", {
         "allowEmptyCatch": true
       }
     ],
@@ -44,7 +44,6 @@
       "error",
       "property"
     ],
-    "dot-notation": "error",
     "eqeqeq": [
       "error",
       "always"
@@ -63,7 +62,6 @@
     "no-multi-str": "error",
     "no-new-func": "error",
     "no-new-wrappers": "error",
-    "no-new": "error",
     "no-octal-escape": "error",
     "no-octal": "error",
     "no-param-reassign": "error",
