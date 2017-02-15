@@ -1,0 +1,17 @@
+.overlay {
+  background: $overlay-bg;
+  bottom: 0;
+  display: none;
+  height: 100%;
+  left: 0;
+  opacity: $overlay-opacity;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: $overlay-zindex;
+
+  &.active {
+    display: block;
+  }
+}

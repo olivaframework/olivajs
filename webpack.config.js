@@ -83,10 +83,6 @@ module.exports = function makeWebpackConfig () {
     })
   ];
 
-	config.sasslint = {
-	  configFile: '.sass-lint.yml'
-	};
-
 	config.eslint = {
     configFile: '.eslintrc'
   };
@@ -130,10 +126,12 @@ module.exports = function makeWebpackConfig () {
 		new ExtractTextPlugin(isProd ? 'css/[name].[hash].css' : '[name].css'),
 		new StyleLintPlugin({
 			configFile: '.stylelintrc',
-			context: './app/styles/custom',
+			context: './app/styles',
 			failOnError: false,
-			glob: '**/*.s?(a|c)ss',
-			ignoreFiles: [],
+			files: [
+				'/components/**/*.s?(a|c)ss',
+				'/custom/**/*.s?(a|c)ss'
+			],
 			ignorePlugins: ['extract-text-webpack-plugin'],
 			quiet: true,
 		})

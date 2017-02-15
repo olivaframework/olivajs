@@ -69,7 +69,6 @@
     "no-return-assign": "error",
     "no-self-compare": "error",
     "no-throw-literal": "error",
-    "no-unused-expressions": "error",
     "no-useless-concat": "error",
     "no-useless-escape": "error",
     "vars-on-top": "error",
@@ -191,7 +190,7 @@
       }
     ],
     "max-statements": [
-      "warn", 15
+      "warn", 20
     ],
     "new-cap": [
       "warn", {
