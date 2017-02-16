@@ -22,13 +22,13 @@ class DOMElement {
     this.element.innerHTML = content;
   }
 
-  public addClasses(classes: string[]): void {
+  public addClasses(classes: Array<string>): void {
     for (let item of classes) {
       this.element.classList.add(item);
     }
   }
 
-  public removeClasses(classes: string[]): void {
+  public removeClasses(classes: Array<string>): void {
     for (let item of classes) {
       this.element.classList.remove(item);
     }
@@ -42,13 +42,13 @@ class DOMElement {
     node.appendChild(this.element);
   }
 
-  public addEvents(events: Events[]): void {
+  public addEvents(events: Array<Events>): void {
     for (let item of events) {
       this.element.addEventListener(item.eventName, item.callback);
     }
   }
 
-  public removeEvents(events: Events[]): void {
+  public removeEvents(events: Array<Events>): void {
     for (let item of events) {
       this.element.removeEventListener(item.eventName, item.callback);
     }

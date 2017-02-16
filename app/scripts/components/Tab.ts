@@ -1,7 +1,7 @@
 class Tab {
-  static readonly ACTIVE_CLASS = 'active';
-  static readonly EVENT_ACTIVE = 'click';
-  static readonly ATTR = 'data-tab-content-id';
+  static readonly ACTIVE_CLASS: string = 'active';
+  static readonly EVENT_ACTIVE: string = 'click';
+  static readonly ATTR: string = 'data-tab-content-id';
 
   private handler: HTMLAnchorElement;
   private content: Element;
