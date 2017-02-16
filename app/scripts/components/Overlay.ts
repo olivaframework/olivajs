@@ -1,10 +1,11 @@
 import { DOMElement } from './DOMElement';
 
 class Overlay {
-  static readonly STYLE_ACTIVE_CLASS = 'active';
-  static readonly STYLE_CLASS = 'overlay';
+  static readonly ACTIVE_CLASS: string = 'active';
+  static readonly STYLE_CLASS: string = 'overlay';
+  static readonly TYPE_HTML_ELEMENT: string = 'div';
 
-  private static instance = new Overlay();
+  private static instance: Overlay = new Overlay();
   private static overlay: DOMElement;
 
   constructor() {
@@ -12,7 +13,7 @@ class Overlay {
       throw new Error('Error: Use Overlay.getInstance() instead of new.');
     }
 
-    Overlay.overlay = new DOMElement('div');
+    Overlay.overlay = new DOMElement(Overlay.TYPE_HTML_ELEMENT);
     Overlay.overlay.addClasses([Overlay.STYLE_CLASS]);
     Overlay.overlay.render(document.body);
   }
@@ -22,11 +23,15 @@ class Overlay {
   }
 
   public hide(): void {
-    Overlay.overlay.removeClasses([Overlay.STYLE_ACTIVE_CLASS]);
+    Overlay.overlay.removeClasses([Overlay.ACTIVE_CLASS]);
   }
 
   public show(): void {
-    Overlay.overlay.addClasses([Overlay.STYLE_ACTIVE_CLASS]);
+    Overlay.overlay.addClasses([Overlay.ACTIVE_CLASS]);
+  }
+
+  public getOverlay(): DOMElement {
+    return Overlay.overlay;
   }
 }
 

@@ -2,6 +2,7 @@ import '../styles/main.scss';
 import './components/Window';
 import { DOMIterator } from './components/DOMIterator';
 import { Http } from './components/Http';
+import { Modal } from './components/Modal';
 import { Tab } from './components/Tab';
 
 document.title = 'Banco Pichincha';
@@ -18,8 +19,13 @@ function (error) {
   return error;
 });
 
-let iterator = new DOMIterator('[data-tab-content-id]');
+let iteratorTabs = new DOMIterator('[data-tab-content-id]');
+let iteratorModals = new DOMIterator('[data-modal-content-id]');
 
-iterator.syncForEach(function (tabs) {
-  new Tab(tabs);
+iteratorTabs.syncForEach(function (tab) {
+  new Tab(tab);
+});
+
+iteratorModals.syncForEach(function (modal) {
+  new Modal(modal);
 });

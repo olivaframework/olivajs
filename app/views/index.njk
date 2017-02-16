@@ -18,7 +18,9 @@
           Te acompañamos en la construcción de tus sueños y metas de
           tus hijos con nuestro crédito educativo.
         </p>
-        <a>solicita tu credito educativo</a>
+        <a data-modal-content-id="modal_test">
+          solicita tu credito educativo
+        </a>
         <div class="social-share">
           <span>compartir</span>
           <i class="fa fa-facebook" aria-hidden="true"></i>
@@ -37,7 +39,7 @@
       </a>
     </div>
     <div class="tab-secondary-content">
-      <div id="features" data-tab-content>
+      <div id="features" class="tab-content">
         <div class="col-xs-offset-1 col-xs-10">
           <ul class="checked-list-yellow col-xs-9">
             <li>Crédito rotativo hasta por el 100% de la matrícula</li>
@@ -80,7 +82,7 @@
           </div>
         </div>
       </div>
-      <div id="benefits" data-tab-content>
+      <div id="benefits" class="tab-content">
         <div class="col-xs-offset-1 col-xs-10">
           <p>Ademas con Banco Pichincha tambien obtienes:</p>
           <ul class="checked-list-gray">
@@ -117,5 +119,9 @@
     <div class="col-xs-4">
       <img src="/images/other-product-3.png"/>
     </div>
+  </div>
+  <div id="modal_test" class="modal-content" data-close-on-overlay="false">
+    <div class="modal-close" data-modal-close></div>
+    Test modal
   </div>
 {% endblock %}

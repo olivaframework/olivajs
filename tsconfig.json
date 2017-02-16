@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
-        "inlineSourceMap": true,
-        "sourceMap": false
+        "sourceMap": true
     },
     "exclude": [
         "node_modules"

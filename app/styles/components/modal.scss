@@ -1,0 +1,33 @@
+.modal-content {
+  background: $modal-bg;
+  border-radius: $modal-border-radius;
+  display: none;
+  height: $modal-height;
+  left: 50%;
+  padding: $modal-padding;
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: $modal-width;
+  z-index: $modal-z-index;
+
+  &.active {
+    display: block;
+  }
+
+  .modal-close {
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: 400;
+    margin-right: 12px;
+    margin-top: 4px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: scaleX(1.2);
+
+    &::before {
+      content: $modal-close-content;
+    }
+  }
+}

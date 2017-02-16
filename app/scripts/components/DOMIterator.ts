@@ -5,7 +5,7 @@ class DOMIterator {
     this.items = document.querySelectorAll(query);
   }
 
-  public syncForEach(callback) {
+  public syncForEach(callback): void {
     for (let i = 0; i < this.items.length; i++) {
       callback(this.items[i]);
     }

@@ -9,7 +9,7 @@
   right: 0;
   top: 0;
   width: 100%;
-  z-index: $overlay-zindex;
+  z-index: $overlay-z-index;
 
   &.active {
     display: block;

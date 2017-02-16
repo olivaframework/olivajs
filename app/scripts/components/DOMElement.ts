@@ -28,7 +28,7 @@ class DOMElement {
     }
   }
 
-  public removeClasses(classes: string[]) {
+  public removeClasses(classes: string[]): void {
     for (let item of classes) {
       this.element.classList.remove(item);
     }
@@ -42,9 +42,15 @@ class DOMElement {
     node.appendChild(this.element);
   }
 
-  public addEvents(events: Events[]) {
+  public addEvents(events: Events[]): void {
     for (let item of events) {
       this.element.addEventListener(item.eventName, item.callback);
+    }
+  }
+
+  public removeEvents(events: Events[]): void {
+    for (let item of events) {
+      this.element.removeEventListener(item.eventName, item.callback);
     }
   }
 }

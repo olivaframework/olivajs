@@ -85,6 +85,32 @@ describe('DOMElement component specification', () => {
     assert(callback2.calledTwice);
   });
 
+  it('should remove div specific events', () => {
+    let callback1 = sinon.spy();
+    let callback2 = sinon.spy();
+
+    const events = [{
+      callback: callback1,
+      eventName: 'click'
+    }, {
+      callback: callback2,
+      eventName: 'click'
+    }];
+
+    domElement.addEvents(events);
+    domElement.render(document.body);
+
+    domElement.getElement().click();
+    assert(callback1.calledOnce);
+    assert(callback2.calledOnce);
+
+    domElement.removeEvents([events[0]]);
+
+    domElement.getElement().click();
+    assert(callback1.calledOnce);
+    assert(callback2.calledTwice);
+  });
+
   afterEach(() => {
     domElement.destroy();
     domElement = null;

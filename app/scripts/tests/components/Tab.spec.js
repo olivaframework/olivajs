@@ -51,13 +51,13 @@ describe('Tab component specification', () => {
     let tabs = tabsContainer.children;
 
     tabA.click();
-    expect(tabA.classList.contains(Tab.STYLE_ACTIVE_CLASS)).to.be.true;
+    expect(tabA.classList.contains(Tab.ACTIVE_CLASS)).to.be.true;
 
     tabComponentA.removeActives(tabs);
-    expect(tabA.classList.contains(Tab.STYLE_ACTIVE_CLASS)).to.be.false;
+    expect(tabA.classList.contains(Tab.ACTIVE_CLASS)).to.be.false;
 
     for (let i = 0; i < tabs.length; i++) {
-      expect(tabs[i].classList.contains(Tab.STYLE_ACTIVE_CLASS)).to.be.false;
+      expect(tabs[i].classList.contains(Tab.ACTIVE_CLASS)).to.be.false;
     }
   });
 
@@ -73,16 +73,16 @@ describe('Tab component specification', () => {
     };
 
     tabComponentA.toggle(event);
-    expect(tabA.classList.contains(Tab.STYLE_ACTIVE_CLASS)).to.be.true;
-    expect(tabB.classList.contains(Tab.STYLE_ACTIVE_CLASS)).to.be.false;
-    expect(tabContentA.classList.contains(Tab.STYLE_ACTIVE_CLASS)).to.be.true;
-    expect(tabContentB.classList.contains(Tab.STYLE_ACTIVE_CLASS)).to.be.false;
+    expect(tabA.classList.contains(Tab.ACTIVE_CLASS)).to.be.true;
+    expect(tabB.classList.contains(Tab.ACTIVE_CLASS)).to.be.false;
+    expect(tabContentA.classList.contains(Tab.ACTIVE_CLASS)).to.be.true;
+    expect(tabContentB.classList.contains(Tab.ACTIVE_CLASS)).to.be.false;
 
     tabComponentB.toggle(event);
-    expect(tabA.classList.contains(Tab.STYLE_ACTIVE_CLASS)).to.be.false;
-    expect(tabB.classList.contains(Tab.STYLE_ACTIVE_CLASS)).to.be.true;
-    expect(tabContentA.classList.contains(Tab.STYLE_ACTIVE_CLASS)).to.be.false;
-    expect(tabContentB.classList.contains(Tab.STYLE_ACTIVE_CLASS)).to.be.true;
+    expect(tabA.classList.contains(Tab.ACTIVE_CLASS)).to.be.false;
+    expect(tabB.classList.contains(Tab.ACTIVE_CLASS)).to.be.true;
+    expect(tabContentA.classList.contains(Tab.ACTIVE_CLASS)).to.be.false;
+    expect(tabContentB.classList.contains(Tab.ACTIVE_CLASS)).to.be.true;
   });
 
   afterEach(() => {

@@ -1,3 +1,11 @@
+$modal-bg: #FFFFFF !default;
+$modal-border-radius: 5px;
+$modal-close-content: 'x';
+$modal-height: 60%;
+$modal-padding: 20px;
+$modal-width: 60%;
+$modal-z-index: 2000 !default;
+
 $overlay-bg: #000000 !default;
 $overlay-opacity: 0.7 !default;
-$overlay-zindex: 1010 !default;
+$overlay-z-index: 1010 !default;
