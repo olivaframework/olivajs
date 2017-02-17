@@ -74,7 +74,10 @@ header {
     padding: 0;
     text-align: right;
 
-    div {
+    a {
+      color: $white-color;
+      cursor: pointer;
+      display: inline-block;
       font-size: 12px;
       font-weight: $font-weight-bold;
       padding: $space-sm $space-sm $space-sm 42px;

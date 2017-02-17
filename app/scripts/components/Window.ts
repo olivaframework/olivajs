@@ -1,11 +1,12 @@
 interface Window {
-  isMobile: boolean;
+  isMobile: () => boolean;
   redirect: (url: string) => void;
   onResize: (callback: () => void) => void;
 }
 
-window.isMobile = 768 > Math.max(0
-  || document.documentElement.clientWidth, window.innerWidth);
+window.isMobile = () => 768 > Math.max(
+  0 || document.documentElement.clientWidth, window.innerWidth
+);
 
 window.redirect = (url: string) => {
   window.location.href = url;
