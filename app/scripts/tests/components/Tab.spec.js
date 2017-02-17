@@ -68,9 +68,7 @@ describe('Tab component specification', () => {
     let tabComponentB = new Tab(tabB);
     let tabContentA = document.getElementById(tabContentAId);
     let tabContentB = document.getElementById(tabContentBId);
-    let event = {
-      preventDefault: () => 0
-    };
+    let event = { preventDefault: () => 0 };
 
     tabComponentA.toggle(event);
     expect(tabA.classList.contains(Tab.ACTIVE_CLASS)).to.be.true;

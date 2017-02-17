@@ -1,12 +1,35 @@
+interface HttpHeader {
+  name: string;
+  value: string;
+}
+
+interface HttpConfig {
+  url: string;
+  headers?: Array<HttpHeader>
+}
+
+interface HttpCallbacks {
+  failure: (error) => any;
+  success: (data) => any;
+}
+
 class Http {
   private xhr: XMLHttpRequest;
+  private config: HttpConfig;
 
-  constructor() {
+  constructor(config: HttpConfig) {
     this.xhr = new XMLHttpRequest();
+    this.config = config;
   }
 
-  public get(url: string, onSuccess: (data) => any, onFailure: (error) => any) {
-    this.xhr.open('GET', url, true);
+  private processRequest(method: string, callbacks: HttpCallbacks, data?: any) {
+    this.xhr.open(method, this.config.url, true);
+
+    if (this.config.headers) {
+      for (let header of this.config.headers) {
+        this.xhr.setRequestHeader(header.name, header.value);
+      }
+    }
 
     this.xhr.onreadystatechange = function () {
       if (this.readyState === 4) {
@@ -16,14 +39,30 @@ class Http {
             ? JSON.parse(this.responseText)
             : this.responseText;
 
-          onSuccess(response);
+          callbacks.success(response);
         } else {
-          onFailure(this);
+          callbacks.failure(this);
         }
       }
     };
 
-    this.xhr.send(null);
+    this.xhr.send(JSON.stringify(data));
+  }
+
+  public get(httpCallbacks: HttpCallbacks): void {
+    this.processRequest('GET', httpCallbacks);
+  }
+
+  public post(data: any, httpCallbacks: HttpCallbacks): void {
+    this.processRequest('POST', httpCallbacks, data);
+  }
+
+  public put(data: any, httpCallbacks: HttpCallbacks): void {
+    this.processRequest('PUT', httpCallbacks, data);
+  }
+
+  public delete(httpCallbacks: HttpCallbacks): void {
+    this.processRequest('DELETE', httpCallbacks);
   }
 }
 
