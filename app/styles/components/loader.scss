@@ -1,0 +1,15 @@
+.ajax-loader {
+  background: $body-bg;
+  border-radius: 5px;
+  display: none;
+  font-size: $font-size-h3;
+  left: 50%;
+  padding: 8px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  &.active {
+    display: block;
+  }
+}
