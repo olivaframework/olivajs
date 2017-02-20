@@ -1,15 +1,17 @@
 .ajax-loader {
   background: $body-bg;
-  border-radius: 5px;
-  display: none;
-  font-size: $font-size-h3;
+  border-radius: $loader-radius;
+  color: $loader-icon-color;
+  font-size: $loader-icon-size;
   left: 50%;
-  padding: 8px;
-  position: absolute;
+  opacity: 0;
+  padding: $loader-padding;
+  position: fixed;
   top: 50%;
   transform: translate(-50%, -50%);
+  transition: $loader-transitions;
 
   &.active {
-    display: block;
+    opacity: 1;
   }
 }

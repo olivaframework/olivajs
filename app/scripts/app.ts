@@ -1,7 +1,9 @@
 import '../styles/main.scss';
 import './components/Window';
 import { DOMIterator } from './components/DOMIterator';
+import { Http } from './components/Http';
 import { Jump } from './components/Jump';
+import { Loader } from './components/Loader';
 import { Modal } from './components/Modal';
 import { Swiper } from './components/Swiper';
 import { Tab } from './components/Tab';
@@ -28,3 +30,37 @@ iteratorJumps.syncForEach(function (jump) {
 iteratorSwipers.syncForEach(function (swiper) {
   new Swiper(swiper);
 });
+
+function onFail() {
+  console.log('Failed!!!');
+}
+
+function onSuccess() {
+  console.log('---- Finished request!!!');
+}
+
+let ajaxLoader = Loader.getInstance();
+let loaderFlag = false;
+
+ajaxLoader.show();
+setInterval(() => {
+  loaderFlag = !loaderFlag;
+  loaderFlag ? ajaxLoader.hide(): ajaxLoader.show();
+}, 3000);
+
+let getRequest = new Http(
+  {url: 'https://jsonplaceholder.typicode.com/posts/1'}
+);
+
+getRequest.get({
+  failure: onFail,
+  success: onSuccess
+});
+
+//
+// setInterval(function () {
+//   getRequest.get({
+//     failure: onFail,
+//     success: onSuccess
+//   })
+// }, 5000);

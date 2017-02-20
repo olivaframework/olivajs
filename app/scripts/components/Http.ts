@@ -32,6 +32,26 @@ class Http {
     }
 
     this.xhr.onreadystatechange = function () {
+      if (this.readyState === 0) {
+        console.log('0000 Uninitialized');
+        console.log(this);
+      }
+
+      if (this.readyState === 1) {
+        console.log('1111 Loading (opened)');
+        console.log(this);
+      }
+
+      if (this.readyState === 2) {
+        console.log('2222 Loaded (Sent request)');
+        console.log(Object.create(this));
+      }
+
+      if (this.readyState === 3) {
+        console.log('3333 Interactive (downloading)');
+        console.log(Object.create(this));
+      }
+
       if (this.readyState === 4) {
         if (this.status === 200) {
           let responseType = this.getResponseHeader('Content-Type');

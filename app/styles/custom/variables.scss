@@ -42,3 +42,10 @@ $font-weight-semibold: 300;
 $font-weight-normal: 200;
 
 $icon-font: 'FontAwesome';
+
+$loader-icon-color: $brand-primary;
+$loader-icon-size: 32px;
+$loader-bg: $body-bg-color;
+$loader-padding: 10px;
+$loader-radius: 5px;
+$loader-transitions:  opacity 0.5s ease;
