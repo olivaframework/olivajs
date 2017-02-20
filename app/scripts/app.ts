@@ -1,5 +1,6 @@
 import '../styles/main.scss';
 import './components/Window';
+import { Carousel } from './components/Carousel';
 import { DOMIterator } from './components/DOMIterator';
 import { Jump } from './components/Jump';
 import { Modal } from './components/Modal';
@@ -10,6 +11,7 @@ document.title = 'Banco Pichincha';
 let iteratorTabs = new DOMIterator('[data-tab-content-id]');
 let iteratorModals = new DOMIterator('[data-modal-content-id]');
 let iteratorJumps = new DOMIterator('[data-jump-content-id]');
+let iteratorCarousels = new DOMIterator('[data-carousel]');
 
 iteratorTabs.syncForEach(function (tab) {
   new Tab(tab);
@@ -21,4 +23,8 @@ iteratorModals.syncForEach(function (modal) {
 
 iteratorJumps.syncForEach(function (jump) {
   new Jump(jump);
+});
+
+iteratorCarousels.syncForEach(function (carousel) {
+  new Carousel(carousel);
 });

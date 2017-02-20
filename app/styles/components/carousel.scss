@@ -1,0 +1,53 @@
+.carousel {
+  overflow: hidden;
+  position: relative;
+
+  .carousel-container {
+    font-size: 0;
+    white-space: nowrap;
+
+    .carousel-item {
+      display: inline-block;
+      float: none;
+      white-space: normal;
+    }
+  }
+
+  .arrow-left,
+  .arrow-right {
+    background: $carousel-control-background;
+    border: $carousel-control-border;
+    box-sizing: content-box;
+    color: $carousel-control-color;
+    cursor: pointer;
+    display: none;
+    font-size: 20px;
+    height: $carousel-control-height;
+    line-height: $carousel-control-height;
+    margin-top: - ($carousel-control-height / 2);
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: $carousel-control-width;
+
+    &.active {
+      display: block;
+    }
+  }
+
+  .arrow-left {
+    left: 0;
+
+    &::before {
+      content: '<';
+    }
+  }
+
+  .arrow-right {
+    right: 0;
+
+    &::before {
+      content: '>';
+    }
+  }
+}
