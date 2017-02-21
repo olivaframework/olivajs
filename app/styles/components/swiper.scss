@@ -1,12 +1,12 @@
-.carousel {
+.swiper {
   overflow: hidden;
   position: relative;
 
-  .carousel-container {
+  .swiper-container {
     font-size: 0;
     white-space: nowrap;
 
-    .carousel-item {
+    .swiper-item {
       display: inline-block;
       float: none;
       white-space: normal;
@@ -15,20 +15,20 @@
 
   .arrow-left,
   .arrow-right {
-    background: $carousel-control-background;
-    border: $carousel-control-border;
+    background: $swiper-control-background;
+    border: $swiper-control-border;
     box-sizing: content-box;
-    color: $carousel-control-color;
+    color: $swiper-control-color;
     cursor: pointer;
     display: none;
     font-size: 20px;
-    height: $carousel-control-height;
-    line-height: $carousel-control-height;
-    margin-top: - ($carousel-control-height / 2);
+    height: $swiper-control-height;
+    line-height: $swiper-control-height;
+    margin-top: - ($swiper-control-height / 2);
     position: absolute;
     text-align: center;
     top: 50%;
-    width: $carousel-control-width;
+    width: $swiper-control-width;
 
     &.active {
       display: block;
