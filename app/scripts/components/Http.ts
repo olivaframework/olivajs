@@ -17,9 +17,30 @@ class Http {
   private xhr: XMLHttpRequest;
   private config: HttpConfig;
 
+  private static openedEvent: Event = Http.createEvent('http-opened');
+  private static sentEvent: Event = Http.createEvent('http-sent');
+  private static loadingEvent: Event = Http.createEvent('http-loading');
+  private static finishedEvent: Event = Http.createEvent('http-finished');
+
   constructor(config: HttpConfig) {
     this.xhr = new XMLHttpRequest();
     this.config = config;
+  }
+
+  private static createEvent(name: string): Event {
+    let event: Event;
+
+    try {
+      event = new CustomEvent(name, {
+        bubbles: true,
+        cancelable: true
+      });
+    } catch (e) {
+      event = document.createEvent('Event');
+      event.initEvent(name, true, true);
+    }
+
+    return event;
   }
 
   private processRequest(method: string, callbacks: HttpCallbacks, data?: any) {
@@ -32,27 +53,21 @@ class Http {
     }
 
     this.xhr.onreadystatechange = function () {
-      if (this.readyState === 0) {
-        console.log('0000 Uninitialized');
-        console.log(this);
-      }
-
       if (this.readyState === 1) {
-        console.log('1111 Loading (opened)');
-        console.log(this);
+        document.dispatchEvent(Http.openedEvent);
       }
 
       if (this.readyState === 2) {
-        console.log('2222 Loaded (Sent request)');
-        console.log(Object.create(this));
+        document.dispatchEvent(Http.sentEvent);
       }
 
       if (this.readyState === 3) {
-        console.log('3333 Interactive (downloading)');
-        console.log(Object.create(this));
+        document.dispatchEvent(Http.loadingEvent);
       }
 
       if (this.readyState === 4) {
+        document.dispatchEvent(Http.finishedEvent);
+
         if (this.status === 200) {
           let responseType = this.getResponseHeader('Content-Type');
           let response = (responseType.indexOf('application/json') >= 0)
