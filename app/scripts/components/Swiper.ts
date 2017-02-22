@@ -58,8 +58,8 @@ class Swiper {
 
       distance = distance + item.offsetWidth;
 
-      if (this.container.offsetWidth < distance) {
-        if (this.container.offsetWidth + 10 > distance) {
+      if (distance > this.container.offsetWidth) {
+        if (distance < this.container.offsetWidth + totalItems) {
           return i - 1;
         }
 
@@ -112,7 +112,7 @@ class Swiper {
   }
 
   public update(): void {
-    if (this.index < this.lastToShow()) {
+    if (this.index <= this.lastToShow()) {
       let currentItem = this.items[this.index] as HTMLElement;
 
       this.animate(currentItem.offsetLeft, 0);
