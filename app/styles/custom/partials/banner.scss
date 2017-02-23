@@ -4,6 +4,10 @@
   .image-section {
     float: left;
     width: 44%;
+
+    img {
+      max-width: 100%;
+    }
   }
 
   .info-section {

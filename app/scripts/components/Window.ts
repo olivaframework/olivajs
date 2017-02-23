@@ -1,5 +1,6 @@
 interface Window {
   isMobile: () => boolean;
+  supportTouchEvents: () => boolean;
   redirect: (url: string) => void;
   onResize: (callback: () => void, time: number) => void;
 }
@@ -20,3 +21,5 @@ window.onResize = (callback: () => void, time: number) => {
     timeout = setTimeout(callback, time, event);
   });
 };
+
+window.supportTouchEvents = () => 'ontouchstart' in window;
