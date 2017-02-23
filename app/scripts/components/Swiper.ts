@@ -4,49 +4,66 @@ class Swiper {
   static readonly PREV_CTRL_ATRR = 'data-swiper-prev';
   static readonly NEXT_CTRL_ATRR = 'data-swiper-next';
   static readonly ACTIVE_CTRL_CLASS = 'active';
-  static readonly CTRL_EVENT_ACTIVE = 'click';
+  static readonly ACTIVE_EVENT_CTRL = 'click';
   static readonly ANIMATION_MS = 300;
+  static readonly SWIPE_OUT_RANGE_PERCENT = 35;
 
   private container: HTMLElement;
-  private controlPrev: Element;
-  private controlNext: Element;
+  private prevCtrl: Element;
+  private nextCtrl: Element;
   private index: number;
   private items: NodeListOf<Element>;
+  private firstPoint: number;
+  private initDistance: number;
 
   constructor(swiper) {
     this.index = 0;
+    this.initDistance = 0;
     this.container = swiper.querySelector(`.${ Swiper.CONTAINER_CLASS }`);
     this.items = this.container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
     this.showPrev = this.showPrev.bind(this);
     this.showNext = this.showNext.bind(this);
+    this.animate = this.animate.bind(this);
     this.update = this.update.bind(this);
-    this.controlPrev = swiper.querySelector(`[${ Swiper.PREV_CTRL_ATRR }]`);
-    this.controlNext = swiper.querySelector(`[${ Swiper.NEXT_CTRL_ATRR }]`);
-    this.controlPrev.addEventListener(Swiper.CTRL_EVENT_ACTIVE, this.showPrev);
-    this.controlNext.addEventListener(Swiper.CTRL_EVENT_ACTIVE, this.showNext);
+    this.mouseDown = this.mouseDown.bind(this);
+    this.mouseUp = this.mouseUp.bind(this);
+    this.swipe = this.swipe.bind(this);
+    this.prevCtrl = swiper.querySelector(`[${ Swiper.PREV_CTRL_ATRR }]`);
+    this.nextCtrl = swiper.querySelector(`[${ Swiper.NEXT_CTRL_ATRR }]`);
+    this.prevCtrl.addEventListener(Swiper.ACTIVE_EVENT_CTRL, this.showPrev);
+    this.nextCtrl.addEventListener(Swiper.ACTIVE_EVENT_CTRL, this.showNext);
+    this.container.addEventListener('mousedown', this.mouseDown);
+    this.container.addEventListener('mouseup', this.mouseUp);
+    //this.container.addEventListener('mouseleave', this.mouseUp);
 
-    this.activeControls(false, true);
+    this.activeControls();
 
     window.onResize(this.update, 1);
   }
 
   public animate(distance: number, velocity: number): void {
-    this.container.style.transform = `translate3d(-${ distance }px, 0px, 0px)`;
+    let translate = `translate3d(${ -1 * distance }px, 0px, 0px)`;
+
+    this.container.style.transform = translate;
     this.container.style.transitionDuration = `${ velocity }ms`;
   }
 
-  public activeControls(activePrev: boolean, activeNext: boolean): void {
-    if (activePrev) {
-      this.controlPrev.classList.add(Swiper.ACTIVE_CTRL_CLASS);
+  public activeControls() {
+    if (this.index > 0) {
+      this.prevCtrl.classList.add(Swiper.ACTIVE_CTRL_CLASS);
     } else {
-      this.controlPrev.classList.remove(Swiper.ACTIVE_CTRL_CLASS);
+      this.prevCtrl.classList.remove(Swiper.ACTIVE_CTRL_CLASS);
     }
 
-    if (activeNext) {
-      this.controlNext.classList.add(Swiper.ACTIVE_CTRL_CLASS);
+    if (this.index <= this.lastToShow()) {
+      this.nextCtrl.classList.add(Swiper.ACTIVE_CTRL_CLASS);
     } else {
-      this.controlNext.classList.remove(Swiper.ACTIVE_CTRL_CLASS);
+      this.nextCtrl.classList.remove(Swiper.ACTIVE_CTRL_CLASS);
     }
+  }
+
+  public containerFullWidth(): number {
+    return this.container.scrollWidth - this.container.offsetWidth;
   }
 
   public lastToShow(): number {
@@ -70,22 +87,37 @@ class Swiper {
     return totalItems;
   }
 
+  public swipe(moveEvent: MouseEvent): void {
+    moveEvent.preventDefault();
+
+    let distance = this.firstPoint - moveEvent.screenX + this.initDistance;
+    let outRange = this.container.offsetWidth / Swiper.SWIPE_OUT_RANGE_PERCENT;
+    let minDistance = Math.round(outRange) * -1;
+    let maxDistance = outRange + this.containerFullWidth();
+
+    if (distance < minDistance) {
+      distance = minDistance;
+    } else if (distance > maxDistance) {
+      distance = maxDistance;
+    }
+
+    this.animate(distance, 0);
+  }
+
   public showPrev(): void {
     if (this.index > 0) {
       this.index = --this.index;
       let currentItem = this.items[this.index] as HTMLElement;
 
       this.animate(currentItem.offsetLeft, Swiper.ANIMATION_MS);
-      if (this.index === 0) {
-        this.activeControls(false, true);
-      } else {
-        this.activeControls(true, true);
-      }
+      this.activeControls();
     }
   }
 
   public showNext(): void {
-    if (this.index < this.lastToShow()) {
+    let lastToShow = this.lastToShow();
+
+    if (this.index < lastToShow) {
       let currentItem = this.items[this.index] as HTMLElement;
       let tempDistance = currentItem.offsetLeft + currentItem.offsetWidth;
       let containerWidth = 0;
@@ -98,35 +130,74 @@ class Swiper {
 
       if (tempDistance < containerWidth) {
         this.animate(tempDistance, Swiper.ANIMATION_MS);
-        this.activeControls(true, true);
       }
 
       this.index = ++this.index;
-    } else if (this.index === this.lastToShow()) {
-      let distance = this.container.scrollWidth - this.container.offsetWidth;
-
-      this.animate(distance, Swiper.ANIMATION_MS);
-      this.activeControls(true, false);
+    } else if (this.index === lastToShow) {
+      this.animate(this.containerFullWidth(), Swiper.ANIMATION_MS);
       this.index = ++this.index;
     }
+
+    this.activeControls();
   }
 
   public update(): void {
-    if (this.index <= this.lastToShow()) {
+    let lastToShow = this.lastToShow();
+
+    if (this.index <= lastToShow) {
       let currentItem = this.items[this.index] as HTMLElement;
 
       this.animate(currentItem.offsetLeft, 0);
-
-      if (this.index > 0) {
-        this.activeControls(true, true);
-      } else {
-        this.activeControls(false, true);
-      }
     } else {
-      this.index = this.lastToShow() + 1;
-      this.animate(this.container.scrollWidth - this.container.offsetWidth, 0);
-      this.activeControls(true, false);
+      this.index = lastToShow + 1;
+      this.animate(this.containerFullWidth(), 0);
     }
+
+    this.activeControls();
+  }
+
+  public mouseDown(downEvent: MouseEvent): void {
+    downEvent.preventDefault();
+    let transform = this.container.style.transform;
+
+    if (transform) {
+      transform = transform.split('(')[1];
+      transform = transform.split(')')[0];
+      transform = transform.split(',')[0];
+      transform = transform.replace('-', '');
+      transform = transform.replace('px', '');
+      this.initDistance = Number(transform);
+    } else {
+      this.initDistance = 0;
+    }
+
+    this.firstPoint = downEvent.screenX;
+    this.container.addEventListener('mousemove', this.swipe);
+  }
+
+  public mouseUp(upEvent: MouseEvent): void {
+    upEvent.preventDefault();
+
+    let distance = this.firstPoint - upEvent.screenX + this.initDistance;
+    let lastToShow = this.lastToShow();
+
+    for (let i = 0; i <= lastToShow; i++) {
+      let item = this.items[i] as HTMLElement;
+      let middleDistance = item.offsetWidth / 2;
+
+      if (item.offsetLeft + middleDistance > distance) {
+        this.animate(item.offsetLeft, Swiper.ANIMATION_MS);
+        this.index = i;
+
+        break;
+      } else if (i === lastToShow) {
+        this.animate(this.containerFullWidth(), Swiper.ANIMATION_MS);
+        this.index = lastToShow + 1;
+      }
+    }
+
+    this.activeControls();
+    this.container.removeEventListener('mousemove', this.swipe);
   }
 }
 
