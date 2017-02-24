@@ -15,20 +15,3 @@
     opacity: 1;
   }
 }
-
-.loader-bar {
-  background-color: $loader-bar-color;
-  content: '';
-  display: block;
-  height: $loader-bar-height;
-  left: 0;
-  opacity: 0;
-  position: fixed;
-  top: 0;
-  transition: $loader-bar-transitions;
-  width: 100%;
-
-  &.loading {
-    opacity: 1;
-  }
-}

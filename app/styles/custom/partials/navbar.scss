@@ -4,13 +4,12 @@ nav {
   box-shadow: $box-shadow-md;
 
   .item {
-    border-right: $border-md $border-regular $light-gray-color;
+    border-right: $border-sm $border-regular $light-gray-color;
     float: left;
-    padding: $space-md $space-sm;
+    padding: $space-md $space-xl $space-md $space-sm;
     position: relative;
-    width: 20%;
 
-    &:last-of-type {
+    &:last-child {
       border-right: 0;
     }
 
@@ -25,7 +24,7 @@ nav {
       top: 0;
     }
 
-    i {
+    > i {
       font-size: 28px;
       height: 36px;
       left: 0;
@@ -36,7 +35,7 @@ nav {
       width: 36px;
     }
 
-    div {
+    > div {
       font-size: 10px;
       font-weight: $font-weight-bold;
       height: 10px;

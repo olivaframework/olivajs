@@ -5,7 +5,7 @@
   height: $modal-height;
   left: 50%;
   padding: $modal-padding;
-  position: absolute;
+  position: fixed;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
   width: $modal-width;

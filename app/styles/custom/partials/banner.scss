@@ -5,6 +5,10 @@
     float: left;
     width: 44%;
 
+    @include media-breakpoint-down(sm) {
+      width: 100%;
+    }
+
     img {
       max-width: 100%;
     }
@@ -14,6 +18,10 @@
     float: right;
     padding: $space-xl 140px $space-xl 0;
     width: 56%;
+
+    @include media-breakpoint-down(sm) {
+      width: 100%;
+    }
 
     .title-section {
       border-left: $border-lg $border-regular $white-color;
