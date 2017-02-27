@@ -19,7 +19,7 @@ describe('Jump component specification', () => {
     clock = sinon.useFakeTimers();
   });
 
-  it('should create a Jump with correct properties', () => {
+  it('should create a Jump component with correct properties', () => {
     let jumpComponent = new Jump(jumpHandler);
 
     expect(jumpComponent.handler).to.equal(jumpHandler);
@@ -64,7 +64,7 @@ describe('Jump component specification', () => {
     jumpHandler.click();
     assert(spy.calledOnce);
 
-    clock.tick(1);
+    clock.tick(Jump.SCROLL_VELOCITY_MS);
     assert(spy.calledTwice);
   });
 
@@ -83,7 +83,7 @@ describe('Jump component specification', () => {
     jumpHandler.click();
     assert(spy.calledOnce);
 
-    clock.tick(100);
+    clock.tick(Jump.SCROLL_VELOCITY_MS);
     assert(spy.calledTwice);
   });
 

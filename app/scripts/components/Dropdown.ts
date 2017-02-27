@@ -1,11 +1,8 @@
 class Dropdown {
-  static readonly ATTR = 'data-dropdown';
-  static readonly ACTIVE_CLASS = 'open';
-  static readonly CONTAINER_CLASS = 'dropdown-container';
+  static readonly ACTIVE_CLASS: string = 'open';
   static readonly EVENT_ACTIVE: string = 'click';
 
   private handler: HTMLElement;
-  private container: HTMLElement;
 
   constructor(handler) {
     this.handler = handler;
