@@ -6,8 +6,7 @@ class Swiper {
   static readonly ACTIVE_CTRL_CLASS = 'active';
   static readonly ACTIVE_EVENT_CTRL = 'click';
   static readonly ANIMATION_MS = 300;
-  static readonly SWIPE_OUT_RANGE_PERCENT = 35;
-  static readonly SUPPORT_TOUCH_EVENT = 'ontouchstart';
+  static readonly SWIPE_OUT_RANGE = 35;
   static readonly TOUCH_EVENTS = {
     down: 'touchstart',
     move: 'touchmove',
@@ -107,7 +106,7 @@ class Swiper {
       : moveEvent.screenX;
 
     let distance = this.firstPoint - distanceEvent + this.initDistance;
-    let outRange = this.container.offsetWidth / Swiper.SWIPE_OUT_RANGE_PERCENT;
+    let outRange = this.container.offsetWidth / Swiper.SWIPE_OUT_RANGE;
     let minDistance = Math.round(outRange) * -1;
     let maxDistance = outRange + this.containerFullWidth();
 
