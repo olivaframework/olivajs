@@ -19,22 +19,15 @@ class Swiper {
   };
 
   private container: HTMLElement;
-  private prevCtrl: Element;
-  private nextCtrl: Element;
+  private prevCtrl: HTMLElement;
+  private nextCtrl: HTMLElement;
   private index: number;
   private items: NodeListOf<Element>;
   private firstPoint: number;
   private initDistance: number;
   private supportEvents: any;
 
-  constructor(swiper) {
-    this.index = 0;
-    this.initDistance = 0;
-    this.supportEvents = window.supportTouchEvents()
-      ? Swiper.TOUCH_EVENTS
-      : Swiper.MOUSE_EVENTS;
-    this.container = swiper.querySelector(`.${ Swiper.CONTAINER_CLASS }`);
-    this.items = this.container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
+  constructor(swiper: Element) {
     this.showPrev = this.showPrev.bind(this);
     this.showNext = this.showNext.bind(this);
     this.animate = this.animate.bind(this);
@@ -42,13 +35,33 @@ class Swiper {
     this.mouseDown = this.mouseDown.bind(this);
     this.mouseUp = this.mouseUp.bind(this);
     this.swipe = this.swipe.bind(this);
-    this.prevCtrl = swiper.querySelector(`[${ Swiper.PREV_CTRL_ATRR }]`);
-    this.nextCtrl = swiper.querySelector(`[${ Swiper.NEXT_CTRL_ATRR }]`);
+    this.init(swiper);
+    this.activeControls();
+  }
+
+  public init(swiper: Element): void {
+    this.supportEvents = window.supportTouchEvents()
+      ? Swiper.TOUCH_EVENTS
+      : Swiper.MOUSE_EVENTS;
+
+    this.index = 0;
+    this.initDistance = 0;
+
+    let container = swiper.querySelector(`.${ Swiper.CONTAINER_CLASS }`);
+    let prevCtrl = swiper.querySelector(`[${ Swiper.PREV_CTRL_ATRR }]`);
+    let nextCtrl = swiper.querySelector(`[${ Swiper.NEXT_CTRL_ATRR }]`);
+
+    this.items = container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
+    this.container = container as HTMLElement;
+    this.prevCtrl = prevCtrl as HTMLElement;
+    this.nextCtrl = nextCtrl as HTMLElement;
+
     this.prevCtrl.addEventListener(Swiper.ACTIVE_EVENT_CTRL, this.showPrev);
     this.nextCtrl.addEventListener(Swiper.ACTIVE_EVENT_CTRL, this.showNext);
     this.container.addEventListener(this.supportEvents.down, this.mouseDown);
     this.container.addEventListener(this.supportEvents.up, this.mouseUp);
-    this.activeControls();
+    document.body.addEventListener(this.supportEvents.up, this.mouseUp);
+
     window.onResize(this.update, 1);
   }
 
