@@ -19,11 +19,9 @@ describe('Modal component specification', () => {
   it('should create a Modal with correct properties', () => {
     let modalComponent = new Modal(modalHandler);
 
-    expect(modalHandler).to.be
-    .equal(modalComponent.handler);
+    expect(modalHandler).to.be.equal(modalComponent.handler);
 
-    expect(modalContent).to.be
-    .equal(modalComponent.modal);
+    expect(modalContent).to.be.equal(modalComponent.modal);
   });
 
   it('should open a Modal on click', () => {
