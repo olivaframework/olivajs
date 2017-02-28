@@ -20,14 +20,14 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['mocha', 'chai', 'sinon', 'source-map-support'],
     files: [{
-      pattern: 'app/scripts/tests/**/*.js',
+      pattern: 'app/scripts/tests/**/*.ts',
       watched: false
     }],
     exclude: [
     ],
     preprocessors: {
       'app/scripts/**/*.ts': ['webpack'],
-      'app/scripts/tests/**/*.js': ['webpack']
+      'app/scripts/tests/**/*.ts': ['webpack']
     },
     webpack: {
       entry: {},

@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import { Modal } from '../../components/Modal';
 
 describe('Modal component specification', () => {

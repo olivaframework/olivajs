@@ -2,7 +2,7 @@ class Dropdown {
   static readonly ACTIVE_CLASS: string = 'open';
   static readonly EVENT_ACTIVE: string = 'click';
 
-  private handler: HTMLElement;
+  public handler: HTMLElement;
 
   constructor(handler) {
     this.handler = handler;

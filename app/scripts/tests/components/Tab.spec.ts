@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import { Tab } from '../../components/Tab';
 
 describe('Tab component specification', () => {
@@ -37,7 +38,8 @@ describe('Tab component specification', () => {
   });
 
   it('should create a Tab with correct properties', () => {
-    let tabComponent = new Tab(document.getElementById(tabIdA));
+    let tab = document.getElementById(tabIdA) as HTMLAnchorElement;
+    let tabComponent = new Tab(tab);
 
     expect(document.getElementById(tabIdA)).to.be
     .equal(tabComponent.handler);
@@ -46,7 +48,7 @@ describe('Tab component specification', () => {
   });
 
   it('should remove active classes when removeActives is called', () => {
-    let tabA = document.getElementById(tabIdA);
+    let tabA = document.getElementById(tabIdA) as HTMLAnchorElement;
     let tabComponentA = new Tab(tabA);
     let tabs = tabsContainer.children;
 
@@ -62,8 +64,8 @@ describe('Tab component specification', () => {
   });
 
   it('should active the correct tab when toggle is called', () => {
-    let tabA = document.getElementById(tabIdA);
-    let tabB = document.getElementById(tabIdB);
+    let tabA = document.getElementById(tabIdA) as HTMLAnchorElement;
+    let tabB = document.getElementById(tabIdB) as HTMLAnchorElement;
     let tabComponentA = new Tab(tabA);
     let tabComponentB = new Tab(tabB);
     let tabContentA = document.getElementById(tabContentAId);

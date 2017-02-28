@@ -1,4 +1,5 @@
 import { Dropdown } from '../../components/Dropdown';
+import { expect } from 'chai';
 
 describe('Dropdown component specification', () => {
   let handler;

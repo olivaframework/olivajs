@@ -3,8 +3,8 @@ class Tab {
   static readonly EVENT_ACTIVE: string = 'click';
   static readonly ATTR: string = 'data-tab-content-id';
 
-  private handler: HTMLAnchorElement;
-  private content: Element;
+  public handler: HTMLAnchorElement;
+  public content: Element;
 
   constructor(handler: HTMLAnchorElement) {
     this.handler = handler;
@@ -13,13 +13,13 @@ class Tab {
     this.handler.addEventListener(Tab.EVENT_ACTIVE, this.toggle);
   }
 
-  private removeActives(elements: HTMLCollection): void {
+  public removeActives(elements: HTMLCollection): void {
     for (let i = 0; i < elements.length; i++) {
       elements[i].classList.remove(Tab.ACTIVE_CLASS);
     }
   }
 
-  private toggle(event: Event): void {
+  public toggle(event): void {
     event.preventDefault();
 
     this.removeActives(this.content.parentElement.children);

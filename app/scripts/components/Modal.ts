@@ -8,9 +8,9 @@ class Modal {
   static readonly EVENT_ACTIVE: string = 'click';
   static readonly EVENT_CLOSE: string = 'click';
 
-  private handler: Element;
-  private modal: Element;
-  private overlay: Overlay;
+  public handler: Element;
+  public modal: Element;
+  public overlay: Overlay;
 
   constructor(handler: Element) {
     this.handler = handler;

@@ -1,3 +1,4 @@
+import { assert, expect } from 'chai';
 import { Jump } from '../../components/Jump';
 
 describe('Jump component specification', () => {

@@ -1,3 +1,4 @@
+import { assert, expect } from 'chai';
 import { DOMElement } from '../../components/DOMElement';
 
 describe('DOMElement component specification', () => {
@@ -69,10 +70,10 @@ describe('DOMElement component specification', () => {
 
     const events = [{
       callback: callback1,
-      eventName: 'click'
+      name: 'click'
     }, {
       callback: callback2,
-      eventName: 'click'
+      name: 'click'
     }];
 
     domElement.addEvents(events);
@@ -91,10 +92,10 @@ describe('DOMElement component specification', () => {
 
     const events = [{
       callback: callback1,
-      eventName: 'click'
+      name: 'click'
     }, {
       callback: callback2,
-      eventName: 'click'
+      name: 'click'
     }];
 
     domElement.addEvents(events);

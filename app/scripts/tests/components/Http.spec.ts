@@ -1,3 +1,4 @@
+import { assert, expect } from 'chai';
 import {Http} from '../../components/Http';
 
 describe('Http component specification', () => {
