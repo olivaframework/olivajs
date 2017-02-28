@@ -1,5 +1,6 @@
 import '../styles/main.scss';
 import './components/Window';
+import { Carousel } from './components/Carousel';
 import { DOMIterator } from './components/DOMIterator';
 import { Dropdown } from './components/Dropdown';
 import { Jump } from './components/Jump';
@@ -14,6 +15,7 @@ let iteratorModals = new DOMIterator('[data-modal-content-id]');
 let iteratorJumps = new DOMIterator('[data-jump-content-id]');
 let iteratorSwipers = new DOMIterator('[data-swiper]');
 let iteratorDropdowns = new DOMIterator('[data-dropdown]');
+let iteratorCarousels = new DOMIterator('[data-carousel]');
 
 iteratorTabs.syncForEach(function (tab) {
   new Tab(tab);
@@ -33,4 +35,8 @@ iteratorSwipers.syncForEach(function (swiper) {
 
 iteratorDropdowns.syncForEach(function (dropdown) {
   new Dropdown(dropdown);
+});
+
+iteratorCarousels.syncForEach(function (carousel) {
+  new Carousel(carousel);
 });

@@ -18,14 +18,14 @@ class Swiper {
     up: 'mouseup'
   };
 
-  private container: HTMLElement;
-  private prevCtrl: HTMLElement;
-  private nextCtrl: HTMLElement;
-  private index: number;
-  private items: NodeListOf<Element>;
-  private firstPoint: number;
-  private initDistance: number;
-  private supportEvents: any;
+  protected container: HTMLElement;
+  protected firstPoint: number;
+  protected index: number;
+  protected initDistance: number;
+  protected items: NodeListOf<Element>;
+  protected nextCtrl: HTMLElement;
+  protected prevCtrl: HTMLElement;
+  protected supportEvents: any;
 
   constructor(swiper: Element) {
     this.showPrev = this.showPrev.bind(this);
@@ -60,7 +60,6 @@ class Swiper {
     this.nextCtrl.addEventListener(Swiper.ACTIVE_EVENT_CTRL, this.showNext);
     this.container.addEventListener(this.supportEvents.down, this.mouseDown);
     this.container.addEventListener(this.supportEvents.up, this.mouseUp);
-    document.body.addEventListener(this.supportEvents.up, this.mouseUp);
 
     window.onResize(this.update, 1);
   }
