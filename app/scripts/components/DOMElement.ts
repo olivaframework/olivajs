@@ -1,6 +1,6 @@
 interface Events {
   callback: () => void;
-  eventName: string;
+  name: string;
 }
 
 class DOMElement {
@@ -44,13 +44,13 @@ class DOMElement {
 
   public addEvents(events: Array<Events>): void {
     for (let item of events) {
-      this.element.addEventListener(item.eventName, item.callback);
+      this.element.addEventListener(item.name, item.callback);
     }
   }
 
   public removeEvents(events: Array<Events>): void {
     for (let item of events) {
-      this.element.removeEventListener(item.eventName, item.callback);
+      this.element.removeEventListener(item.name, item.callback);
     }
   }
 }

@@ -1,5 +1,6 @@
 @keyframes dropdown-open {
   0% {
+    display: block;
     top: 0%;
   }
 
@@ -22,7 +23,7 @@
     .dropdown-container {
       animation-duration: 250ms;
       animation-name: dropdown-open;
-      visibility: visible;
+      display: block;
     }
   }
 
@@ -35,11 +36,11 @@
     border: $dropdown-container-border;
     border-radius: $dropdown-container-border-radius;
     box-shadow: $dropdown-box-shadow;
+    display: none;
     left: 0;
     padding: $dropdown-container-padding;
     position: absolute;
     top: 100%;
-    visibility: hidden;
     width: $dropdown-container-width;
     z-index: 5;
   }

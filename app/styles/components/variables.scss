@@ -1,25 +1,36 @@
-$dropdown-box-shadow: 0 5px 5px -3px #AAAAAA;
-$dropdown-z-index: 500;
-$dropdown-container-background: #F7F7F7;
-$dropdown-container-border: 1px solid #EBEBEB;
-$dropdown-container-border-radius: 0 0 3px 3px;
-$dropdown-container-padding: 12px 20px;
-$dropdown-container-width: 100%;
+$dropdown-box-shadow: 0 5px 5px -3px #AAAAAA !default;
+$dropdown-z-index: 500 !default;
+$dropdown-container-background: #F7F7F7 !default;
+$dropdown-container-border: 1px solid #EBEBEB !default;
+$dropdown-container-border-radius: 0 0 3px 3px !default;
+$dropdown-container-padding: 12px 20px !default;
+$dropdown-container-width: 100% !default;
 
-$swiper-control-background: #59595B;
-$swiper-control-border: 1px solid #59595B;
-$swiper-control-color: #FFFFFF;
-$swiper-control-height: 100px;
-$swiper-control-width: 40px;
+$loader-background: #FFFFFF !default;
+$loader-border-radius: 5px !default;
+$loader-icon-color: #000000 !default;
+$loader-font-size: 32px !default;
+$loader-padding: 10px !default;
+$loader-z-index: 2000 !default;
 
-$modal-bg: #FFFFFF !default;
-$modal-border-radius: 5px;
-$modal-close-content: 'x';
-$modal-height: 60%;
-$modal-padding: 20px;
-$modal-width: 60%;
+$loader-bar-color: #FF0000;
+$loader-bar-transitions:  opacity 0.2s ease, width 0.3s ease;
+$loader-bar-height: 3px;
+
+$modal-background: #FFFFFF !default;
+$modal-border-radius: 5px !default;
+$modal-close-content: 'x' !default;
+$modal-height: 60% !default;
+$modal-padding: 20px !default;
+$modal-width: 60% !default;
 $modal-z-index: 2000 !default;
 
-$overlay-bg: #000000 !default;
+$swiper-control-background: #59595B !default;
+$swiper-control-border: 1px solid #59595B !default;
+$swiper-control-color: #FFFFFF !default;
+$swiper-control-height: 100px !default;
+$swiper-control-width: 40px !default;
+
+$overlay-background: #000000 !default;
 $overlay-opacity: 0.7 !default;
 $overlay-z-index: 1010 !default;

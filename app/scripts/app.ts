@@ -4,6 +4,7 @@ import { Carousel } from './components/Carousel';
 import { DOMIterator } from './components/DOMIterator';
 import { Dropdown } from './components/Dropdown';
 import { Jump } from './components/Jump';
+import { Loader } from './components/Loader';
 import { Modal } from './components/Modal';
 import { Swiper } from './components/Swiper';
 import { Tab } from './components/Tab';
@@ -40,3 +41,11 @@ iteratorDropdowns.syncForEach(function (dropdown) {
 iteratorCarousels.syncForEach(function (carousel) {
   new Carousel(carousel);
 });
+
+let loader = Loader.getInstance();
+
+loader.show();
+
+setTimeout(() => {
+  loader.hide();
+}, 1000);

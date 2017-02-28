@@ -1,17 +1,32 @@
-.ajax-loader {
-  background: $body-bg;
-  border-radius: $loader-radius;
+@keyframes loader-open {
+  0% {
+    display: block;
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.loader {
+  background: $loader-background;
+  border-radius: $loader-border-radius;
   color: $loader-icon-color;
-  font-size: $loader-icon-size;
+  display: none;
+  font-size: $loader-font-size;
   left: 50%;
   opacity: 0;
   padding: $loader-padding;
   position: fixed;
   top: 50%;
   transform: translate(-50%, -50%);
-  transition: $loader-transitions;
+  z-index: $loader-z-index;
 
   &.active {
+    animation-duration: 400ms;
+    animation-name: loader-open;
+    display: block;
     opacity: 1;
   }
 }
