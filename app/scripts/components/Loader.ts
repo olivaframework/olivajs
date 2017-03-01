@@ -3,10 +3,10 @@ import { Overlay } from './Overlay';
 
 class Loader {
   static readonly ACTIVE_CLASS: string = 'active';
-  static readonly LOADER_CLASS: string = 'loader';
-  static readonly LOADER_ELEMENT: string = 'div';
-  static readonly LOADER_ICON_ELEMENT: string = 'div';
-  static readonly LOADER_ICON_CLASSES: string[] = [
+  static readonly STYLE_CLASS: string = 'loader';
+  static readonly TYPE_HTML_ELEMENT: string = 'div';
+  static readonly ICON_ELEMENT: string = 'div';
+  static readonly ICON_CLASSES: string[] = [
     'fa', 'fa-spinner', 'fa-pulse', 'fa-3x', 'fa-fw'
   ];
 
@@ -22,12 +22,12 @@ class Loader {
 
     this.overlay = Overlay.getInstance();
 
-    Loader.loader = new DOMElement(Loader.LOADER_ELEMENT);
-    Loader.loader.addClasses([Loader.LOADER_CLASS]);
+    Loader.loader = new DOMElement(Loader.TYPE_HTML_ELEMENT);
+    Loader.loader.addClasses([Loader.STYLE_CLASS]);
     Loader.loader.render(document.body);
 
-    Loader.loaderIcon = new DOMElement(Loader.LOADER_ICON_ELEMENT);
-    Loader.loaderIcon.addClasses(Loader.LOADER_ICON_CLASSES);
+    Loader.loaderIcon = new DOMElement(Loader.ICON_ELEMENT);
+    Loader.loaderIcon.addClasses(Loader.ICON_CLASSES);
     Loader.loaderIcon.render(Loader.loader.getElement());
   }
 
@@ -43,6 +43,10 @@ class Loader {
   public hide(): void {
     Loader.loader.removeClasses([Loader.ACTIVE_CLASS]);
     this.overlay.hide();
+  }
+
+  public getLoader(): DOMElement {
+    return Loader.loader;
   }
 }
 
