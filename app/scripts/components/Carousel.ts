@@ -35,7 +35,7 @@ class Carousel extends Swiper {
 
   public showNext(): void {
     this.index = ++this.index;
-    let lastToShow = this.lastToShow() + 1;
+    let lastToShow = this.lastToShow();
 
     if (this.index <= lastToShow) {
       let currentItem = this.items[this.index] as HTMLElement;
@@ -61,7 +61,7 @@ class Carousel extends Swiper {
       this.isPartialItem = false;
     }
 
-    for (let i = 0; i < clonedAmount; i++) {
+    for (let i = 0; i <= clonedAmount; i++) {
       let currentItem = this.items[i] as HTMLElement;
 
       if (currentItem.offsetLeft > this.container.offsetWidth) {

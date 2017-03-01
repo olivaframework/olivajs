@@ -1,4 +1,4 @@
-import {DOMElement} from './DOMElement';
+import { DOMElement } from './DOMElement';
 
 class LoaderBar {
   private static readonly ACTIVE_CLASS: string = 'loading';
