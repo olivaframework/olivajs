@@ -17,12 +17,8 @@ class Jump {
   public jump(event): void {
     event.preventDefault();
 
-    let bodyRect = this.getOffsetTop(document.body);
-    let elementRect = this.getOffsetTop(this.element);
-    let handlerRect = this.getOffsetTop(this.handler);
-
-    let elementTop = elementRect - bodyRect;
-    let handlerTop = handlerRect - bodyRect;
+    let elementTop = this.getOffsetTop(this.element);
+    let handlerTop = window.pageYOffset;
 
     if (handlerTop < elementTop) {
       this.scrollDown(handlerTop, elementTop);
