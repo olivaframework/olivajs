@@ -1,64 +1,60 @@
 .swiper {
-  overflow: hidden;
-  position: relative;
+  .swiper-section {
+    overflow: hidden;
+    position: relative;
 
-  .swiper-container {
-    font-size: 0;
-    white-space: nowrap;
+    .swiper-container {
+      font-size: 0;
+      white-space: nowrap;
 
-    .swiper-item {
-      display: inline-block;
-      float: none;
-      white-space: normal;
-    }
-  }
-
-  .arrow-left,
-  .arrow-right {
-    background: $swiper-control-background;
-    border: $swiper-control-border;
-    box-sizing: content-box;
-    color: $swiper-control-color;
-    cursor: pointer;
-    display: none;
-    font-size: 20px;
-    height: $swiper-control-height;
-    line-height: $swiper-control-height;
-    margin-top: - ($swiper-control-height / 2);
-    position: absolute;
-    text-align: center;
-    top: 50%;
-    width: $swiper-control-width;
-
-    &.active {
-      display: block;
-
-      @include media-breakpoint-down(lg) {
-        //display: none;
+      .swiper-item {
+        display: inline-block;
+        float: none;
+        white-space: normal;
       }
     }
-  }
 
-  .arrow-left {
-    left: 0;
+    .arrow-left,
+    .arrow-right {
+      background: $swiper-control-background;
+      border: $swiper-control-border;
+      box-sizing: content-box;
+      color: $swiper-control-color;
+      cursor: pointer;
+      display: none;
+      font-size: 20px;
+      height: $swiper-control-height;
+      line-height: $swiper-control-height;
+      margin-top: - ($swiper-control-height / 2);
+      position: absolute;
+      text-align: center;
+      top: 50%;
+      width: $swiper-control-width;
 
-    &::before {
-      content: '<';
+      &.active {
+        display: block;
+
+        @include media-breakpoint-down(lg) {
+          //display: none;
+        }
+      }
     }
-  }
 
-  .arrow-right {
-    right: 0;
+    .arrow-left {
+      left: 0;
 
-    &::before {
-      content: '>';
+      &::before {
+        content: '<';
+      }
     }
-  }
-}
 
-.gallery {
-  .swiper-item {
-    width: 100%;
+    .arrow-right {
+      right: 0;
+
+      &::before {
+        content: '>';
+      }
+    }
   }
 
   .thumbnails-container {

@@ -1,4 +1,8 @@
 class Swiper {
+  static readonly ACTIVE_EVENT = 'click';
+  static readonly THUMBNAILS_CONTAINER_CLASS = 'thumbnails-container';
+  static readonly THUMBNAIL_ITEM_CLASS = 'thumbnail-item';
+  static readonly ITEM_MAGNIFY_WIDTH = '100%';
   static readonly CONTAINER_CLASS = 'swiper-container';
   static readonly ITEM_CLASS = 'swiper-item';
   static readonly PREV_CTRL_ATRR = 'data-swiper-prev';
@@ -26,16 +30,19 @@ class Swiper {
   public nextCtrl: HTMLElement;
   public prevCtrl: HTMLElement;
   public supportEvents: any;
+  public thumbnails: NodeListOf<Element>;
 
   constructor(swiper: Element) {
     this.actionDown = this.actionDown.bind(this);
     this.actionUp = this.actionUp.bind(this);
     this.animate = this.animate.bind(this);
+    this.showByIndex = this.showByIndex.bind(this);
     this.showPrev = this.showPrev.bind(this);
     this.showNext = this.showNext.bind(this);
     this.swipe = this.swipe.bind(this);
     this.update = this.update.bind(this);
     this.init(swiper);
+    this.activeControlsByIndexes(swiper);
     this.activeControls();
   }
 
@@ -47,14 +54,13 @@ class Swiper {
     this.index = 0;
     this.initDistance = 0;
 
-    let container = swiper.querySelector(`.${ Swiper.CONTAINER_CLASS }`);
-    let prevCtrl = swiper.querySelector(`[${ Swiper.PREV_CTRL_ATRR }]`);
-    let nextCtrl = swiper.querySelector(`[${ Swiper.NEXT_CTRL_ATRR }]`);
-
-    this.items = container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
-    this.container = container as HTMLElement;
-    this.prevCtrl = prevCtrl as HTMLElement;
-    this.nextCtrl = nextCtrl as HTMLElement;
+    this.container = swiper
+      .querySelector(`.${ Swiper.CONTAINER_CLASS }`) as HTMLElement;
+    this.prevCtrl = swiper
+      .querySelector(`[${ Swiper.PREV_CTRL_ATRR }]`) as HTMLElement;
+    this.nextCtrl = swiper
+      .querySelector(`[${ Swiper.NEXT_CTRL_ATRR }]`) as HTMLElement;
+    this.items = this.container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
 
     this.prevCtrl.addEventListener(Swiper.ACTIVE_EVENT_CTRL, this.showPrev);
     this.nextCtrl.addEventListener(Swiper.ACTIVE_EVENT_CTRL, this.showNext);
@@ -222,6 +228,53 @@ class Swiper {
 
     this.activeControls();
     this.container.removeEventListener(this.supportEvents.move, this.swipe);
+  }
+
+  public activeControlsByIndexes(swiper): void {
+    let thumbsContainer = swiper
+      .querySelector(`.${ Swiper.THUMBNAILS_CONTAINER_CLASS }`);
+
+    if (thumbsContainer) {
+      this.thumbnails = thumbsContainer
+        .querySelectorAll(`.${ Swiper.THUMBNAIL_ITEM_CLASS }`);
+
+      let itemsSize = this.items.length;
+      let thumbnailsSize = this.thumbnails.length;
+
+      if (itemsSize === thumbnailsSize) {
+        for (let i = 0; i < itemsSize; i++) {
+          let thumbnail = this.thumbnails[i] as HTMLElement;
+          let item = this.items[i] as HTMLElement;
+
+          thumbnail.addEventListener(Swiper.ACTIVE_EVENT, this.showByIndex);
+          item.style.width = Swiper.ITEM_MAGNIFY_WIDTH;
+        }
+      } else {
+        throw new Error('Error: Thumbnails and Items have different length');
+      }
+    }
+  }
+
+  public showByIndex(event: Event): void {
+    let thumbnail = event.target as HTMLElement;
+    let thumbnailsSize = this.thumbnails.length;
+
+    while (!thumbnail.classList.contains(Swiper.THUMBNAIL_ITEM_CLASS)
+      && thumbnail) {
+      thumbnail = thumbnail.offsetParent as HTMLElement;
+    }
+
+    for (let i = 0; i < thumbnailsSize; i++) {
+      if (this.thumbnails[i] === thumbnail) {
+        let itemToShow = this.items[i] as HTMLElement;
+
+        this.index = i;
+        this.activeControls();
+        this.animate(itemToShow.offsetLeft, Swiper.ANIMATION_MS);
+
+        break;
+      }
+    }
   }
 }
 
