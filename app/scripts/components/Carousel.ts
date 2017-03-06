@@ -9,6 +9,7 @@ class Carousel extends Swiper {
 
   constructor(element) {
     super(element);
+
     this.createClones = this.createClones.bind(this);
     this.showNext = this.showNext.bind(this);
     this.stopAutoplay = this.stopAutoplay.bind(this);
