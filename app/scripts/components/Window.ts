@@ -2,7 +2,7 @@ interface Window {
   isMobile: () => boolean;
   supportTouchEvents: () => boolean;
   redirect: (url: string) => void;
-  onResize: (callback: () => void, time: number) => void;
+  onEvent: (callback: () => void, time: number, eventName: string) => void;
 }
 
 window.isMobile = () => 768 > Math.max(
@@ -13,10 +13,10 @@ window.redirect = (url: string) => {
   window.location.href = url;
 };
 
-window.onResize = (callback: () => void, time: number) => {
+window.onEvent = (callback: () => void, time: number, eventName: string) => {
   let timeout = 0;
 
-  window.addEventListener('resize', event => {
+  window.addEventListener(eventName, event => {
     clearTimeout(timeout);
     timeout = setTimeout(callback, time, event);
   });

@@ -1,11 +1,11 @@
 import '../styles/main.scss';
-import './components/Window';
 import { Carousel } from './components/Carousel';
 import { DOMIterator } from './components/DOMIterator';
 import { Dropdown } from './components/Dropdown';
 import { Jump } from './components/Jump';
 import { Loader } from './components/Loader';
 import { Modal } from './components/Modal';
+import { Mosaic } from './components/Mosaic';
 import { Swiper } from './components/Swiper';
 import { Tab } from './components/Tab';
 
@@ -17,29 +17,34 @@ let iteratorJumps = new DOMIterator('[data-jump-content-id]');
 let iteratorSwipers = new DOMIterator('[data-swiper]');
 let iteratorDropdowns = new DOMIterator('[data-dropdown]');
 let iteratorCarousels = new DOMIterator('[data-carousel]');
+let iteratorMosaics = new DOMIterator('[data-mosaic]');
 
-iteratorTabs.syncForEach(function (tab) {
+iteratorTabs.syncForEach(tab => {
   new Tab(tab);
 });
 
-iteratorModals.syncForEach(function (modal) {
+iteratorModals.syncForEach(modal => {
   new Modal(modal);
 });
 
-iteratorJumps.syncForEach(function (jump) {
+iteratorJumps.syncForEach(jump => {
   new Jump(jump);
 });
 
-iteratorSwipers.syncForEach(function (swiper) {
+iteratorSwipers.syncForEach(swiper => {
   new Swiper(swiper);
 });
 
-iteratorDropdowns.syncForEach(function (dropdown) {
+iteratorDropdowns.syncForEach(dropdown => {
   new Dropdown(dropdown);
 });
 
-iteratorCarousels.syncForEach(function (carousel) {
+iteratorCarousels.syncForEach(carousel => {
   new Carousel(carousel);
+});
+
+iteratorMosaics.syncForEach(mosaic => {
+  new Mosaic(mosaic);
 });
 
 let loader = Loader.getInstance();

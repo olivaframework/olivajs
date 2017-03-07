@@ -1,0 +1,24 @@
+.mosaic {
+  margin-bottom: 20px;
+
+  .col-xs-4 {
+    &:nth-child(3n + 1) {
+      padding-left: 0;
+    }
+  }
+
+  .mosaic-item {
+    background: #EEEEEE;
+    height: 100px;
+    list-style: none;
+    margin-bottom: 12px;
+    margin-left: 4px;
+    padding: 8px;
+  }
+
+  .mosaic-detail {
+    background: #EEEEEE;
+    margin-left: 4px;
+    padding: 8px;
+  }
+}

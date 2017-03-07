@@ -3,6 +3,7 @@ import { Swiper } from './Swiper';
 class Carousel extends Swiper {
   static readonly AUTOPLAY_TIME = 1200;
   static readonly CLONED_CLASS = 'clone';
+  static readonly WINDOW_EVENT = 'resize';
 
   private interval: number;
   private isPartialItem: boolean;
@@ -19,7 +20,8 @@ class Carousel extends Swiper {
     this.autoplay();
     this.container.addEventListener(this.supportEvents.move, this.stopAutoplay);
     this.container.addEventListener('mouseout', this.autoplay);
-    window.onResize(this.createClones, 1);
+
+    window.onEvent(this.createClones, 1, Carousel.WINDOW_EVENT);
   }
 
   public autoplay(): void {

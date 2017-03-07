@@ -1,3 +1,5 @@
+import './Window';
+
 class Swiper {
   static readonly ACTIVE_EVENT = 'click';
   static readonly THUMBNAILS_CONTAINER_CLASS = 'thumbnails-container';
@@ -11,6 +13,7 @@ class Swiper {
   static readonly ACTIVE_EVENT_CTRL = 'click';
   static readonly ANIMATION_MS = 300;
   static readonly SWIPE_OUT_RANGE = 35;
+  static readonly WINDOW_EVENT = 'resize';
   static readonly TOUCH_EVENTS = {
     down: 'touchstart',
     move: 'touchmove',
@@ -67,7 +70,7 @@ class Swiper {
     this.container.addEventListener(this.supportEvents.down, this.actionDown);
     this.container.addEventListener(this.supportEvents.up, this.actionUp);
 
-    window.onResize(this.update, 1);
+    window.onEvent(this.update, 1, Swiper.WINDOW_EVENT);
   }
 
   public animate(distance: number, velocity: number): void {
