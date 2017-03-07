@@ -1,4 +1,4 @@
-import './Window';
+import { DOMUtils } from './DOMUtils';
 
 class Swiper {
   static readonly ACTIVE_EVENT = 'click';
@@ -262,10 +262,10 @@ class Swiper {
     let thumbnail = event.target as HTMLElement;
     let thumbnailsSize = this.thumbnails.length;
 
-    while (!thumbnail.classList.contains(Swiper.THUMBNAIL_ITEM_CLASS)
-      && thumbnail) {
-      thumbnail = thumbnail.offsetParent as HTMLElement;
-    }
+    thumbnail = DOMUtils.findParentElementByClass(
+      thumbnail,
+      Swiper.THUMBNAIL_ITEM_CLASS
+    );
 
     for (let i = 0; i < thumbnailsSize; i++) {
       if (this.thumbnails[i] === thumbnail) {

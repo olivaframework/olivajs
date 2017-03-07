@@ -47,22 +47,6 @@ describe('Tab component specification', () => {
     .equal(tabComponent.content);
   });
 
-  it('should remove active classes when removeActives is called', () => {
-    let tabA = document.getElementById(tabIdA) as HTMLAnchorElement;
-    let tabComponentA = new Tab(tabA);
-    let tabs = tabsContainer.children;
-
-    tabA.click();
-    expect(tabA.classList.contains(Tab.ACTIVE_CLASS)).to.be.true;
-
-    tabComponentA.removeActives(tabs);
-    expect(tabA.classList.contains(Tab.ACTIVE_CLASS)).to.be.false;
-
-    for (let i = 0; i < tabs.length; i++) {
-      expect(tabs[i].classList.contains(Tab.ACTIVE_CLASS)).to.be.false;
-    }
-  });
-
   it('should active the correct tab when toggle is called', () => {
     let tabA = document.getElementById(tabIdA) as HTMLAnchorElement;
     let tabB = document.getElementById(tabIdB) as HTMLAnchorElement;

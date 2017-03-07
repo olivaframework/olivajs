@@ -1,24 +1,46 @@
 .mosaic {
   margin-bottom: 20px;
 
-  .col-xs-4 {
-    &:nth-child(3n + 1) {
-      padding-left: 0;
+  .mosaic-container {
+    .mosaic-item {
+      background: #EEEEEE;
+      height: 100px;
+      list-style: none;
+      margin-bottom: 12px;
+      margin-left: 4px;
+      padding: 8px;
     }
-  }
 
-  .mosaic-item {
-    background: #EEEEEE;
-    height: 100px;
-    list-style: none;
-    margin-bottom: 12px;
-    margin-left: 4px;
-    padding: 8px;
+    .col-xs-4 {
+      &:nth-child(3n + 1) {
+        padding-left: 0;
+      }
+
+      &:nth-last-child(-n + 3) {
+        .mosaic-item {
+          margin-bottom: 0;
+        }
+      }
+    }
   }
 
   .mosaic-detail {
     background: #EEEEEE;
+    float: right;
     margin-left: 4px;
     padding: 8px;
+    width: 100%;
+
+    .title {
+      margin-bottom: 8px;
+    }
+
+    .description {
+      margin-bottom: 8px;
+    }
+
+    img {
+      height: 150px;
+    }
   }
 }

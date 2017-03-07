@@ -1,6 +1,6 @@
 import '../styles/main.scss';
 import { Carousel } from './components/Carousel';
-import { DOMIterator } from './components/DOMIterator';
+import { DOMUtils } from './components/DOMUtils';
 import { Dropdown } from './components/Dropdown';
 import { Jump } from './components/Jump';
 import { Loader } from './components/Loader';
@@ -11,41 +11,41 @@ import { Tab } from './components/Tab';
 
 document.title = 'Banco Pichincha';
 
-let iteratorTabs = new DOMIterator('[data-tab-content-id]');
-let iteratorModals = new DOMIterator('[data-modal-content-id]');
-let iteratorJumps = new DOMIterator('[data-jump-content-id]');
-let iteratorSwipers = new DOMIterator('[data-swiper]');
-let iteratorDropdowns = new DOMIterator('[data-dropdown]');
-let iteratorCarousels = new DOMIterator('[data-carousel]');
-let iteratorMosaics = new DOMIterator('[data-mosaic]');
+let tabs = document.querySelectorAll('[data-tab-content-id]');
+let modals = document.querySelectorAll('[data-modal-content-id]');
+let jumps = document.querySelectorAll('[data-jump-content-id]');
+let swipers = document.querySelectorAll('[data-swiper]');
+let dropdowns = document.querySelectorAll('[data-dropdown]');
+let carousels = document.querySelectorAll('[data-carousel]');
+let mosaics = document.querySelectorAll('[data-mosaic]');
 
-iteratorTabs.syncForEach(tab => {
+DOMUtils.syncForEach(tab => {
   new Tab(tab);
-});
+}, tabs);
 
-iteratorModals.syncForEach(modal => {
+DOMUtils.syncForEach(modal => {
   new Modal(modal);
-});
+}, modals);
 
-iteratorJumps.syncForEach(jump => {
+DOMUtils.syncForEach(jump => {
   new Jump(jump);
-});
+}, jumps);
 
-iteratorSwipers.syncForEach(swiper => {
+DOMUtils.syncForEach(swiper => {
   new Swiper(swiper);
-});
+}, swipers);
 
-iteratorDropdowns.syncForEach(dropdown => {
+DOMUtils.syncForEach(dropdown => {
   new Dropdown(dropdown);
-});
+}, dropdowns);
 
-iteratorCarousels.syncForEach(carousel => {
+DOMUtils.syncForEach(carousel => {
   new Carousel(carousel);
-});
+}, carousels);
 
-iteratorMosaics.syncForEach(mosaic => {
+DOMUtils.syncForEach(mosaic => {
   new Mosaic(mosaic);
-});
+}, mosaics);
 
 let loader = Loader.getInstance();
 
