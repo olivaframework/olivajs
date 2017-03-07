@@ -1,3 +1,4 @@
+import './Window';
 import { DOMUtils } from './DOMUtils';
 
 class Swiper {

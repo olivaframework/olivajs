@@ -1,4 +1,3 @@
-import '../../components/window';
 import { expect } from 'chai';
 import { Swiper } from '../../components/Swiper';
 
