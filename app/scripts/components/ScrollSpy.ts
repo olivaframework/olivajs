@@ -1,7 +1,5 @@
-import { DOMUtils } from './DOMUtils';
-
 class ScrollSpy {
-  static readonly ACTIVE_CLASS: string = 'scrolled';
+  static readonly ACTIVE_CLASS: string = 'active';
   static readonly EVENT_ACTIVE: string = 'scroll';
   static readonly SCROLL_PERCENT: number = 25;
 
@@ -15,17 +13,13 @@ class ScrollSpy {
   }
 
   public validatePosition(): void {
-    let windowPercent : number = (window.innerHeight * ScrollSpy.SCROLL_PERCENT)
-     / 100;
+    let scrollLimit = (window.innerHeight * ScrollSpy.SCROLL_PERCENT) / 100;
 
-    if (window.pageYOffset >= windowPercent
-      && DOMUtils.getBodyHeight() >= window.innerHeight) {
+    if (window.pageYOffset > scrollLimit) {
       this.handler.classList.add(ScrollSpy.ACTIVE_CLASS);
-      console.log(this.handler);
     } else {
       this.handler.classList.remove(ScrollSpy.ACTIVE_CLASS);
     }
-    // this.handler.classList.contains(ScrollSpy.ACTIVE_CLASS);
   }
 }
 
