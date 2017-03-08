@@ -1,0 +1,29 @@
+.go-top {
+  background-color: #E98839;
+  border-radius: 50%;
+  bottom: -100px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  position: fixed;
+  right: 20px;
+  transition: all 0.25s ease;
+  visibility: hidden;
+  z-index: 1000;
+
+  a,
+  a:active,
+  a:hover {
+    color: #FFFFFF;
+    display: block;
+    font-size: 32px;
+    height: 50px;
+    line-height: 45px;
+    text-align: center;
+    text-decoration: none;
+    width: 50px;
+  }
+}
+
+.scrolled {
+  bottom: 20px;
+  visibility: visible;
+}

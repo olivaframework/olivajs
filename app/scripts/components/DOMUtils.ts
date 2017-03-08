@@ -46,6 +46,15 @@ class DOMUtils {
       elements[i].parentNode.removeChild(elements[i]);
     }
   }
-}
 
+  static getBodyHeight(): number {
+    return Math.max(
+      document.body.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.clientHeight,
+      document.documentElement.scrollHeight,
+      document.documentElement.offsetHeight
+    );
+  }
+}
 export { DOMUtils };
