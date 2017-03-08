@@ -7,23 +7,23 @@ class DOMUtils {
     }
   }
 
-  static removeClassToItems(items, className: string): void {
-    let itemsSize = items.length;
+  static removeClassToItems(elements, className: string): void {
+    let elementsSize = elements.length;
 
-    for (let i = 0; i < itemsSize; i++) {
-      items[i].classList.remove(className);
+    for (let i = 0; i < elementsSize; i++) {
+      elements[i].classList.remove(className);
     }
   }
 
-  static syncForEach(callback, items: NodeListOf<Element>): void {
-    let itemsSize = items.length;
+  static syncForEach(callback, elements: NodeListOf<Element>): void {
+    let elementsSize = elements.length;
 
-    for (let i = 0; i < itemsSize; i++) {
-      callback(items[i]);
+    for (let i = 0; i < elementsSize; i++) {
+      callback(elements[i]);
     }
   }
 
-  static findParentElementByClass(nodeElement, className) {
+  static findParentElementByClass(nodeElement, className): HTMLElement {
     let element = nodeElement;
 
     while (!element.classList.contains(className) && element) {
@@ -33,9 +33,17 @@ class DOMUtils {
     return element;
   }
 
-  static removeAllChildElements(nodeElement) {
+  static removeAllChildElements(nodeElement): void {
     while (nodeElement.firstChild) {
       nodeElement.removeChild(nodeElement.firstChild);
+    }
+  }
+
+  static removeElements(elements: NodeListOf<Element>): void {
+    let elementsSize = elements.length;
+
+    for (let i = 0; i < elementsSize; i++) {
+      elements[i].parentNode.removeChild(elements[i]);
     }
   }
 }

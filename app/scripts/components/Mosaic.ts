@@ -1,13 +1,19 @@
 import { DOMUtils } from './DOMUtils';
 
 class Mosaic {
-  static readonly ACTIVE_CLASS = 'active';
-  static readonly ITEM_CLASS = 'mosaic-item';
-  static readonly DETAIL_CLASS = 'mosaic-detail';
-  static readonly CONTAINER_CLASS = 'mosaic-container';
-  static readonly TITLE_ATTR = 'data-mosaic-title';
-  static readonly DESCRIPTION_ATTR = 'data-mosaic-description';
-  static readonly IMAGE_ATTR = 'data-mosaic-image';
+  static readonly ACTIVE_CLASS: string = 'active';
+  static readonly ITEM_CLASS: string = 'mosaic-item';
+  static readonly DETAIL_CLASS: string = 'mosaic-detail';
+  static readonly CONTAINER_CLASS: string = 'mosaic-container';
+  static readonly TITLE_ATTR: string = 'data-mosaic-title';
+  static readonly DESCRIPTION_ATTR: string = 'data-mosaic-description';
+  static readonly IMAGE_ATTR: string = 'data-mosaic-image';
+  static readonly WINDOW_EVENT: string = 'resize';
+  static readonly DETAIL_TEMPLATE: string = `<div>
+    <div class="title">{title}</div>
+    <div class="description">{description}</div>
+    <img src="{image}">
+  </div>`;
 
   public description: string;
   public image: string;
@@ -17,19 +23,18 @@ class Mosaic {
   public container: HTMLElement;
 
   constructor(mosaic) {
-    this.container = mosaic.querySelector(`.${ Mosaic.CONTAINER_CLASS }`);
     this.showDetail = this.showDetail.bind(this);
     this.setDetailContailerHeight = this.setDetailContailerHeight.bind(this);
-    this.renderDetail = this.renderDetail.bind(this);
+    this.container = mosaic.querySelector(`.${ Mosaic.CONTAINER_CLASS }`);
     this.items = mosaic.querySelectorAll(`.${ Mosaic.ITEM_CLASS }`);
     this.detailContainer = mosaic.querySelector(`.${ Mosaic.DETAIL_CLASS }`);
     this.activateItems();
     this.setDetailContailerHeight();
 
-    window.onEvent(this.setDetailContailerHeight, 1, 'resize');
+    window.onEvent(this.setDetailContailerHeight, 1, Mosaic.WINDOW_EVENT);
   }
 
-  public activateItems() {
+  public activateItems(): void {
     let itemsSize = this.items.length;
 
     for (let i = 0; i < itemsSize; i++) {
@@ -39,7 +44,7 @@ class Mosaic {
     }
   }
 
-  public showDetail(event) {
+  public showDetail(event): void {
     DOMUtils.removeClassToItems(this.items, Mosaic.ACTIVE_CLASS);
 
     let item = DOMUtils.findParentElementByClass(
@@ -56,20 +61,26 @@ class Mosaic {
     this.renderDetail();
   }
 
-  public renderDetail() {
-    DOMUtils.removeAllChildElements(this.detailContainer);
+  public renderDetail(): void {
+    let detailTemplate = Mosaic.DETAIL_TEMPLATE
+      .replace('{title}', this.title)
+      .replace('{description}', this.description)
+      .replace('{image}', this.image);
 
-    let template = `<div>
-      <div class="title">${ this.title }</div>
-      <div class="description">${ this.description }</div>
-      <img src="${ this.image }">
-    </div>`;
-
-    this.detailContainer.innerHTML = template;
+    if (window.isMobile()) {
+      DOMUtils.removeAllChildElements(this.detailContainer);
+    } else {
+      DOMUtils.removeAllChildElements(this.detailContainer);
+      this.detailContainer.innerHTML = detailTemplate;
+    }
   }
 
-  public setDetailContailerHeight() {
+  public setDetailContailerHeight(): void {
     this.detailContainer.style.height = `${ this.container.offsetHeight }px`;
+  }
+
+  public elementsPerRow(): number {
+    return 0;
   }
 }
 

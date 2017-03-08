@@ -9,11 +9,11 @@ window.isMobile = () => 768 > Math.max(
   0 || document.documentElement.clientWidth, window.innerWidth
 );
 
-window.redirect = (url: string) => {
+window.redirect = url => {
   window.location.href = url;
 };
 
-window.onEvent = (callback: () => void, time: number, eventName: string) => {
+window.onEvent = (callback, time, eventName) => {
   let timeout = 0;
 
   window.addEventListener(eventName, event => {

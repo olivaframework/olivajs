@@ -1,26 +1,32 @@
 import './Window';
 import { DOMUtils } from './DOMUtils';
 
+interface SwiperEvents {
+  down: string;
+  move: string;
+  up: string;
+}
+
 class Swiper {
-  static readonly ACTIVE_EVENT = 'click';
-  static readonly THUMBNAILS_CONTAINER_CLASS = 'thumbnails-container';
-  static readonly THUMBNAIL_ITEM_CLASS = 'thumbnail-item';
-  static readonly ITEM_MAGNIFY_WIDTH = '100%';
-  static readonly CONTAINER_CLASS = 'swiper-container';
-  static readonly ITEM_CLASS = 'swiper-item';
-  static readonly PREV_CTRL_ATRR = 'data-swiper-prev';
-  static readonly NEXT_CTRL_ATRR = 'data-swiper-next';
-  static readonly ACTIVE_CTRL_CLASS = 'active';
-  static readonly ACTIVE_EVENT_CTRL = 'click';
-  static readonly ANIMATION_MS = 300;
-  static readonly SWIPE_OUT_RANGE = 35;
-  static readonly WINDOW_EVENT = 'resize';
-  static readonly TOUCH_EVENTS = {
+  static readonly ACTIVE_EVENT: string = 'click';
+  static readonly THUMBNAILS_CONTAINER_CLASS: string = 'thumbnails-container';
+  static readonly THUMBNAIL_ITEM_CLASS: string = 'thumbnail-item';
+  static readonly ITEM_MAGNIFY_WIDTH: string = '100%';
+  static readonly CONTAINER_CLASS: string = 'swiper-container';
+  static readonly ITEM_CLASS: string = 'swiper-item';
+  static readonly PREV_CTRL_ATRR: string = 'data-swiper-prev';
+  static readonly NEXT_CTRL_ATRR: string = 'data-swiper-next';
+  static readonly ACTIVE_CTRL_CLASS: string = 'active';
+  static readonly ACTIVE_EVENT_CTRL: string = 'click';
+  static readonly ANIMATION_MS: number = 300;
+  static readonly SWIPE_OUT_RANGE: number = 35;
+  static readonly WINDOW_EVENT: string = 'resize';
+  static readonly TOUCH_EVENTS: SwiperEvents = {
     down: 'touchstart',
     move: 'touchmove',
     up: 'touchend'
   };
-  static readonly MOUSE_EVENTS = {
+  static readonly MOUSE_EVENTS: SwiperEvents = {
     down: 'mousedown',
     move: 'mousemove',
     up: 'mouseup'
@@ -33,7 +39,7 @@ class Swiper {
   public items: NodeListOf<Element>;
   public nextCtrl: HTMLElement;
   public prevCtrl: HTMLElement;
-  public supportEvents: any;
+  public supportEvents: SwiperEvents;
   public thumbnails: NodeListOf<Element>;
 
   constructor(swiper: Element) {
@@ -81,7 +87,7 @@ class Swiper {
     this.container.style.transitionDuration = `${ velocity }ms`;
   }
 
-  public activeControls() {
+  public activeControls(): void {
     if (this.index > 0) {
       this.prevCtrl.classList.add(Swiper.ACTIVE_CTRL_CLASS);
     } else {

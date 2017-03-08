@@ -31,14 +31,14 @@ class LoaderBar {
     LoaderBar.loaderbar.render(document.body);
   }
 
-  private static addRequest() {
+  private static addRequest(): void {
     if (LoaderBar.activeRequests === 0) {
       LoaderBar.show();
     }
     LoaderBar.activeRequests = LoaderBar.activeRequests + 1;
   }
 
-  private static removeRequest() {
+  private static removeRequest(): void {
     if (LoaderBar.activeRequests === 0) {
       LoaderBar.hide();
       LoaderBar.progress = 0;
@@ -47,21 +47,21 @@ class LoaderBar {
     }
   }
 
-  private static show() {
+  private static show(): void {
     LoaderBar.loaderbar.addClasses([LoaderBar.ACTIVE_CLASS]);
   }
 
-  private static changeProgress() {
+  private static changeProgress(): void {
     LoaderBar.progress = LoaderBar.progress
       + ((100 - LoaderBar.progress) / 5);
     LoaderBar.changeWidth(LoaderBar.progress);
   }
 
-  private static changeWidth(width: number) {
+  private static changeWidth(width: number): void {
     LoaderBar.loaderbar.getElement().style.width = `${ width }%`;
   }
 
-  private static hide() {
+  private static hide(): void {
     LoaderBar.changeWidth(100);
     LoaderBar.loaderbar.removeClasses([LoaderBar.ACTIVE_CLASS]);
   }

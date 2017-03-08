@@ -43,7 +43,10 @@ class Http {
     return event;
   }
 
-  private processRequest(method: string, callbacks: HttpCallbacks, data?: any) {
+  private processRequest(
+    method: string,
+    callbacks: HttpCallbacks,
+    data?: any): void {
     this.xhr.open(method, this.config.url, true);
 
     if (this.config.headers) {

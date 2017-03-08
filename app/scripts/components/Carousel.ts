@@ -1,3 +1,4 @@
+import { DOMUtils } from './DOMUtils';
 import { Swiper } from './Swiper';
 
 class Carousel extends Swiper {
@@ -57,7 +58,7 @@ class Carousel extends Swiper {
     let last = this.items[this.items.length - 1] as HTMLElement;
     let clonedAmount = this.items.length - 1 - this.lastToShow();
 
-    if (last.offsetWidth < this.container.offsetWidth && clonedAmount === 1) {
+    if (last.offsetWidth < this.container.offsetWidth && clonedAmount === 0) {
       this.isPartialItem = true;
       clonedAmount = ++clonedAmount;
     } else {
@@ -77,16 +78,8 @@ class Carousel extends Swiper {
       this.container.appendChild(clonedItem);
     }
 
-    this.removeCloned(clons);
+    DOMUtils.removeElements(clons);
     this.items = this.container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
-  }
-
-  public removeCloned(clonedItems) {
-    let clonedAmount = clonedItems.length;
-
-    for (let i = 0; i < clonedAmount; i++) {
-      clonedItems[i].parentNode.removeChild(clonedItems[i]);
-    }
   }
 
   public restartPosition(): void {
