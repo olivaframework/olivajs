@@ -9,6 +9,11 @@
       margin-bottom: 12px;
       margin-left: 4px;
       padding: 8px;
+
+      &.active {
+        background: #009DDA;
+        color: #EEEEEE;
+      }
     }
 
     .col-xs-4 {

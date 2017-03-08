@@ -1,3 +1,4 @@
+import { DOMUtils } from './DOMUtils';
 import { Overlay } from './Overlay';
 
 class Modal {
@@ -26,15 +27,14 @@ class Modal {
   public setFunctionClose(): void {
     let closeElements = this.modal.querySelectorAll(`[${ Modal.ATTR_CLOSE }]`);
 
-    for (let i = 0; i < closeElements.length; i++) {
-      closeElements[i].addEventListener(Modal.EVENT_CLOSE, this.hide);
-    }
+    DOMUtils.syncForEach(item => {
+      item.addEventListener(Modal.EVENT_CLOSE, this.hide);
+    }, closeElements);
 
     if (this.modal.getAttribute(Modal.ATTR_CLOSE_ON_OVERLAY) !== 'false') {
-      this.overlay.getOverlay().addEvents([{
-        callback: this.hide,
-        name: Modal.EVENT_CLOSE
-      }]);
+      let overlay = this.overlay.getOverlay().getElement();
+
+      overlay.addEventListener(Modal.EVENT_CLOSE, this.hide);
     }
   }
 

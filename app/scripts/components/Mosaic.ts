@@ -20,33 +20,31 @@ class Mosaic {
   public title: string;
   public items: NodeListOf<Element>;
   public detailContainer: HTMLElement;
-  public container: HTMLElement;
+  public mosaicContainer: HTMLElement;
 
   constructor(mosaic) {
     this.showDetail = this.showDetail.bind(this);
+    this.removeActives = this.removeActives.bind(this);
     this.setDetailContailerHeight = this.setDetailContailerHeight.bind(this);
-    this.container = mosaic.querySelector(`.${ Mosaic.CONTAINER_CLASS }`);
+    this.mosaicContainer = mosaic.querySelector(`.${ Mosaic.CONTAINER_CLASS }`);
     this.items = mosaic.querySelectorAll(`.${ Mosaic.ITEM_CLASS }`);
     this.detailContainer = mosaic.querySelector(`.${ Mosaic.DETAIL_CLASS }`);
-    this.activateItems();
+
+    DOMUtils.syncForEach(item => {
+      item.addEventListener('mouseenter', this.showDetail);
+      item.addEventListener('mouseout', this.removeActives);
+    }, this.items);
+
     this.setDetailContailerHeight();
 
     window.onEvent(this.setDetailContailerHeight, 1, Mosaic.WINDOW_EVENT);
   }
 
-  public activateItems(): void {
-    let itemsSize = this.items.length;
-
-    for (let i = 0; i < itemsSize; i++) {
-      let item = this.items[i] as HTMLElement;
-
-      item.addEventListener('mousemove', this.showDetail);
-    }
+  public removeActives(): void {
+    DOMUtils.removeClassToItems(this.items, Mosaic.ACTIVE_CLASS);
   }
 
   public showDetail(event): void {
-    DOMUtils.removeClassToItems(this.items, Mosaic.ACTIVE_CLASS);
-
     let item = DOMUtils.findParentElementByClass(
       event.target,
       Mosaic.ITEM_CLASS
@@ -76,7 +74,9 @@ class Mosaic {
   }
 
   public setDetailContailerHeight(): void {
-    this.detailContainer.style.height = `${ this.container.offsetHeight }px`;
+    let mosaicContainerHeigth = this.mosaicContainer.offsetHeight;
+
+    this.detailContainer.style.height = `${ mosaicContainerHeigth }px`;
   }
 
   public elementsPerRow(): number {
