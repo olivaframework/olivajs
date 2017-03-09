@@ -38,7 +38,7 @@ class Carousel extends Swiper {
   }
 
   public showNext(): void {
-    this.index = ++this.index;
+    ++this.index;
     let lastToShow = this.lastToShow();
 
     if (this.index <= lastToShow) {
@@ -60,7 +60,7 @@ class Carousel extends Swiper {
 
     if (last.offsetWidth < this.container.offsetWidth && clonedAmount === 0) {
       this.isPartialItem = true;
-      clonedAmount = ++clonedAmount;
+      ++clonedAmount;
     } else {
       this.isPartialItem = false;
     }

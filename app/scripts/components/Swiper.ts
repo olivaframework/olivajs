@@ -140,7 +140,7 @@ class Swiper {
     let lastToShow = this.lastToShow();
 
     if (this.index + 1 <= lastToShow) {
-      this.index = ++this.index;
+      ++this.index;
 
       if (this.index < lastToShow) {
         let currentItem = this.items[this.index] as HTMLElement;

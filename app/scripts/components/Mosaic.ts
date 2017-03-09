@@ -1,88 +1,102 @@
+import { DOMElement } from './DOMElement';
 import { DOMUtils } from './DOMUtils';
 
 class Mosaic {
+  static readonly WINDOW_EVENT: string = 'resize';
   static readonly ACTIVE_CLASS: string = 'active';
+  static readonly TOUCH_EVENT: string = 'touchstart';
+  static readonly MOUSE_EVENT: string = 'mouseenter';
   static readonly ITEM_CLASS: string = 'mosaic-item';
   static readonly DETAIL_CLASS: string = 'mosaic-detail';
+  static readonly DETAIL_CONTAINER_HTML_TYPE: string = 'div';
+  static readonly DETAIL_CONTAINER_CLASSES: string[] = ['mosaic-detail'];
+  static readonly KEY_ATRRS_TO_RENDER: string = 'data-mosaic-[]';
   static readonly CONTAINER_CLASS: string = 'mosaic-container';
-  static readonly TITLE_ATTR: string = 'data-mosaic-title';
-  static readonly DESC_ATTR: string = 'data-mosaic-desc';
-  static readonly IMAGE_ATTR: string = 'data-mosaic-image';
-  static readonly WINDOW_EVENT: string = 'resize';
-  static readonly DETAIL_TEMPLATE: string = `<div>
-    <div class="title">{title}</div>
-    <div class="desc">{desc}</div>
-    <img src="{image}">
-  </div>`;
+  static readonly MIN_CONTAINER_PERCENT: number = 25;
+  static readonly ATTRS_TO_RENDER: string [] = ['title', 'desc', 'image'];
+  static readonly DETAIL_TEMPLATE: string = `
+    <div class="content">
+      <div class="title">[${ Mosaic.ATTRS_TO_RENDER[0] }]</div>
+      <div class="desc">[${ Mosaic.ATTRS_TO_RENDER[1] }]</div>
+      <img src="[${ Mosaic.ATTRS_TO_RENDER[2] }]">
+    </div`;
 
-  public desc: string;
-  public image: string;
-  public title: string;
   public items: NodeListOf<Element>;
-  public detailContainer: HTMLElement;
-  public mosaicContainer: HTMLElement;
+  public activedItem: HTMLElement;
+  public detailContainer: DOMElement;
+  public itemsContainer: HTMLElement;
   public mosaic: HTMLElement;
+  public supportEvents: string;
 
   constructor(mosaic) {
     this.mosaic = mosaic;
     this.items = mosaic.querySelectorAll(`.${ Mosaic.ITEM_CLASS }`);
-    this.detailContainer = mosaic.querySelector(`.${ Mosaic.DETAIL_CLASS }`);
-    this.mosaicContainer = mosaic.querySelector(`.${ Mosaic.CONTAINER_CLASS }`);
-    this.desc = this.items[0].getAttribute(Mosaic.DESC_ATTR);
-    this.image = this.items[0].getAttribute(Mosaic.IMAGE_ATTR);
-    this.title = this.items[0].getAttribute(Mosaic.TITLE_ATTR);
+    this.detailContainer = new DOMElement('div');
+    this.itemsContainer = mosaic.querySelector(`.${ Mosaic.CONTAINER_CLASS }`);
+    this.activedItem = this.items[0] as HTMLElement;
     this.showDetail = this.showDetail.bind(this);
-    this.itemsPerRow = this.itemsPerRow.bind(this);
-    this.removeActives = this.removeActives.bind(this);
-    this.setDetailContailerHeight = this.setDetailContailerHeight.bind(this);
+    this.renderDetail = this.renderDetail.bind(this);
     this.renderDetail();
-    this.setDetailContailerHeight();
+
+    let activeEvent = window.supportTouchEvents()
+      ? Mosaic.TOUCH_EVENT
+      : Mosaic.MOUSE_EVENT;
 
     DOMUtils.syncForEach(item => {
-      item.addEventListener('mouseenter', this.showDetail);
-      item.addEventListener('mouseout', this.removeActives);
+      item.addEventListener(activeEvent, this.showDetail);
     }, this.items);
 
-    window.onEvent(this.setDetailContailerHeight, 1, Mosaic.WINDOW_EVENT);
+    window.onEvent(this.renderDetail, 1, Mosaic.WINDOW_EVENT);
   }
 
   public showDetail(event): void {
-    let item = DOMUtils.findParentElementByClass(
-      event.target,
-      Mosaic.ITEM_CLASS
-    );
+    let target = event.target;
+    let item = DOMUtils.findParentElementByClass(target, Mosaic.ITEM_CLASS);
 
-    item.classList.add(Mosaic.ACTIVE_CLASS);
-
-    this.title = item.getAttribute(Mosaic.TITLE_ATTR);
-    this.desc = item.getAttribute(Mosaic.DESC_ATTR);
-    this.image = item.getAttribute(Mosaic.IMAGE_ATTR);
-
+    DOMUtils.removeClassToItems(this.items, Mosaic.ACTIVE_CLASS);
+    this.activedItem = item;
     this.renderDetail();
   }
 
   public renderDetail(): void {
-    let detailTemplate = Mosaic.DETAIL_TEMPLATE
-      .replace('{title}', this.title)
-      .replace('{desc}', this.desc)
-      .replace('{image}', this.image);
+    this.detailContainer.destroy();
+    this.createDetailContainer();
+    this.activedItem.classList.add(Mosaic.ACTIVE_CLASS);
 
-    if (window.isMobile()) {
-      DOMUtils.removeAllChildElements(this.detailContainer);
+    let mosaicWidth = this.mosaic.offsetWidth;
+    let itemsContainerWitdh = this.itemsContainer.offsetWidth;
+    let availableDistance = mosaicWidth - itemsContainerWitdh;
+    let minimumDistance = (mosaicWidth * Mosaic.MIN_CONTAINER_PERCENT) / 100;
+
+    if (availableDistance >= minimumDistance) {
+      let styles = { height: `${ this.itemsContainer.offsetHeight }px` };
+
+      this.detailContainer.setStyles(styles);
+      this.detailContainer.render(this.mosaic);
     } else {
-      DOMUtils.removeAllChildElements(this.detailContainer);
-      this.detailContainer.innerHTML = detailTemplate;
+      let indexToInsert = this.lastItemOfActivedRow();
+      let styles = { width: `${ itemsContainerWitdh }px` };
+
+      this.detailContainer.setStyles(styles);
+      this.detailContainer.renderBefore(this.itemsContainer, indexToInsert);
     }
   }
 
-  public removeActives(): void {
-    DOMUtils.removeClassToItems(this.items, Mosaic.ACTIVE_CLASS);
-  }
+  public createDetailContainer(): void {
+    let template = Mosaic.DETAIL_TEMPLATE;
+    let attrsToRenderSize = Mosaic.ATTRS_TO_RENDER.length;
 
-  public setDetailContailerHeight(): void {
-    let mosaicContainerHeigth = this.mosaicContainer.offsetHeight;
+    for (let i = 0; i < attrsToRenderSize; i++) {
+      let attribute = Mosaic.ATTRS_TO_RENDER[i];
+      let keyAttribute = Mosaic.KEY_ATRRS_TO_RENDER.replace('[]', attribute);
+      let value = this.activedItem.getAttribute(keyAttribute);
 
-    this.detailContainer.style.height = `${ mosaicContainerHeigth }px`;
+      template = template.replace(`[${ attribute }]`, value);
+    }
+
+    this.detailContainer = new DOMElement(Mosaic.DETAIL_CONTAINER_HTML_TYPE);
+    this.detailContainer.setContent(template);
+    this.detailContainer.addClasses(Mosaic.DETAIL_CONTAINER_CLASSES);
   }
 
   public itemsPerRow(): Array<number> {
@@ -96,20 +110,33 @@ class Mosaic {
 
       distance = distance + item.offsetWidth;
 
-      if (distance > this.mosaicContainer.offsetWidth) {
+      if (distance > this.itemsContainer.offsetWidth) {
         itemsPerRow.push(itemsCount);
         distance = item.offsetWidth;
         itemsCount = 0;
-      }
-
-      if (i < itemsSize - 1) {
-        itemsCount = ++itemsCount;
-      } else {
+      } else if (i === itemsSize - 1) {
         itemsPerRow.push(itemsCount + 1);
       }
+
+      ++itemsCount;
     }
 
     return itemsPerRow;
+  }
+
+  public lastItemOfActivedRow(): number {
+    let itemsPerRow = this.itemsPerRow();
+    let rows = itemsPerRow.length;
+    let item = 0;
+    let indexElement = DOMUtils.getIndexNode(this.activedItem);
+
+    for (let i = 0; i < rows; i++) {
+      item = item + itemsPerRow[i];
+
+      if (item >= indexElement) {
+        return item;
+      }
+    }
   }
 }
 

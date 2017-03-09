@@ -34,12 +34,26 @@ class DOMElement {
     }
   }
 
+  public setStyles(styles: Object): void {
+    for (let property in styles) {
+      this.element.style[property] = styles[property];
+    }
+  }
+
   public destroy(): void {
-    this.element.parentNode.removeChild(this.element);
+    if (this.element.parentNode) {
+      this.element.parentNode.removeChild(this.element);
+    }
   }
 
   public render(node: Node): void {
     node.appendChild(this.element);
+  }
+
+  public renderBefore(node, index: number) {
+    let childrenNodes = node.children;
+
+    node.insertBefore(this.element, childrenNodes[index]);
   }
 
   public addEvents(events: Array<Events>): void {

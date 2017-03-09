@@ -56,5 +56,16 @@ class DOMUtils {
       document.documentElement.offsetHeight
     );
   }
+
+  static getIndexNode(nodeElement): number {
+    let children = nodeElement.parentNode.children;
+    let childrenSize = children.length;
+
+    for (let i = 0; i < childrenSize; i++) {
+      if (nodeElement === children[i]) {
+        return i + 1;
+      }
+    }
+  }
 }
 export { DOMUtils };
