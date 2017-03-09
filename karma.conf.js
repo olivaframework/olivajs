@@ -56,7 +56,24 @@ module.exports = function (config) {
     logLevel: config.LOG_DISABLE,
     autoWatch: !isCoverage,
     autoWatchBatchDelay: 100,
-    browsers: ['PhantomJS'],
+    browsers: ['PhantomJS_custom'],
+    customLaunchers: {
+      'PhantomJS_custom': {
+        base: 'PhantomJS',
+        options: {
+          windowName: 'my-window',
+          settings: {
+            webSecurityEnabled: false
+          },
+          viewportSize: {
+            width: 500,
+            height: 500
+          }
+        },
+        flags: ['--load-images=true'],
+        debug: true
+      }
+    },
     singleRun: isCoverage,
     concurrency: Infinity
   })

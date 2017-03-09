@@ -13,6 +13,7 @@ class ScrollSpy {
   }
 
   public validatePosition(): void {
+    console.log('llego');
     let scrollLimit = (window.innerHeight * ScrollSpy.SCROLL_PERCENT) / 100;
 
     if (window.pageYOffset > scrollLimit) {
