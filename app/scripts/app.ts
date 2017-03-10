@@ -6,6 +6,7 @@ import { Jump } from './components/Jump';
 import { Loader } from './components/Loader';
 import { Modal } from './components/Modal';
 import { Mosaic } from './components/Mosaic';
+import { ResponsiveMenu } from './components/ResponsiveMenu';
 import { ScrollSpy } from './components/ScrollSpy';
 import { Swiper } from './components/Swiper';
 import { Tab } from './components/Tab';
@@ -20,6 +21,7 @@ let dropdowns = document.querySelectorAll('[data-dropdown]');
 let carousels = document.querySelectorAll('[data-carousel]');
 let mosaics = document.querySelectorAll('[data-mosaic]');
 let scrollSpies = document.querySelectorAll('[data-scroll-spy]');
+let responsiveMenus = document.querySelectorAll('[data-responsive-menu]');
 
 DOMUtils.syncForEach(scrollSpy => {
   new ScrollSpy(scrollSpy);
@@ -52,6 +54,10 @@ DOMUtils.syncForEach(carousel => {
 DOMUtils.syncForEach(mosaic => {
   new Mosaic(mosaic);
 }, mosaics);
+
+DOMUtils.syncForEach(responsiveMenu => {
+  new ResponsiveMenu(responsiveMenu);
+}, responsiveMenus);
 
 let loader = Loader.getInstance();
 

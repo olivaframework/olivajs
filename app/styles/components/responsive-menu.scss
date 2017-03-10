@@ -1,0 +1,122 @@
+@include media-breakpoint-down('sm') {
+  .responsive-menu-body {
+    overflow-x: hidden;
+    transition: transform 200ms ease-out,
+      bottom 200ms ease-out,
+      top 200ms ease-out;
+
+    &.push {
+      &.top,
+      &.bottom {
+        position: absolute;
+        top: 0;
+      }
+
+      &.active {
+        &.left {
+          transform: translate(85%);
+        }
+
+        &.right {
+          transform: translate(-85%);
+        }
+      }
+    }
+
+    &.discover {
+      background: #FCA456;
+
+      &.top {
+        position: absolute;
+        top: 0;
+
+        &.active {
+          top: 85%;
+        }
+      }
+    }
+  }
+
+  .responsive-menu {
+    position: absolute;
+
+    &.over {
+      transition: transform 200ms ease-out,
+        bottom 200ms ease-out,
+        top 200ms ease-out;
+      z-index: $responsive-menu-z-index;
+
+      &.top {
+        top: 0;
+        transform: translate(0, -100%);
+      }
+
+      &.bottom {
+        bottom: 0;
+        transform: translate(0, 100%);
+      }
+
+      &.active {
+        transform: translate(0, 0);
+      }
+    }
+
+    &.push {
+      transition: transform 200ms ease-out,
+        bottom 200ms ease-out,
+        top 200ms ease-out;
+      z-index: $responsive-menu-z-index;
+
+      &.top {
+        top: 0;
+        transform: translate(0, -100%);
+      }
+
+      &.bottom {
+        position: fixed;
+        top: 100%;
+        transform: translate(0, 100%);
+      }
+
+      &.active {
+        transform: translate(0, 0);
+      }
+    }
+
+    &.discover {
+      width: 85%;
+
+      &.top {
+        top: -100%;
+      }
+
+      &.bottom {
+        bottom: 0;
+      }
+
+      &.active {
+        &.top {
+          position: fixed;
+          top: 0;
+          width: 100%;
+        }
+      }
+    }
+
+    &.right {
+      height: 100%;
+      right: 0;
+      top: 0;
+      transform: translate(100%);
+      width: 85%;
+    }
+
+    &.left {
+      height: 100%;
+      left: 0;
+      top: 0;
+      transform: translate(-100%);
+      width: 85%;
+    }
+  }
+}
