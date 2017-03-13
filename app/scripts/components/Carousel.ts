@@ -27,7 +27,7 @@ class Carousel extends Swiper {
     this.container.addEventListener(this.supportEvents.move, this.stopAutoplay);
     this.container.addEventListener('mouseout', this.autoplay);
 
-    window.onEvent(this.createClones, 1, Carousel.WINDOW_EVENT);
+    window.onEvent(Carousel.WINDOW_EVENT, this.createClones, 1);
   }
 
   public autoplay(): void {

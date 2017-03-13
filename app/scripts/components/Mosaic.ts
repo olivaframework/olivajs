@@ -47,7 +47,7 @@ class Mosaic {
       item.addEventListener(activeEvent, this.showDetail);
     }, this.items);
 
-    window.onEvent(this.renderDetail, 1, Mosaic.WINDOW_EVENT);
+    window.onEvent(Mosaic.WINDOW_EVENT, this.renderDetail, 1);
   }
 
   public showDetail(event): void {

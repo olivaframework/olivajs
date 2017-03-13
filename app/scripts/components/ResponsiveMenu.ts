@@ -23,8 +23,7 @@ class ResponsiveMenu {
     this.init = this.init.bind(this);
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-
-    this.openButton.addEventListener(ResponsiveMenu.EVENT_ACTIVE, this.open);
+    this.update = this.update.bind(this);
     this.init();
   }
 
@@ -35,6 +34,14 @@ class ResponsiveMenu {
     this.menu.classList.add(ResponsiveMenu.MENU_CLASS);
     this.menu.classList.add(this.position);
     this.menu.classList.add(this.type);
+
+    window.onEvent('onresize', this.update, 1);
+  }
+
+  private update(): void {
+    if (window.isMobile()){
+      this.openButton.addEventListener(ResponsiveMenu.EVENT_ACTIVE, this.open);
+    }
   }
 
   private open(): void {
