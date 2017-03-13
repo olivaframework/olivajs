@@ -18,12 +18,13 @@ describe('ScrollSpy component specification', () => {
 
     expect(scrollSpyComponent.handler).to.equals(scrollSpyHandler);
 
-    assert(spy.calledWith(calledFunction, calledTime, calledEvent));
+    assert(spy.calledWith(calledEvent, calledFunction, calledTime));
   });
 
   it('should add active class on window scroll event', () => {
-    let scrollSpyComponent = new ScrollSpy(scrollSpyHandler);
-    let spy = sinon.spy(scrollSpyComponent, 'validatePosition');
+    // let scrollSpyComponent = new ScrollSpy(scrollSpyHandler);
+    // let spy = sinon.spy(scrollSpyComponent, 'validatePosition');
+
     scrollSpyHandler.style.height = '600px';
     window.dispatchEvent(new Event('scroll'));
   });

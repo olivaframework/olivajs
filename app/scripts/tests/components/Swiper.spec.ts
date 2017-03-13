@@ -4,20 +4,21 @@ import { Swiper } from '../../components/Swiper';
 describe('Swiper component specification', () => {
   let swiper;
   let swiperContainer;
-  let prevCtrl;
-  let nextCtrl;
   let itemsAmount = 5;
-  let swiperOptions= {
+  let swiperOptions = {
     animationMs: 500,
     nextCtrlClasses: ['right-arrow'],
     prevCtrlClasses: ['left-arrow'],
     showControls: true
-  }
+  };
 
   beforeEach(() => {
     swiper = document.createElement('div');
     swiper.style.overflow = 'hidden';
 
+    let swiperSection = document.createElement('div');
+
+    swiperSection.classList.add(Swiper.SWIPER_CLASS);
     swiperContainer = document.createElement('div');
     swiperContainer.classList.add(Swiper.CONTAINER_CLASS);
     swiperContainer.style.width = '1000px';
@@ -32,9 +33,8 @@ describe('Swiper component specification', () => {
       swiperContainer.appendChild(item);
     }
 
-    swiper.appendChild(swiperContainer);
-    swiper.appendChild(prevCtrl);
-    swiper.appendChild(nextCtrl);
+    swiperSection.appendChild(swiperContainer);
+    swiper.appendChild(swiperSection);
     document.body.appendChild(swiper);
   });
 
@@ -42,8 +42,6 @@ describe('Swiper component specification', () => {
     let swiperComponent = new Swiper(swiper, swiperOptions);
 
     expect(swiperComponent.container).to.equals(swiperContainer);
-    expect(swiperComponent.prevCtrl).to.equals(prevCtrl);
-    expect(swiperComponent.nextCtrl).to.equals(nextCtrl);
     expect(swiperComponent.items.length).to.equals(itemsAmount);
     expect(swiperComponent.index).to.equals(0);
     expect(swiperComponent.initDistance).to.equals(0);
@@ -87,11 +85,5 @@ describe('Swiper component specification', () => {
 
     swiperContainer.remove();
     swiperContainer = null;
-
-    prevCtrl.remove();
-    prevCtrl = null;
-
-    nextCtrl.remove();
-    nextCtrl = null;
   });
 });
