@@ -2,6 +2,7 @@ import './Window';
 import { DOMUtils } from './DOMUtils';
 
 interface SwiperEvents {
+  click: string;
   down: string;
   move: string;
   up: string;
@@ -20,13 +21,16 @@ class Swiper {
   static readonly ACTIVE_EVENT_CTRL: string = 'click';
   static readonly ANIMATION_MS: number = 300;
   static readonly SWIPE_OUT_RANGE: number = 35;
+  static readonly SWIPE_PERCENT_AJUST: number = 20;
   static readonly WINDOW_EVENT: string = 'resize';
   static readonly TOUCH_EVENTS: SwiperEvents = {
+    click: 'touchend',
     down: 'touchstart',
     move: 'touchmove',
     up: 'touchend'
   };
   static readonly MOUSE_EVENTS: SwiperEvents = {
+    click: 'click',
     down: 'mousedown',
     move: 'mousemove',
     up: 'mouseup'
@@ -36,6 +40,7 @@ class Swiper {
   public firstPoint: number;
   public index: number;
   public initDistance: number;
+  public traveledDistance: number;
   public items: NodeListOf<Element>;
   public nextCtrl: HTMLElement;
   public prevCtrl: HTMLElement;
@@ -63,6 +68,7 @@ class Swiper {
 
     this.index = 0;
     this.initDistance = 0;
+    this.traveledDistance = 0;
 
     this.container = swiper
       .querySelector(`.${ Swiper.CONTAINER_CLASS }`) as HTMLElement;
@@ -76,6 +82,11 @@ class Swiper {
     this.nextCtrl.addEventListener(Swiper.ACTIVE_EVENT_CTRL, this.showNext);
     this.container.addEventListener(this.supportEvents.down, this.actionDown);
     this.container.addEventListener(this.supportEvents.up, this.actionUp);
+    this.container.addEventListener(this.supportEvents.click, event => {
+      if (this.traveledDistance !== 0) {
+        event.preventDefault();
+      }
+    });
 
     window.onEvent(this.update, 1, Swiper.WINDOW_EVENT);
   }
@@ -170,8 +181,6 @@ class Swiper {
   }
 
   public swipe(moveEvent: any): void {
-    moveEvent.preventDefault();
-
     let distanceEvent = (this.supportEvents.move === Swiper.TOUCH_EVENTS.move)
       ? moveEvent.touches[0].clientX
       : moveEvent.screenX;
@@ -191,7 +200,10 @@ class Swiper {
   }
 
   public actionDown(downEvent: any): void {
-    downEvent.preventDefault();
+    if (this.supportEvents.down === Swiper.MOUSE_EVENTS.down) {
+      downEvent.preventDefault();
+    }
+
     let transform = this.container.style.transform;
 
     if (transform) {
@@ -212,20 +224,23 @@ class Swiper {
   }
 
   public actionUp(upEvent: any): void {
-    upEvent.preventDefault();
-
     let distanceEvent = (this.supportEvents.up === Swiper.TOUCH_EVENTS.up)
       ? upEvent.changedTouches[0].clientX
       : upEvent.screenX;
-    let moveDistance = this.firstPoint - distanceEvent;
-    let distance = moveDistance + this.initDistance;
+
+    this.traveledDistance = this.firstPoint - distanceEvent;
+
+    let distance = this.traveledDistance + this.initDistance;
     let lastToShow = this.lastToShow();
 
     for (let i = 0; i <= lastToShow; i++) {
       let item = this.items[i] as HTMLElement;
-      let middleDistance = item.offsetWidth / 2;
+      let ajustDistance = (item.offsetWidth * Swiper.SWIPE_PERCENT_AJUST) / 100;
+      let minDistance = this.traveledDistance > 0
+        ? item.offsetLeft + ajustDistance
+        : item.offsetLeft + item.offsetWidth - ajustDistance;
 
-      if (i < lastToShow && item.offsetLeft + middleDistance > distance) {
+      if (i < lastToShow && minDistance > distance) {
         this.animate(item.offsetLeft, Swiper.ANIMATION_MS);
         this.index = i;
 

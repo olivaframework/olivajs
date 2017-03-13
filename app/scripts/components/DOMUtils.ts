@@ -27,7 +27,7 @@ class DOMUtils {
     let element = nodeElement;
 
     while (!element.classList.contains(className) && element) {
-      element = element.offsetParent as HTMLElement;
+      element = element.parentNode as HTMLElement;
     }
 
     return element;
