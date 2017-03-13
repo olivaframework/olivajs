@@ -7,7 +7,7 @@ class Loader {
   static readonly TYPE_HTML_ELEMENT: string = 'div';
   static readonly ICON_ELEMENT: string = 'div';
   static readonly ICON_CLASSES: string[] = [
-    'fa', 'fa-spinner', 'fa-pulse', 'fa-3x', 'fa-fw'
+    'fa', 'fa-spinner', 'fa-pulse', 'fa-fw'
   ];
 
   private static instance: Loader = new Loader();
