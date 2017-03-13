@@ -1,22 +1,27 @@
+import { Swiper, SwiperOptions } from './Swiper';
 import { DOMUtils } from './DOMUtils';
-import { Swiper } from './Swiper';
+
+interface CarouselOptions extends SwiperOptions {
+  autoplayMs: number;
+}
 
 class Carousel extends Swiper {
-  static readonly AUTOPLAY_TIME = 1200;
   static readonly CLONED_CLASS = 'clone';
   static readonly WINDOW_EVENT = 'resize';
 
-  private interval: number;
-  private isPartialItem: boolean;
+  public interval: number;
+  public isPartialItem: boolean;
+  public options: CarouselOptions;
 
-  constructor(element) {
-    super(element);
+  constructor(element: Element, options: CarouselOptions) {
+    super(element, options);
 
     this.createClones = this.createClones.bind(this);
     this.showNext = this.showNext.bind(this);
     this.stopAutoplay = this.stopAutoplay.bind(this);
     this.autoplay = this.autoplay.bind(this);
     this.isPartialItem = false;
+    this.options = options;
     this.createClones();
     this.autoplay();
     this.container.addEventListener(this.supportEvents.move, this.stopAutoplay);
@@ -28,9 +33,9 @@ class Carousel extends Swiper {
   public autoplay(): void {
     this.interval = setInterval(() => {
       this.showNext();
-      this.prevCtrl.classList.add(Swiper.ACTIVE_CTRL_CLASS);
-      this.nextCtrl.classList.add(Swiper.ACTIVE_CTRL_CLASS);
-    }, Carousel.AUTOPLAY_TIME);
+      this.prevCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
+      this.nextCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
+    }, this.options.autoplayMs);
   }
 
   public stopAutoplay(): void {
@@ -44,7 +49,7 @@ class Carousel extends Swiper {
     if (this.index <= lastToShow) {
       let currentItem = this.items[this.index] as HTMLElement;
 
-      this.animate(currentItem.offsetLeft, Swiper.ANIMATION_MS);
+      this.animate(currentItem.offsetLeft, this.options.animationMs);
 
       if ((this.isPartialItem && this.index === lastToShow - 1)
         || this.index === lastToShow) {
@@ -87,7 +92,7 @@ class Carousel extends Swiper {
       this.animate(0, 0);
       this.index = 0;
       clearTimeout(timeout);
-    }, Swiper.ANIMATION_MS);
+    }, this.options.animationMs);
   }
 }
 

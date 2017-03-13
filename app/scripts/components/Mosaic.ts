@@ -1,3 +1,4 @@
+import './Window';
 import { DOMElement } from './DOMElement';
 import { DOMUtils } from './DOMUtils';
 

@@ -1,4 +1,5 @@
 import './Window';
+import { DOMElement } from './DOMElement';
 import { DOMUtils } from './DOMUtils';
 
 interface SwiperEvents {
@@ -6,6 +7,13 @@ interface SwiperEvents {
   down: string;
   move: string;
   up: string;
+}
+
+interface SwiperOptions {
+  animationMs: number;
+  nextCtrlClasses: string[];
+  prevCtrlClasses: string[];
+  showControls: boolean;
 }
 
 class Swiper {
@@ -16,11 +24,8 @@ class Swiper {
   static readonly SWIPER_CLASS: string = 'swiper-section';
   static readonly CONTAINER_CLASS: string = 'swiper-container';
   static readonly ITEM_CLASS: string = 'swiper-item';
-  static readonly PREV_CTRL_ATRR: string = 'data-swiper-prev';
-  static readonly NEXT_CTRL_ATRR: string = 'data-swiper-next';
   static readonly ACTIVE_CTRL_CLASS: string = 'active';
   static readonly ACTIVE_EVENT_CTRL: string = 'click';
-  static readonly ANIMATION_MS: number = 300;
   static readonly SWIPE_OUT_RANGE: number = 35;
   static readonly SWIPE_PERCENT_AJUST: number = 10;
   static readonly WINDOW_EVENT: string = 'resize';
@@ -43,13 +48,14 @@ class Swiper {
   public initDistance: number;
   public traveledDistance: number;
   public items: NodeListOf<Element>;
-  public nextCtrl: HTMLElement;
-  public prevCtrl: HTMLElement;
+  public nextCtrl: DOMElement;
+  public prevCtrl: DOMElement;
   public swiper: HTMLElement;
   public supportEvents: SwiperEvents;
   public thumbnails: NodeListOf<Element>;
+  public options: SwiperOptions;
 
-  constructor(swiper: Element) {
+  constructor(swiper: Element, options: SwiperOptions) {
     this.actionDown = this.actionDown.bind(this);
     this.actionUp = this.actionUp.bind(this);
     this.animate = this.animate.bind(this);
@@ -58,12 +64,12 @@ class Swiper {
     this.showNext = this.showNext.bind(this);
     this.swipe = this.swipe.bind(this);
     this.update = this.update.bind(this);
-    this.init(swiper);
+    this.init(swiper, options);
     this.activeControlsByIndexes(swiper);
     this.activeControls();
   }
 
-  public init(swiper: Element): void {
+  public init(swiper: Element, options: SwiperOptions): void {
     this.supportEvents = window.supportTouchEvents()
       ? Swiper.TOUCH_EVENTS
       : Swiper.MOUSE_EVENTS;
@@ -71,25 +77,38 @@ class Swiper {
     this.index = 0;
     this.initDistance = 0;
     this.traveledDistance = 0;
+    this.options = options;
 
     this.swiper = swiper
       .querySelector(`.${ Swiper.SWIPER_CLASS }`) as HTMLElement;
     this.container = swiper
       .querySelector(`.${ Swiper.CONTAINER_CLASS }`) as HTMLElement;
-    this.prevCtrl = swiper
-      .querySelector(`[${ Swiper.PREV_CTRL_ATRR }]`) as HTMLElement;
-    this.nextCtrl = swiper
-      .querySelector(`[${ Swiper.NEXT_CTRL_ATRR }]`) as HTMLElement;
     this.items = this.container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
 
-    this.prevCtrl.addEventListener(Swiper.ACTIVE_EVENT_CTRL, this.showPrev);
-    this.nextCtrl.addEventListener(Swiper.ACTIVE_EVENT_CTRL, this.showNext);
     this.swiper.addEventListener(this.supportEvents.down, this.actionDown);
     this.swiper.addEventListener(this.supportEvents.click, event => {
-      if (this.traveledDistance !== 0) {
+      if (this.traveledDistance !== 0
+        && this.supportEvents.down === Swiper.MOUSE_EVENTS.down) {
         event.preventDefault();
       }
     });
+
+    if (this.options.showControls) {
+      this.prevCtrl = new DOMElement('div');
+      this.nextCtrl = new DOMElement('div');
+      this.prevCtrl.addClasses(this.options.prevCtrlClasses);
+      this.nextCtrl.addClasses(this.options.nextCtrlClasses);
+      this.prevCtrl.render(this.swiper);
+      this.nextCtrl.render(this.swiper);
+      this.prevCtrl.addEvents([{
+        callback: this.showPrev,
+        name: Swiper.ACTIVE_EVENT_CTRL
+      }]);
+      this.nextCtrl.addEvents([{
+        callback: this.showNext,
+        name: Swiper.ACTIVE_EVENT_CTRL
+      }]);
+    }
 
     window.onEvent(this.update, 1, Swiper.WINDOW_EVENT);
   }
@@ -103,15 +122,15 @@ class Swiper {
 
   public activeControls(): void {
     if (this.index > 0) {
-      this.prevCtrl.classList.add(Swiper.ACTIVE_CTRL_CLASS);
+      this.prevCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
     } else {
-      this.prevCtrl.classList.remove(Swiper.ACTIVE_CTRL_CLASS);
+      this.prevCtrl.removeClasses([Swiper.ACTIVE_CTRL_CLASS]);
     }
 
     if (this.index < this.lastToShow()) {
-      this.nextCtrl.classList.add(Swiper.ACTIVE_CTRL_CLASS);
+      this.nextCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
     } else {
-      this.nextCtrl.classList.remove(Swiper.ACTIVE_CTRL_CLASS);
+      this.nextCtrl.removeClasses([Swiper.ACTIVE_CTRL_CLASS]);
     }
   }
 
@@ -145,7 +164,7 @@ class Swiper {
       this.index = --this.index;
       let currentItem = this.items[this.index] as HTMLElement;
 
-      this.animate(currentItem.offsetLeft, Swiper.ANIMATION_MS);
+      this.animate(currentItem.offsetLeft, this.options.animationMs);
       this.activeControls();
     }
   }
@@ -159,9 +178,9 @@ class Swiper {
       if (this.index < lastToShow) {
         let currentItem = this.items[this.index] as HTMLElement;
 
-        this.animate(currentItem.offsetLeft, Swiper.ANIMATION_MS);
+        this.animate(currentItem.offsetLeft, this.options.animationMs);
       } else {
-        this.animate(this.containerFullWidth(), Swiper.ANIMATION_MS);
+        this.animate(this.containerFullWidth(), this.options.animationMs);
       }
     }
 
@@ -249,12 +268,12 @@ class Swiper {
         : item.offsetLeft + item.offsetWidth - ajustDistance;
 
       if (i < lastToShow && minDistance > distance) {
-        this.animate(item.offsetLeft, Swiper.ANIMATION_MS);
+        this.animate(item.offsetLeft, this.options.animationMs);
         this.index = i;
 
         break;
       } else if (i === lastToShow) {
-        this.animate(this.containerFullWidth(), Swiper.ANIMATION_MS);
+        this.animate(this.containerFullWidth(), this.options.animationMs);
         this.index = lastToShow;
       }
     }
@@ -306,7 +325,7 @@ class Swiper {
 
         this.index = i;
         this.activeControls();
-        this.animate(itemToShow.offsetLeft, Swiper.ANIMATION_MS);
+        this.animate(itemToShow.offsetLeft, this.options.animationMs);
 
         break;
       }
@@ -314,4 +333,4 @@ class Swiper {
   }
 }
 
-export { Swiper };
+export { Swiper, SwiperOptions };

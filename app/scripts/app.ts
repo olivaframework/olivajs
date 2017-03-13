@@ -14,14 +14,29 @@ import { Tab } from './components/Tab';
 let tabs = document.querySelectorAll('[data-tab-content-id]');
 let modals = document.querySelectorAll('[data-modal-content-id]');
 let jumps = document.querySelectorAll('[data-jump-content-id]');
-let swipers = document.querySelectorAll('[data-swiper]');
+let swiper = document.querySelector('[data-swiper]');
+let carousel = document.querySelector('[data-carousel]');
 let dropdowns = document.querySelectorAll('[data-dropdown]');
-let carousels = document.querySelectorAll('[data-carousel]');
 let mosaics = document.querySelectorAll('[data-mosaic]');
 let scrollSpies = document.querySelectorAll('[data-scroll-spy]');
 let responsiveMenus = document.querySelectorAll('[data-responsive-menu]');
 
 window.onload = () => {
+  new Swiper(swiper, {
+    animationMs: 300,
+    nextCtrlClasses: ['arrow-right'],
+    prevCtrlClasses: ['arrow-left'],
+    showControls: true
+  });
+
+  new Carousel(carousel, {
+    animationMs: 400,
+    autoplayMs: 1200,
+    nextCtrlClasses: ['arrow-right'],
+    prevCtrlClasses: ['arrow-left'],
+    showControls: true
+  });
+
   DOMUtils.syncForEach(scrollSpy => {
     new ScrollSpy(scrollSpy);
   }, scrollSpies);
@@ -38,17 +53,9 @@ window.onload = () => {
     new Jump(jump);
   }, jumps);
 
-  DOMUtils.syncForEach(swiper => {
-    new Swiper(swiper);
-  }, swipers);
-
   DOMUtils.syncForEach(dropdown => {
     new Dropdown(dropdown);
   }, dropdowns);
-
-  DOMUtils.syncForEach(carousel => {
-    new Carousel(carousel);
-  }, carousels);
 
   DOMUtils.syncForEach(mosaic => {
     new Mosaic(mosaic);

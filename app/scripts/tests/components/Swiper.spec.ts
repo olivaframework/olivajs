@@ -7,6 +7,12 @@ describe('Swiper component specification', () => {
   let prevCtrl;
   let nextCtrl;
   let itemsAmount = 5;
+  let swiperOptions= {
+    animationMs: 500,
+    nextCtrlClasses: ['right-arrow'],
+    prevCtrlClasses: ['left-arrow'],
+    showControls: true
+  }
 
   beforeEach(() => {
     swiper = document.createElement('div');
@@ -16,12 +22,6 @@ describe('Swiper component specification', () => {
     swiperContainer.classList.add(Swiper.CONTAINER_CLASS);
     swiperContainer.style.width = '1000px';
     swiperContainer.style.whiteSpace = 'nowrap';
-
-    prevCtrl = document.createElement('div');
-    prevCtrl.setAttribute(Swiper.PREV_CTRL_ATRR, '');
-
-    nextCtrl = document.createElement('div');
-    nextCtrl.setAttribute(Swiper.NEXT_CTRL_ATRR, '');
 
     for (let i = 0; i < itemsAmount; i++) {
       let item = document.createElement('div');
@@ -39,7 +39,7 @@ describe('Swiper component specification', () => {
   });
 
   it('should create a Swiper component with correct properties', () => {
-    let swiperComponent = new Swiper(swiper);
+    let swiperComponent = new Swiper(swiper, swiperOptions);
 
     expect(swiperComponent.container).to.equals(swiperContainer);
     expect(swiperComponent.prevCtrl).to.equals(prevCtrl);
@@ -50,7 +50,7 @@ describe('Swiper component specification', () => {
   });
 
   it('should show correct item when showNext is called', () => {
-    let swiperComponent = new Swiper(swiper);
+    let swiperComponent = new Swiper(swiper, swiperOptions);
 
     for (let i = 0; i <= swiperComponent.lastToShow(); i++) {
       if (i < swiperComponent.lastToShow()) {
@@ -64,7 +64,7 @@ describe('Swiper component specification', () => {
   });
 
   it('should show previous item when showPrev is called', () => {
-    let swiperComponent = new Swiper(swiper);
+    let swiperComponent = new Swiper(swiper, swiperOptions);
 
     swiperComponent.showNext();
     swiperComponent.showNext();
