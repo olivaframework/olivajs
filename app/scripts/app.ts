@@ -11,8 +11,6 @@ import { ScrollSpy } from './components/ScrollSpy';
 import { Swiper } from './components/Swiper';
 import { Tab } from './components/Tab';
 
-document.title = 'Banco Pichincha';
-
 let tabs = document.querySelectorAll('[data-tab-content-id]');
 let modals = document.querySelectorAll('[data-modal-content-id]');
 let jumps = document.querySelectorAll('[data-jump-content-id]');
@@ -23,46 +21,48 @@ let mosaics = document.querySelectorAll('[data-mosaic]');
 let scrollSpies = document.querySelectorAll('[data-scroll-spy]');
 let responsiveMenus = document.querySelectorAll('[data-responsive-menu]');
 
-DOMUtils.syncForEach(scrollSpy => {
-  new ScrollSpy(scrollSpy);
-}, scrollSpies);
+window.onload = () => {
+  DOMUtils.syncForEach(scrollSpy => {
+    new ScrollSpy(scrollSpy);
+  }, scrollSpies);
 
-DOMUtils.syncForEach(tab => {
-  new Tab(tab);
-}, tabs);
+  DOMUtils.syncForEach(tab => {
+    new Tab(tab);
+  }, tabs);
 
-DOMUtils.syncForEach(modal => {
-  new Modal(modal);
-}, modals);
+  DOMUtils.syncForEach(modal => {
+    new Modal(modal);
+  }, modals);
 
-DOMUtils.syncForEach(jump => {
-  new Jump(jump);
-}, jumps);
+  DOMUtils.syncForEach(jump => {
+    new Jump(jump);
+  }, jumps);
 
-DOMUtils.syncForEach(swiper => {
-  new Swiper(swiper);
-}, swipers);
+  DOMUtils.syncForEach(swiper => {
+    new Swiper(swiper);
+  }, swipers);
 
-DOMUtils.syncForEach(dropdown => {
-  new Dropdown(dropdown);
-}, dropdowns);
+  DOMUtils.syncForEach(dropdown => {
+    new Dropdown(dropdown);
+  }, dropdowns);
 
-DOMUtils.syncForEach(carousel => {
-  new Carousel(carousel);
-}, carousels);
+  DOMUtils.syncForEach(carousel => {
+    new Carousel(carousel);
+  }, carousels);
 
-DOMUtils.syncForEach(mosaic => {
-  new Mosaic(mosaic);
-}, mosaics);
+  DOMUtils.syncForEach(mosaic => {
+    new Mosaic(mosaic);
+  }, mosaics);
 
-DOMUtils.syncForEach(responsiveMenu => {
-  new ResponsiveMenu(responsiveMenu);
-}, responsiveMenus);
+  DOMUtils.syncForEach(responsiveMenu => {
+    new ResponsiveMenu(responsiveMenu);
+  }, responsiveMenus);
 
-let loader = Loader.getInstance();
+  let loader = Loader.getInstance();
 
-loader.show();
+  loader.show();
 
-setTimeout(() => {
-  loader.hide();
-}, 1000);
+  setTimeout(() => {
+    loader.hide();
+  }, 1000);
+};

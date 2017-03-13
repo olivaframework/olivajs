@@ -13,6 +13,7 @@ class Swiper {
   static readonly THUMBNAILS_CONTAINER_CLASS: string = 'thumbnails-container';
   static readonly THUMBNAIL_ITEM_CLASS: string = 'thumbnail-item';
   static readonly ITEM_MAGNIFY_WIDTH: string = '100%';
+  static readonly SWIPER_CLASS: string = 'swiper-section';
   static readonly CONTAINER_CLASS: string = 'swiper-container';
   static readonly ITEM_CLASS: string = 'swiper-item';
   static readonly PREV_CTRL_ATRR: string = 'data-swiper-prev';
@@ -21,7 +22,7 @@ class Swiper {
   static readonly ACTIVE_EVENT_CTRL: string = 'click';
   static readonly ANIMATION_MS: number = 300;
   static readonly SWIPE_OUT_RANGE: number = 35;
-  static readonly SWIPE_PERCENT_AJUST: number = 20;
+  static readonly SWIPE_PERCENT_AJUST: number = 10;
   static readonly WINDOW_EVENT: string = 'resize';
   static readonly TOUCH_EVENTS: SwiperEvents = {
     click: 'touchend',
@@ -44,6 +45,7 @@ class Swiper {
   public items: NodeListOf<Element>;
   public nextCtrl: HTMLElement;
   public prevCtrl: HTMLElement;
+  public swiper: HTMLElement;
   public supportEvents: SwiperEvents;
   public thumbnails: NodeListOf<Element>;
 
@@ -70,6 +72,8 @@ class Swiper {
     this.initDistance = 0;
     this.traveledDistance = 0;
 
+    this.swiper = swiper
+      .querySelector(`.${ Swiper.SWIPER_CLASS }`) as HTMLElement;
     this.container = swiper
       .querySelector(`.${ Swiper.CONTAINER_CLASS }`) as HTMLElement;
     this.prevCtrl = swiper
@@ -80,9 +84,8 @@ class Swiper {
 
     this.prevCtrl.addEventListener(Swiper.ACTIVE_EVENT_CTRL, this.showPrev);
     this.nextCtrl.addEventListener(Swiper.ACTIVE_EVENT_CTRL, this.showNext);
-    this.container.addEventListener(this.supportEvents.down, this.actionDown);
-    this.container.addEventListener(this.supportEvents.up, this.actionUp);
-    this.container.addEventListener(this.supportEvents.click, event => {
+    this.swiper.addEventListener(this.supportEvents.down, this.actionDown);
+    this.swiper.addEventListener(this.supportEvents.click, event => {
       if (this.traveledDistance !== 0) {
         event.preventDefault();
       }
@@ -181,6 +184,8 @@ class Swiper {
   }
 
   public swipe(moveEvent: any): void {
+    moveEvent.preventDefault();
+
     let distanceEvent = (this.supportEvents.move === Swiper.TOUCH_EVENTS.move)
       ? moveEvent.touches[0].clientX
       : moveEvent.screenX;
@@ -220,7 +225,10 @@ class Swiper {
     this.firstPoint = (this.supportEvents.down === Swiper.TOUCH_EVENTS.down)
      ? downEvent.touches[0].clientX
      : downEvent.screenX;
-    this.container.addEventListener(this.supportEvents.move, this.swipe);
+    this.swiper.addEventListener(this.supportEvents.move, this.swipe);
+    this.swiper.addEventListener(this.supportEvents.up, this.actionUp);
+    document.body.addEventListener(this.supportEvents.move, this.swipe);
+    document.body.addEventListener(this.supportEvents.up, this.actionUp);
   }
 
   public actionUp(upEvent: any): void {
@@ -252,7 +260,10 @@ class Swiper {
     }
 
     this.activeControls();
-    this.container.removeEventListener(this.supportEvents.move, this.swipe);
+    this.swiper.removeEventListener(this.supportEvents.move, this.swipe);
+    this.swiper.removeEventListener(this.supportEvents.up, this.actionUp);
+    document.body.removeEventListener(this.supportEvents.move, this.swipe);
+    document.body.removeEventListener(this.supportEvents.up, this.actionUp);
   }
 
   public activeControlsByIndexes(swiper): void {
