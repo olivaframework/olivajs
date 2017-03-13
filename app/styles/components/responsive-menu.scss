@@ -76,11 +76,11 @@
       &.bottom {
         position: fixed;
         top: 100%;
-        transform: translate(0, 100%);
-      }
-
-      &.active {
         transform: translate(0, 0);
+
+        &.active {
+          transform: translate(0, -100%);
+        }
       }
     }
 

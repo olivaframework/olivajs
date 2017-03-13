@@ -35,12 +35,21 @@ class ResponsiveMenu {
     this.menu.classList.add(this.position);
     this.menu.classList.add(this.type);
 
-    window.onEvent('onresize', this.update, 1);
+    window.onEvent('resize', this.update, 200);
+    this.update();
   }
 
   private update(): void {
-    if (window.isMobile()){
-      this.openButton.addEventListener(ResponsiveMenu.EVENT_ACTIVE, this.open);
+    if (window.isMobile()) {
+      this.openButton.addEventListener(
+        ResponsiveMenu.EVENT_ACTIVE,
+        this.open
+      );
+    } else {
+      this.openButton.removeEventListener(
+        ResponsiveMenu.EVENT_ACTIVE,
+        this.open
+      );
     }
   }
 
