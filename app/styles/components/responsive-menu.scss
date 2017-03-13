@@ -53,6 +53,7 @@
 
       &.bottom {
         bottom: 0;
+        position: fixed;
         transform: translate(0, 100%);
       }
 
