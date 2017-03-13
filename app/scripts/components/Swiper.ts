@@ -227,8 +227,8 @@ class Swiper {
      : downEvent.screenX;
     this.swiper.addEventListener(this.supportEvents.move, this.swipe);
     this.swiper.addEventListener(this.supportEvents.up, this.actionUp);
-    document.body.addEventListener(this.supportEvents.move, this.swipe);
-    document.body.addEventListener(this.supportEvents.up, this.actionUp);
+    window.addEventListener(this.supportEvents.move, this.swipe);
+    window.addEventListener(this.supportEvents.up, this.actionUp);
   }
 
   public actionUp(upEvent: any): void {
@@ -262,8 +262,8 @@ class Swiper {
     this.activeControls();
     this.swiper.removeEventListener(this.supportEvents.move, this.swipe);
     this.swiper.removeEventListener(this.supportEvents.up, this.actionUp);
-    document.body.removeEventListener(this.supportEvents.move, this.swipe);
-    document.body.removeEventListener(this.supportEvents.up, this.actionUp);
+    window.removeEventListener(this.supportEvents.move, this.swipe);
+    window.removeEventListener(this.supportEvents.up, this.actionUp);
   }
 
   public activeControlsByIndexes(swiper): void {
