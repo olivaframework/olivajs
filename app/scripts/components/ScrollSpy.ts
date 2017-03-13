@@ -9,7 +9,7 @@ class ScrollSpy {
     this.handler = handler;
     this.validatePosition = this.validatePosition.bind(this);
 
-    window.onEvent(this.validatePosition, 1, ScrollSpy.EVENT_ACTIVE);
+    window.onEvent(ScrollSpy.EVENT_ACTIVE, this.validatePosition, 1);
   }
 
   public validatePosition(): void {

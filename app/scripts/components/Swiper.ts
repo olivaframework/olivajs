@@ -110,7 +110,7 @@ class Swiper {
       }]);
     }
 
-    window.onEvent(this.update, 1, Swiper.WINDOW_EVENT);
+    window.onEvent(Swiper.WINDOW_EVENT, this.update, 1);
   }
 
   public animate(distance: number, velocity: number): void {
