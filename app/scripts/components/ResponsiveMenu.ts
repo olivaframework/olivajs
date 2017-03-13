@@ -25,7 +25,6 @@ class ResponsiveMenu {
     this.close = this.close.bind(this);
 
     this.openButton.addEventListener(ResponsiveMenu.EVENT_ACTIVE, this.open);
-    window.addEventListener(ResponsiveMenu.EVENT_ACTIVE, this.close);
     this.init();
   }
 
@@ -53,6 +52,8 @@ class ResponsiveMenu {
     if (this.position === 'bottom' && this.type === 'push') {
       document.body.style.top = `-${ this.menu.offsetHeight }px`;
     }
+
+    window.addEventListener(ResponsiveMenu.EVENT_ACTIVE, this.close);
   }
 
   private close(event): void {
@@ -73,6 +74,8 @@ class ResponsiveMenu {
       if (this.showOverlay) {
         Overlay.getInstance().hide();
       }
+
+      window.removeEventListener(ResponsiveMenu.EVENT_ACTIVE, this.close);
     }
   }
 }
