@@ -61,7 +61,8 @@ class ResponsiveMenu {
       Overlay.getInstance().show();
     }
 
-    if (this.position === 'top' && this.type === 'push') {
+    if ((this.type === 'push' || this.type === 'discover')
+      && this.position === 'top') {
       document.body.style.top = `${ this.menu.offsetHeight }px`;
     }
 
@@ -80,7 +81,8 @@ class ResponsiveMenu {
       this.menu.classList.remove(ResponsiveMenu.ACTIVE_CLASS);
       document.body.classList.remove(ResponsiveMenu.ACTIVE_CLASS);
 
-      if (this.position === 'top' && this.type === 'push') {
+      if ((this.type === 'push' || this.type === 'discover')
+        && this.position === 'top') {
         document.body.style.top = '0px';
       }
       if (this.position === 'bottom' && this.type === 'push') {

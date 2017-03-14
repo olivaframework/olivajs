@@ -3,6 +3,9 @@
     overflow-x: hidden;
     transition: transform 200ms ease-out,
       bottom 200ms ease-out,
+      bottom 200ms ease-out,
+      left 200ms ease-out,
+      right 200ms ease-out,
       top 200ms ease-out;
 
     &.push {
@@ -24,14 +27,29 @@
     }
 
     &.discover {
-      background: #FCA456;
+      // To avoid seeing the menu below transparent body content.
+      background: $body-bg-color;
+      position: absolute;
+
+      &.left {
+        left: 0;
+      }
+
+      &.right {
+        right: 0;
+      }
 
       &.top {
-        position: absolute;
         top: 0;
+      }
 
-        &.active {
-          top: 85%;
+      &.active {
+        &.left {
+          left: 85%;
+        }
+
+        &.right {
+          right: 85%;
         }
       }
     }
@@ -39,12 +57,31 @@
 
   .responsive-menu {
     position: absolute;
+    z-index: $responsive-menu-z-index;
+
+    &.over,
+    &.push {
+      &.right {
+        height: 100%;
+        right: 0;
+        top: 0;
+        transform: translate(100%);
+        width: 85%;
+      }
+
+      &.left {
+        height: 100%;
+        left: 0;
+        top: 0;
+        transform: translate(-100%);
+        width: 85%;
+      }
+    }
 
     &.over {
       transition: transform 200ms ease-out,
         bottom 200ms ease-out,
         top 200ms ease-out;
-      z-index: $responsive-menu-z-index;
 
       &.top {
         top: 0;
@@ -66,7 +103,6 @@
       transition: transform 200ms ease-out,
         bottom 200ms ease-out,
         top 200ms ease-out;
-      z-index: $responsive-menu-z-index;
 
       &.top {
         top: 0;
@@ -85,39 +121,29 @@
     }
 
     &.discover {
+      position: fixed;
       width: 85%;
+      z-index: -5;
 
       &.top {
-        top: -100%;
+        top: 0;
+        width: 100%;
+      }
+
+      &.left {
+        left: 0;
+        top: 0;
+      }
+
+      &.right {
+        right: 0;
+        top: 0;
       }
 
       &.bottom {
         bottom: 0;
+        width: 100%;
       }
-
-      &.active {
-        &.top {
-          position: fixed;
-          top: 0;
-          width: 100%;
-        }
-      }
-    }
-
-    &.right {
-      height: 100%;
-      right: 0;
-      top: 0;
-      transform: translate(100%);
-      width: 85%;
-    }
-
-    &.left {
-      height: 100%;
-      left: 0;
-      top: 0;
-      transform: translate(-100%);
-      width: 85%;
     }
   }
 }
