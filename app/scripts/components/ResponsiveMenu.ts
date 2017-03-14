@@ -2,6 +2,7 @@ import { Overlay } from './Overlay';
 
 class ResponsiveMenu {
   private static BODY_CLASS: string = 'responsive-menu-body';
+  private static MENU_ANIMATE_CLASS: string = 'responsive-menu-animated';
   private static MENU_CLASS: string = 'responsive-menu';
   static readonly EVENT_ACTIVE: string = 'click';
   static readonly ACTIVE_CLASS: string = 'active';
@@ -28,12 +29,12 @@ class ResponsiveMenu {
   }
 
   private init(): void {
-    document.body.classList.add(ResponsiveMenu.BODY_CLASS);
     document.body.classList.add(this.type);
     document.body.classList.add(this.position);
-    this.menu.classList.add(ResponsiveMenu.MENU_CLASS);
+    document.body.classList.add(ResponsiveMenu.BODY_CLASS);
     this.menu.classList.add(this.position);
     this.menu.classList.add(this.type);
+    this.menu.classList.add(ResponsiveMenu.MENU_CLASS);
 
     window.onEvent('resize', this.update, 200);
     this.update();
@@ -54,7 +55,9 @@ class ResponsiveMenu {
   }
 
   private open(): void {
+    this.menu.classList.add(ResponsiveMenu.MENU_ANIMATE_CLASS);
     this.menu.classList.add(ResponsiveMenu.ACTIVE_CLASS);
+    document.body.classList.add(ResponsiveMenu.MENU_ANIMATE_CLASS);
     document.body.classList.add(ResponsiveMenu.ACTIVE_CLASS);
 
     if (this.showOverlay) {

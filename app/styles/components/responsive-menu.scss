@@ -1,12 +1,15 @@
 @include media-breakpoint-down('sm') {
   .responsive-menu-body {
     overflow-x: hidden;
-    transition: transform 200ms ease-out,
-      bottom 200ms ease-out,
-      bottom 200ms ease-out,
-      left 200ms ease-out,
-      right 200ms ease-out,
-      top 200ms ease-out;
+
+    &.responsive-menu-animated {
+      transition: transform 200ms ease-out,
+        bottom 200ms ease-out,
+        bottom 200ms ease-out,
+        left 200ms ease-out,
+        right 200ms ease-out,
+        top 200ms ease-out;
+    }
 
     &.push {
       &.top,
@@ -79,9 +82,11 @@
     }
 
     &.over {
-      transition: transform 200ms ease-out,
-        bottom 200ms ease-out,
-        top 200ms ease-out;
+      &.responsive-menu-animated {
+        transition: transform 200ms ease-out,
+          bottom 200ms ease-out,
+          top 200ms ease-out;
+      }
 
       &.top {
         top: 0;
@@ -100,9 +105,11 @@
     }
 
     &.push {
-      transition: transform 200ms ease-out,
-        bottom 200ms ease-out,
-        top 200ms ease-out;
+      &.responsive-menu-animated {
+        transition: transform 200ms ease-out,
+          bottom 200ms ease-out,
+          top 200ms ease-out;
+      }
 
       &.top {
         top: 0;
