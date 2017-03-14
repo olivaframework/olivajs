@@ -9,11 +9,13 @@ describe('DOMElement component specification', () => {
   });
 
   it('should create a div element on body', () => {
+    domElement = new DOMElement('div');
     domElement.setId('dom_element');
     domElement.render(document.body);
 
-    expect(document.querySelector('#dom_element')).to.be
-    .equals(domElement.getElement());
+    const element = domElement.getElement();
+
+    expect(document.querySelector('#dom_element')).to.be.equals(element);
   });
 
   it('should create a div element on body with correct classes', () => {
@@ -47,11 +49,11 @@ describe('DOMElement component specification', () => {
     domElement.addClasses(classes);
     domElement.removeClasses(removedClasses);
 
-    expect(domElement.getElement().classList[0]).to.be
-    .equals(classes[1]);
+    expect(domElement.getElement().classList[0]).to.be.equals(classes[1]);
 
-    expect(domElement.getElement().classList.length).to.be
-    .equals(classes.length - removedClasses.length);
+    const classesSize = classes.length - removedClasses.length;
+
+    expect(domElement.getElement().classList.length).to.be.equals(classesSize);
   });
 
   it('should create a div element with correct content', () => {
@@ -60,13 +62,12 @@ describe('DOMElement component specification', () => {
     domElement.setContent(content);
     domElement.render(document.body);
 
-    expect(domElement.getElement().textContent).to.be
-    .equals(content);
+    expect(domElement.getElement().textContent).to.be.equals(content);
   });
 
   it('should create a div element with events', () => {
-    let callback1 = sinon.spy();
-    let callback2 = sinon.spy();
+    const callback1 = sinon.spy();
+    const callback2 = sinon.spy();
 
     const events = [{
       callback: callback1,
@@ -87,8 +88,8 @@ describe('DOMElement component specification', () => {
   });
 
   it('should remove div specific events', () => {
-    let callback1 = sinon.spy();
-    let callback2 = sinon.spy();
+    const callback1 = sinon.spy();
+    const callback2 = sinon.spy();
 
     const events = [{
       callback: callback1,
@@ -110,6 +111,50 @@ describe('DOMElement component specification', () => {
     domElement.getElement().click();
     assert(callback1.calledOnce);
     assert(callback2.calledTwice);
+  });
+
+  it('should set correct styles to DOMElement', () => {
+    const styles = {
+      height: '100px',
+      width: '100px'
+    };
+
+    domElement.setStyles(styles);
+    domElement.render(document.body);
+
+    expect(domElement.getElement().style.height).to.be.equals(styles.height);
+    expect(domElement.getElement().style.width).to.be.equals(styles.width);
+  });
+
+  it('should render in correct position with renderBefore method', () => {
+    let positionToInsert = 2;
+    let container = document.createElement('div');
+
+    document.body.appendChild(container);
+
+    for (let i = 0; i < 5; i++) {
+      let item = new DOMElement('div');
+
+      item.addClasses(['item']);
+      item.render(container);
+    }
+
+    domElement.setId('id');
+    domElement.addClasses(['item']);
+    domElement.renderBefore(container, positionToInsert);
+
+    let items = document.querySelectorAll('.item');
+    let element = domElement.getElement();
+
+    for (let i = 0; i < items.length; i++) {
+      let item = items[i] as HTMLElement;
+
+      if (i === positionToInsert) {
+        expect(element.id).to.be.equals(item.id);
+      } else {
+        expect(element.id).to.not.equals(item.id);
+      }
+    }
   });
 
   afterEach(() => {
