@@ -62,30 +62,25 @@
     position: absolute;
     z-index: $responsive-menu-z-index;
 
-    &.over,
-    &.push {
-      &.right {
-        height: 100%;
-        right: 0;
-        top: 0;
-        transform: translate(100%);
-        width: 85%;
-      }
-
-      &.left {
-        height: 100%;
-        left: 0;
-        top: 0;
-        transform: translate(-100%);
-        width: 85%;
-      }
-    }
-
     &.over {
       &.responsive-menu-animated {
         transition: transform 200ms ease-out,
           bottom 200ms ease-out,
           top 200ms ease-out;
+      }
+
+      &.right {
+        max-width: 85%;
+        right: 0;
+        top: 0;
+        transform: translate(100%);
+      }
+
+      &.left {
+        left: 0;
+        max-width: 85%;
+        top: 0;
+        transform: translate(-100%);
       }
 
       &.top {
@@ -105,10 +100,27 @@
     }
 
     &.push {
+      height: 100%;
+      position: fixed;
+
       &.responsive-menu-animated {
         transition: transform 200ms ease-out,
           bottom 200ms ease-out,
           top 200ms ease-out;
+      }
+
+      &.right {
+        right: 0;
+        top: 0;
+        transform: translate(100%);
+        width: 85%;
+      }
+
+      &.left {
+        left: 0;
+        top: 0;
+        transform: translate(-100%);
+        width: 85%;
       }
 
       &.top {
