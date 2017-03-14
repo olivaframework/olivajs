@@ -1,3 +1,5 @@
+import { DOMUtils } from './DOMUtils';
+
 class ScrollSpy {
   static readonly ACTIVE_CLASS: string = 'active';
   static readonly EVENT_ACTIVE: string = 'scroll';
@@ -16,9 +18,9 @@ class ScrollSpy {
     let scrollLimit = (window.innerHeight * ScrollSpy.SCROLL_PERCENT) / 100;
 
     if (window.pageYOffset > scrollLimit) {
-      this.handler.classList.add(ScrollSpy.ACTIVE_CLASS);
+      DOMUtils.addClass(this.handler, ScrollSpy.ACTIVE_CLASS);
     } else {
-      this.handler.classList.remove(ScrollSpy.ACTIVE_CLASS);
+      DOMUtils.removeClass(this.handler, ScrollSpy.ACTIVE_CLASS);
     }
   }
 }

@@ -86,7 +86,7 @@ class Swiper {
     this.items = this.container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
 
     this.swiper.addEventListener(this.supportEvents.down, this.actionDown);
-    this.swiper.addEventListener(this.supportEvents.click, event => {
+    this.swiper.addEventListener(this.supportEvents.down, event => {
       if (this.traveledDistance !== 0
         && this.supportEvents.down === Swiper.MOUSE_EVENTS.down) {
         event.preventDefault();

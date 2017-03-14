@@ -1,3 +1,5 @@
+import { DOMUtils } from './DOMUtils.ts';
+
 class Dropdown {
   static readonly ACTIVE_CLASS: string = 'open';
   static readonly EVENT_ACTIVE: string = 'click';
@@ -16,12 +18,12 @@ class Dropdown {
     let isClickInside = this.handler.contains(event.target);
 
     if (!isClickInside) {
-      this.handler.classList.remove(Dropdown.ACTIVE_CLASS);
+      DOMUtils.removeClass(this.handler, Dropdown.ACTIVE_CLASS);
     }
   }
 
   public toggle(): void {
-    this.handler.classList.toggle(Dropdown.ACTIVE_CLASS);
+    DOMUtils.toggleClass(this.handler, Dropdown.ACTIVE_CLASS);
   }
 }
 

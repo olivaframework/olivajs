@@ -79,7 +79,7 @@ class Carousel extends Swiper {
 
       let clonedItem = currentItem.cloneNode(true) as HTMLElement;
 
-      clonedItem.classList.add(Carousel.CLONED_CLASS);
+      DOMUtils.addClass(clonedItem, Carousel.CLONED_CLASS);
       this.container.appendChild(clonedItem);
     }
 

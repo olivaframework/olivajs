@@ -7,33 +7,42 @@ class DOMUtils {
     }
   }
 
-  static removeClassToItems(elements, className: string): void {
+  static removeClassToItems(
+    elements: NodeListOf<Element>,
+    className: string
+  ): void {
     let elementsSize = elements.length;
 
     for (let i = 0; i < elementsSize; i++) {
-      elements[i].classList.remove(className);
+      this.removeClass(elements[i], className);
     }
   }
 
-  static syncForEach(callback, elements: NodeListOf<Element>): void {
+  static syncForEach(
+    callback: (elements: HTMLElement) => void,
+    elements: NodeListOf<Element>
+  ): void {
     let elementsSize = elements.length;
 
     for (let i = 0; i < elementsSize; i++) {
-      callback(elements[i]);
+      callback(elements[i] as HTMLElement);
     }
   }
 
-  static findParentElementByClass(nodeElement, className): HTMLElement {
+  static findParentElementByClass(
+    nodeElement: HTMLElement,
+    className: string
+  ): HTMLElement {
     let element = nodeElement;
 
-    while (!element.classList.contains(className) && element) {
+    while (!this.containsClass(element, className) && element) {
       element = element.parentNode as HTMLElement;
     }
 
     return element;
   }
 
-  static removeAllChildElements(nodeElement): void {
+  static removeAllChildElements(nodeElement: HTMLElement): void {
     while (nodeElement.firstChild) {
       nodeElement.removeChild(nodeElement.firstChild);
     }
@@ -57,8 +66,9 @@ class DOMUtils {
     );
   }
 
-  static getIndexNode(nodeElement): number {
-    let children = nodeElement.parentNode.children;
+  static getIndexNode(nodeElement: Element): number {
+    let parent = nodeElement.parentNode as HTMLElement;
+    let children = parent.children;
     let childrenSize = children.length;
 
     for (let i = 0; i < childrenSize; i++) {
@@ -66,6 +76,38 @@ class DOMUtils {
         return i + 1;
       }
     }
+  }
+
+  static addClass(nodeElement: Element, className: string): void {
+    let classes = nodeElement.className;
+
+    if (classes.indexOf(className) === -1) {
+      if (classes === '') {
+        nodeElement.className = className;
+      } else {
+        nodeElement.className = classes.concat(' ' + className);
+      }
+    }
+  }
+
+  static removeClass(nodeElement: Element, className: string): void {
+    let regex = new RegExp('(^|\\s+)' + className + '(\\s+|$)');
+
+    nodeElement.className = nodeElement.className.replace(regex, '');
+  }
+
+  static toggleClass(nodeElement: Element, className: string): void {
+    if (this.containsClass(nodeElement, className)) {
+      this.removeClass(nodeElement, className);
+    } else {
+      this.addClass(nodeElement, className);
+    }
+  }
+
+  static containsClass(nodeElement: Element, className: string): boolean {
+    let regex = new RegExp('(^|\\s+)' + className + '(\\s+|$)');
+
+    return regex.test(nodeElement.className);
   }
 }
 export { DOMUtils };

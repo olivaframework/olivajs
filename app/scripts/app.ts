@@ -42,7 +42,7 @@ window.onload = () => {
   }, scrollSpies);
 
   DOMUtils.syncForEach(tab => {
-    new Tab(tab);
+    new Tab(tab as HTMLAnchorElement);
   }, tabs);
 
   DOMUtils.syncForEach(modal => {
@@ -50,7 +50,7 @@ window.onload = () => {
   }, modals);
 
   DOMUtils.syncForEach(jump => {
-    new Jump(jump);
+    new Jump(jump as HTMLAnchorElement);
   }, jumps);
 
   DOMUtils.syncForEach(dropdown => {

@@ -39,12 +39,12 @@ class Modal {
   }
 
   public show(): void {
-    this.modal.classList.add(Modal.ACTIVE_CLASS);
+    DOMUtils.addClass(this.modal, Modal.ACTIVE_CLASS);
     this.overlay.show();
   }
 
   public hide(): void {
-    this.modal.classList.remove(Modal.ACTIVE_CLASS);
+    DOMUtils.removeClass(this.modal, Modal.ACTIVE_CLASS);
     this.overlay.hide();
   }
 }

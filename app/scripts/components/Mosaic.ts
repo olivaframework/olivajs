@@ -62,7 +62,8 @@ class Mosaic {
   public renderDetail(): void {
     this.detailContainer.destroy();
     this.createDetailContainer();
-    this.activedItem.classList.add(Mosaic.ACTIVE_CLASS);
+
+    DOMUtils.addClass(this.activedItem, Mosaic.ACTIVE_CLASS);
 
     let mosaicWidth = this.mosaic.offsetWidth;
     let itemsContainerWitdh = this.itemsContainer.offsetWidth;

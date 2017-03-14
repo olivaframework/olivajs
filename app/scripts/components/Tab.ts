@@ -24,8 +24,8 @@ class Tab {
     DOMUtils.removeClassToItems(contentItems, Tab.ACTIVE_CLASS);
     DOMUtils.removeClassToItems(handlerItems, Tab.ACTIVE_CLASS);
 
-    this.content.classList.add(Tab.ACTIVE_CLASS);
-    this.handler.classList.add(Tab.ACTIVE_CLASS);
+    DOMUtils.addClass(this.content, Tab.ACTIVE_CLASS);
+    DOMUtils.addClass(this.handler, Tab.ACTIVE_CLASS);
   }
 }
 

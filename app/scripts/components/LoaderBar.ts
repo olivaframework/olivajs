@@ -1,4 +1,5 @@
 import { DOMElement } from './DOMElement';
+import { DOMUtils } from './DOMUtils';
 
 class LoaderBar {
   private static readonly ACTIVE_CLASS: string = 'loading';
@@ -19,11 +20,11 @@ class LoaderBar {
       throw new Error('Error: Use Loader.getInstance() instead of new.');
     }
 
-    document.addEventListener('http-sent', LoaderBar.addRequest);
+    window.addEventListener('http-sent', LoaderBar.addRequest);
 
-    document.addEventListener('http-loading', LoaderBar.changeProgress);
+    window.addEventListener('http-loading', LoaderBar.changeProgress);
 
-    document.addEventListener('http-finished', LoaderBar.removeRequest);
+    window.addEventListener('http-finished', LoaderBar.removeRequest);
 
     LoaderBar.loaderbar = new DOMElement(LoaderBar.LOADERBAR_ELEMENT);
     LoaderBar.loaderbar.addClasses([LoaderBar.LOADERBAR_CLASS]);

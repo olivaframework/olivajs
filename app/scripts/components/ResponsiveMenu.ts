@@ -1,3 +1,4 @@
+import { DOMUtils } from './DOMUtils';
 import { Overlay } from './Overlay';
 
 class ResponsiveMenu {
@@ -29,12 +30,12 @@ class ResponsiveMenu {
   }
 
   private init(): void {
-    document.body.classList.add(this.type);
-    document.body.classList.add(this.position);
-    document.body.classList.add(ResponsiveMenu.BODY_CLASS);
-    this.menu.classList.add(this.position);
-    this.menu.classList.add(this.type);
-    this.menu.classList.add(ResponsiveMenu.MENU_CLASS);
+    DOMUtils.addClass(document.body, this.type);
+    DOMUtils.addClass(document.body, this.position);
+    DOMUtils.addClass(document.body, ResponsiveMenu.BODY_CLASS);
+    DOMUtils.addClass(this.menu, this.type);
+    DOMUtils.addClass(this.menu, this.position);
+    DOMUtils.addClass(this.menu, ResponsiveMenu.MENU_CLASS);
 
     window.onEvent('resize', this.update, 200);
     this.update();
@@ -42,23 +43,17 @@ class ResponsiveMenu {
 
   private update(): void {
     if (window.isMobile()) {
-      this.openButton.addEventListener(
-        ResponsiveMenu.EVENT_ACTIVE,
-        this.open
-      );
+      this.openButton.addEventListener(ResponsiveMenu.EVENT_ACTIVE, this.open);
     } else {
-      this.openButton.removeEventListener(
-        ResponsiveMenu.EVENT_ACTIVE,
-        this.open
-      );
+      this.openButton.addEventListener(ResponsiveMenu.EVENT_ACTIVE, this.open);
     }
   }
 
   private open(): void {
-    this.menu.classList.add(ResponsiveMenu.MENU_ANIMATE_CLASS);
-    this.menu.classList.add(ResponsiveMenu.ACTIVE_CLASS);
-    document.body.classList.add(ResponsiveMenu.MENU_ANIMATE_CLASS);
-    document.body.classList.add(ResponsiveMenu.ACTIVE_CLASS);
+    DOMUtils.addClass(this.menu, ResponsiveMenu.MENU_ANIMATE_CLASS);
+    DOMUtils.addClass(this.menu, ResponsiveMenu.ACTIVE_CLASS);
+    DOMUtils.addClass(document.body, ResponsiveMenu.MENU_ANIMATE_CLASS);
+    DOMUtils.addClass(document.body, ResponsiveMenu.ACTIVE_CLASS);
 
     if (this.showOverlay) {
       Overlay.getInstance().show();
@@ -81,8 +76,8 @@ class ResponsiveMenu {
       || this.openButton.contains(event.target);
 
     if (!isClickInside) {
-      this.menu.classList.remove(ResponsiveMenu.ACTIVE_CLASS);
-      document.body.classList.remove(ResponsiveMenu.ACTIVE_CLASS);
+      DOMUtils.removeClass(this.menu, ResponsiveMenu.ACTIVE_CLASS);
+      DOMUtils.removeClass(document.body, ResponsiveMenu.ACTIVE_CLASS);
 
       if ((this.type === 'push' || this.type === 'discover')
         && this.position === 'top') {

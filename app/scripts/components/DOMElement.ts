@@ -1,3 +1,5 @@
+import { DOMUtils } from './DOMUtils';
+
 interface Events {
   callback: () => void;
   name: string;
@@ -24,13 +26,13 @@ class DOMElement {
 
   public addClasses(classes: Array<string>): void {
     for (let item of classes) {
-      this.element.classList.add(item);
+      DOMUtils.addClass(this.element, item);
     }
   }
 
   public removeClasses(classes: Array<string>): void {
     for (let item of classes) {
-      this.element.classList.remove(item);
+      DOMUtils.removeClass(this.element, item);
     }
   }
 
