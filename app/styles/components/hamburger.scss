@@ -15,6 +15,30 @@
   transition: background $hamburger-button-transistion-duration;
   width: $hamburger-button-width;
 
+  &.bottom,
+  &.left,
+  &.right,
+  &.top {
+    position: fixed;
+    z-index: $hamburger-button-z-index;
+  }
+
+  &.left,
+  &.top {
+    left: 0;
+    top: 0;
+  }
+
+  &.right {
+    right: 0;
+    top: 0;
+  }
+
+  &.bottom {
+    bottom: 0;
+    left: 0;
+  }
+
   .hamburger {
     display: block;
     height: $hamburger-bar-thickness;
