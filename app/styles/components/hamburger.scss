@@ -1,0 +1,122 @@
+.menu-hamburger-btn {
+  background-color: $hamburger-button-bg;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  cursor: pointer;
+  display: block;
+  font-size: 0;
+  height: $hamburger-button-height;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  text-indent: -9999px;
+  transition: background $hamburger-button-transistion-duration;
+  width: $hamburger-button-width;
+
+  .hamburger {
+    display: block;
+    height: $hamburger-bar-thickness;
+    left: $hamburger-button-pad;
+    position: absolute;
+    right: $hamburger-button-pad;
+    top: ($hamburger-button-height / 2) - ($hamburger-bar-thickness / 2);
+
+    &,
+    &::before,
+    &::after {
+      background-color: #FFFFFF;
+      content: '';
+      display: block;
+      height: $hamburger-bar-thickness;
+      position: absolute;
+    }
+
+    &::before {
+      top: -$hamburger-bar-thickness - $hamburger-button-bar-space;
+      width: 100%;
+    }
+
+    &::after {
+      bottom: -$hamburger-bar-thickness - $hamburger-button-bar-space;
+      width: 100%;
+    }
+  }
+
+  .hamburger-x {
+    transition: background 0s $hamburger-button-transistion-duration;
+
+    &::after,
+    &::before {
+      transition-delay: $hamburger-button-transistion-duration, 0s;
+      transition-duration: $hamburger-button-transistion-duration,
+        $hamburger-button-transistion-duration;
+    }
+
+    &::before {
+      transition-property: top, transform;
+    }
+
+    &::after {
+      transition-property: bottom, transform;
+    }
+
+    &.active {
+      background: none;
+
+      &::before {
+        top: 0;
+        transform: rotate(45deg);
+      }
+
+      &::after {
+        bottom: 0;
+        transform: rotate(-45deg);
+      }
+    }
+  }
+
+  .hamburger-back {
+    transition: transform $hamburger-button-transistion-duration;
+
+    &::before {
+      transform-origin: top right;
+      transition: transform $hamburger-button-transistion-duration,
+        width $hamburger-button-transistion-duration,
+        top $hamburger-button-transistion-duration;
+    }
+
+    &::after {
+      transform-origin: bottom right;
+      transition: transform $hamburger-button-transistion-duration,
+        width $hamburger-button-transistion-duration,
+        bottom $hamburger-button-transistion-duration;
+    }
+
+    &.active {
+      transform: rotate(180deg);
+
+      &::before,
+      &::after {
+        width: 50%;
+      }
+
+      $ham-back-x: $hamburger-button-width/2 - $hamburger-button-pad
+        + $hamburger-bar-thickness;
+
+      &::before {
+        $before-y: $hamburger-bar-thickness/2;
+        top: 0;
+        transform: translateX($ham-back-x) translateY($before-y) rotate(45deg);
+      }
+
+      &::after {
+
+        $after-y: -$hamburger-bar-thickness / 2;
+        bottom: 0;
+        transform: translateX($ham-back-x) translateY($after-y) rotate(-45deg);
+      }
+    }
+  }
+}
