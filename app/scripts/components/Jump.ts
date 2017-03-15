@@ -1,5 +1,3 @@
-import { DOMUtils } from './DOMUtils';
-
 class Jump {
   static readonly ATTR: string = 'data-jump-content-id';
   static readonly EVENT_ACTIVE: string = 'click';
@@ -43,7 +41,7 @@ class Jump {
 
   public scrollDown(init: number, end: number): void {
     let top = init;
-    let maxEnd = DOMUtils.getBodyHeight() - window.innerHeight;
+    let maxEnd = document.body.offsetHeight - window.innerHeight;
     let finalEnd = (end > maxEnd) ? maxEnd : end;
 
     setTimeout(() => {

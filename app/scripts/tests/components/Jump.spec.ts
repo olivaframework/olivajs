@@ -83,9 +83,6 @@ describe('Jump component specification', () => {
 
     jumpHandler.click();
     assert(spy.calledOnce);
-
-    clock.tick(Jump.SCROLL_VELOCITY_MS);
-    assert(spy.calledTwice);
   });
 
   afterEach(() => {

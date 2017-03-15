@@ -1,4 +1,4 @@
-import { DOMUtils } from './DOMUtils.ts';
+import { DOMUtils } from './DOMUtils';
 
 class Dropdown {
   static readonly ACTIVE_CLASS: string = 'open';

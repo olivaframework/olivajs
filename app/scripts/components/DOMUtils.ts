@@ -42,28 +42,12 @@ class DOMUtils {
     return element;
   }
 
-  static removeAllChildElements(nodeElement: HTMLElement): void {
-    while (nodeElement.firstChild) {
-      nodeElement.removeChild(nodeElement.firstChild);
-    }
-  }
-
   static removeElements(elements: NodeListOf<Element>): void {
     let elementsSize = elements.length;
 
     for (let i = 0; i < elementsSize; i++) {
       elements[i].parentNode.removeChild(elements[i]);
     }
-  }
-
-  static getBodyHeight(): number {
-    return Math.max(
-      document.body.scrollHeight,
-      document.body.offsetHeight,
-      document.documentElement.clientHeight,
-      document.documentElement.scrollHeight,
-      document.documentElement.offsetHeight
-    );
   }
 
   static getIndexNode(nodeElement: Element): number {
@@ -110,4 +94,5 @@ class DOMUtils {
     return regex.test(nodeElement.className);
   }
 }
+
 export { DOMUtils };

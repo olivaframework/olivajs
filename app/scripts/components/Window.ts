@@ -3,8 +3,6 @@ interface Window {
   supportTouchEvents: () => boolean;
   redirect: (url: string) => void;
   onEvent: (eventName: string, callback: () => void, time: number) => void;
-  attachEvent(event: string, listener: EventListener): boolean;
-  detachEvent(event: string, listener: EventListener): void;
 }
 
 window.isMobile = () => 768 > Math.max(

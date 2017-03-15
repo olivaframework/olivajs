@@ -21,3 +21,7 @@ npm-debug.log
 #JetBrains Files
 .idea
 *.iml
+
+#Typescript Maps
+/app/scripts/**/*.js.map
+/app/scripts/**/*.js
