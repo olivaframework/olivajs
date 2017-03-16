@@ -23,6 +23,16 @@
     z-index: $hamburger-button-z-index;
   }
 
+  &.discover {
+    position: absolute;
+  }
+
+  &.push {
+    &.top {
+      position: absolute;
+    }
+  }
+
   &.left,
   &.top {
     left: 0;
