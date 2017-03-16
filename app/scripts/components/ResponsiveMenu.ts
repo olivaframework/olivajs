@@ -15,6 +15,7 @@ class ResponsiveMenu {
   private openButton: Element;
   private hamburgerButton: DOMElement;
   private hamburgerButtonContent: DOMElement;
+  private hamburgerButtonElement: HTMLElement;
   private openButtonId: string;
   private position: string; // bottom, left, right, top
   private type: string; // discover, over, push
@@ -61,13 +62,14 @@ class ResponsiveMenu {
         this.position,
         this.type
       ]);
+      this.hamburgerButtonElement = this.hamburgerButton.getElement();
       this.hamburgerButton.render(this.openButton);
       this.hamburgerButtonContent = new DOMElement('span');
       this.hamburgerButtonContent.addClasses([
         ResponsiveMenu.BUTTON_INNER_CLASS,
         this.buttonType
       ]);
-      this.hamburgerButtonContent.render(this.hamburgerButton.getElement());
+      this.hamburgerButtonContent.render(this.hamburgerButtonElement);
     }
   }
 
@@ -100,9 +102,18 @@ class ResponsiveMenu {
       Overlay.getInstance().show();
     }
 
-    if ((this.type === 'push' || this.type === 'discover')
-      && this.position === 'top') {
-      document.body.style.top = `${ this.menu.offsetHeight }px`;
+    if (this.type === 'push' || this.type === 'discover') {
+      switch (this.position) {
+        case 'top':
+          document.body.style.top = `${ this.menu.offsetHeight }px`;
+          break;
+        case 'left':
+        case 'right':
+        default:
+          this.menu.style.top = `${ window.scrollY }px`;
+          this.hamburgerButtonElement.style.top = `${ window.scrollY }px`;
+          break;
+      }
     }
 
     if (this.position === 'bottom' && this.type === 'push') {
@@ -128,9 +139,18 @@ class ResponsiveMenu {
         );
       }
 
-      if ((this.type === 'push' || this.type === 'discover')
-        && this.position === 'top') {
-        document.body.style.top = '0px';
+      if (this.type === 'push' || this.type === 'discover') {
+        switch (this.position) {
+          case 'top':
+            document.body.style.top = '0px';
+            break;
+          case 'left':
+          case 'right':
+          default:
+            this.menu.style.top = '0px';
+            this.hamburgerButtonElement.style.top = '0px';
+            break;
+        }
       }
       if (this.position === 'bottom' && this.type === 'push') {
         document.body.style.top = '0px';
