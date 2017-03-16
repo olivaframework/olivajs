@@ -1,17 +1,17 @@
 interface Window {
+  getInnerHeight: () => number;
   isMobile: () => boolean;
-  supportTouchEvents: () => boolean;
-  redirect: (url: string) => void;
   onEvent: (eventName: string, callback: () => void, time: number) => void;
+  redirect: (url: string) => void;
+  scrollTop: () => number;
+  supportTouchEvents: () => boolean;
 }
+
+window.getInnerHeight = () => window.innerHeight;
 
 window.isMobile = () => 768 > Math.max(
   0 || document.documentElement.clientWidth, window.innerWidth
 );
-
-window.redirect = url => {
-  window.location.href = url;
-};
 
 window.onEvent = (eventName, callback, time) => {
   let timeout = 0;
@@ -20,6 +20,18 @@ window.onEvent = (eventName, callback, time) => {
     clearTimeout(timeout);
     timeout = setTimeout(callback, time, event);
   });
+};
+
+window.redirect = url => {
+  window.location.href = url;
+};
+
+window.scrollTop = () => {
+  if (window.pageYOffset) {
+    return window.pageYOffset;
+  }
+
+  return document.body.scrollTop;
 };
 
 window.supportTouchEvents = () => 'ontouchstart' in window;

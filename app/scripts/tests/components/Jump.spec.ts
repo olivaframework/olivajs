@@ -78,11 +78,18 @@ describe('Jump component specification', () => {
 
     let jumpComponent = new Jump(jumpHandler);
     let spy = sinon.spy(jumpComponent, 'scrollDown');
+    let stub = sinon.stub(window, 'getInnerHeight');
+
+    stub.onFirstCall().returns(0);
+    stub.onSecondCall().returns(-100);
 
     assert(spy.notCalled);
 
     jumpHandler.click();
     assert(spy.calledOnce);
+
+    clock.tick(Jump.SCROLL_VELOCITY_MS);
+    assert(spy.calledTwice);
   });
 
   afterEach(() => {

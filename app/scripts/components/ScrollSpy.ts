@@ -1,3 +1,4 @@
+import './Window';
 import { DOMUtils } from './DOMUtils';
 
 class ScrollSpy {
@@ -17,7 +18,7 @@ class ScrollSpy {
   public validatePosition(): void {
     let scrollLimit = (window.innerHeight * ScrollSpy.SCROLL_PERCENT) / 100;
 
-    if (window.pageYOffset > scrollLimit) {
+    if (window.scrollTop() > scrollLimit) {
       DOMUtils.addClass(this.handler, ScrollSpy.ACTIVE_CLASS);
     } else {
       DOMUtils.removeClass(this.handler, ScrollSpy.ACTIVE_CLASS);

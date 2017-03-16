@@ -18,7 +18,7 @@ class Jump {
     event.preventDefault();
 
     let elementTop = this.getOffsetTop(this.element);
-    let handlerTop = window.pageYOffset;
+    let handlerTop = window.scrollTop();
 
     if (handlerTop < elementTop) {
       this.scrollDown(handlerTop, elementTop);
@@ -41,7 +41,7 @@ class Jump {
 
   public scrollDown(init: number, end: number): void {
     let top = init;
-    let maxEnd = document.body.offsetHeight - window.innerHeight;
+    let maxEnd = document.body.offsetHeight - window.getInnerHeight();
     let finalEnd = (end > maxEnd) ? maxEnd : end;
 
     setTimeout(() => {

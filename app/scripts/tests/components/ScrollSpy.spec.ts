@@ -21,12 +21,28 @@ describe('ScrollSpy component specification', () => {
     assert(spy.calledWith(calledEvent, calledFunction, calledTime));
   });
 
-  it('should add active class on window scroll event', () => {
-    // let scrollSpyComponent = new ScrollSpy(scrollSpyHandler);
-    // let spy = sinon.spy(scrollSpyComponent, 'validatePosition');
+  it('should active or desactivate class on validatePosition method', () => {
+    let scrollSpyComponent = new ScrollSpy(scrollSpyHandler);
+    let stub = sinon.stub(window, 'scrollTop');
 
-    scrollSpyHandler.style.height = '600px';
-    window.dispatchEvent(new Event('scroll'));
+    stub.onFirstCall().returns(1000);
+    stub.onSecondCall().returns(0);
+
+    expect(stub.called).to.be.false;
+    expect(scrollSpyHandler.classList.contains(ScrollSpy.ACTIVE_CLASS))
+    .to.be.false;
+
+    scrollSpyComponent.validatePosition();
+
+    expect(stub.called).to.be.true;
+    expect(scrollSpyHandler.classList.contains(ScrollSpy.ACTIVE_CLASS))
+    .to.be.true;
+
+    scrollSpyComponent.validatePosition();
+    expect(scrollSpyHandler.classList.contains(ScrollSpy.ACTIVE_CLASS))
+    .to.be.false;
+
+    stub.resetBehavior();
   });
 
   afterEach(() => {
