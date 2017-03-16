@@ -75,7 +75,7 @@ class DOMUtils {
   }
 
   static removeClass(nodeElement: Element, className: string): void {
-    let regex = new RegExp('(^|\\s+)' + className + '(\\s+|$)');
+    let regex = new RegExp('(^|\\s+)' + className);
 
     nodeElement.className = nodeElement.className.replace(regex, '');
   }

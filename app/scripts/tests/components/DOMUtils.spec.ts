@@ -125,12 +125,22 @@ describe('DOMUtils component specification', () => {
 
   it('should remove class on removeClass method', () => {
     let className = 'className';
+    let className2 = 'className2';
+    let className3 = 'className3';
 
     container.classList.add(className);
-    expect(container.classList.contains(className)).to.be.true;
+    container.classList.add(className2);
+    container.classList.add(className3);
 
-    DOMUtils.removeClass(container, className);
-    expect(container.classList.contains(className)).to.be.false;
+    expect(container.classList.contains(className)).to.be.true;
+    expect(container.classList.contains(className2)).to.be.true;
+    expect(container.classList.contains(className3)).to.be.true;
+
+    DOMUtils.removeClass(container, className2);
+
+    expect(container.classList.contains(className)).to.be.true;
+    expect(container.classList.contains(className2)).to.be.false;
+    expect(container.classList.contains(className3)).to.be.true;
   });
 
   it('should toggle class on toggleClass method', () => {
