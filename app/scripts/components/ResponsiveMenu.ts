@@ -111,7 +111,7 @@ class ResponsiveMenu {
         case 'right':
         default:
           this.menu.style.top = `${ window.scrollY }px`;
-          this.hamburgerButtonElement.style.top = `${ window.scrollY }px`;
+          this.scrollHamburger(window.scrollY);
           break;
       }
     }
@@ -121,14 +121,19 @@ class ResponsiveMenu {
     }
   }
 
-  private close(event): void {
-    event.stopPropagation();
-    document.removeEventListener(ResponsiveMenu.EVENT, this.close);
-    this.openButton.addEventListener(ResponsiveMenu.EVENT, this.open);
+  private scrollHamburger(posY: number = 0): void {
+    if (this.isMainMenu) {
+      this.hamburgerButtonElement.style.top = `${ posY }px`;
+    }
+  }
 
+  private close(event): void {
     let isClickInside = this.menu.contains(event.target);
 
     if (!isClickInside) {
+      event.stopPropagation();
+      document.removeEventListener(ResponsiveMenu.EVENT, this.close);
+      this.openButton.addEventListener(ResponsiveMenu.EVENT, this.open);
       DOMUtils.removeClass(this.menu, ResponsiveMenu.ACTIVE_CLASS);
       DOMUtils.removeClass(document.body, ResponsiveMenu.ACTIVE_CLASS);
 
@@ -147,8 +152,8 @@ class ResponsiveMenu {
           case 'left':
           case 'right':
           default:
+            this.scrollHamburger();
             this.menu.style.top = '0px';
-            this.hamburgerButtonElement.style.top = '0px';
             break;
         }
       }
