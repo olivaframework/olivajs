@@ -58,13 +58,8 @@
   }
 
   .responsive-menu {
-    display: none;
     position: absolute;
     z-index: $responsive-menu-z-index;
-
-    &.active {
-      display: block;
-    }
 
     &.over {
       &.responsive-menu-animated {
@@ -75,6 +70,7 @@
 
       &.right {
         max-width: 85%;
+        position: fixed;
         right: 0;
         top: 0;
         transform: translate(100%);
@@ -83,11 +79,13 @@
       &.left {
         left: 0;
         max-width: 85%;
+        position: fixed;
         top: 0;
         transform: translate(-100%);
       }
 
       &.top {
+        position: fixed;
         top: 0;
         transform: translate(0, -100%);
       }

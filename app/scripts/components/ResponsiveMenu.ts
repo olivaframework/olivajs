@@ -96,6 +96,22 @@ class ResponsiveMenu {
         this.hamburgerButtonContent.getElement(),
         ResponsiveMenu.ACTIVE_CLASS
       );
+
+      if (this.type === 'over') {
+        switch (this.position) {
+          case 'top':
+          case 'bottom':
+            this.hamburgerButtonElement.style[this.position]
+              = `${ this.menu.offsetHeight }px`;
+            break;
+          case 'left':
+          case 'right':
+          default:
+            this.hamburgerButtonElement.style[this.position]
+              = `${ this.menu.offsetWidth }px`;
+            break;
+        }
+      }
     }
 
     if (this.showOverlay) {
@@ -142,6 +158,10 @@ class ResponsiveMenu {
           this.hamburgerButtonContent.getElement(),
           ResponsiveMenu.ACTIVE_CLASS
         );
+
+        if (this.type === 'over') {
+          this.hamburgerButtonElement.style[this.position] = '0px';
+        }
       }
 
       if (this.type === 'push' || this.type === 'discover') {

@@ -12,7 +12,11 @@
   padding: 0;
   position: relative;
   text-indent: -9999px;
-  transition: background $hamburger-button-transistion-duration;
+  transition: background $hamburger-button-transistion-duration,
+    left $hamburger-button-transistion-duration,
+    right $hamburger-button-transistion-duration,
+    bottom $hamburger-button-transistion-duration,
+    top $hamburger-button-transistion-duration;
   width: $hamburger-button-width;
 
   &.bottom,
