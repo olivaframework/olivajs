@@ -2,7 +2,7 @@ import { DOMElement } from './DOMElement';
 import { DOMUtils } from './DOMUtils';
 import { Overlay } from './Overlay';
 
-class ResponsiveMenu {
+class MenuResponsive {
   private static BODY_CLASS: string = 'responsive-menu-body';
   private static MENU_ANIMATE_CLASS: string = 'responsive-menu-animated';
   private static MENU_CLASS: string = 'responsive-menu';
@@ -42,10 +42,10 @@ class ResponsiveMenu {
   private init(): void {
     DOMUtils.addClass(document.body, this.type);
     DOMUtils.addClass(document.body, this.position);
-    DOMUtils.addClass(document.body, ResponsiveMenu.BODY_CLASS);
+    DOMUtils.addClass(document.body, MenuResponsive.BODY_CLASS);
     DOMUtils.addClass(this.menu, this.type);
     DOMUtils.addClass(this.menu, this.position);
-    DOMUtils.addClass(this.menu, ResponsiveMenu.MENU_CLASS);
+    DOMUtils.addClass(this.menu, MenuResponsive.MENU_CLASS);
 
     this.renderHamburgerBtn();
     this.update();
@@ -58,7 +58,7 @@ class ResponsiveMenu {
       this.openButton.innerHTML = null;
       this.hamburgerButton = new DOMElement('div');
       this.hamburgerButton.addClasses([
-        ResponsiveMenu.BUTTON_OUTER_CLASS,
+        MenuResponsive.BUTTON_OUTER_CLASS,
         this.position,
         this.type
       ]);
@@ -66,7 +66,7 @@ class ResponsiveMenu {
       this.hamburgerButton.render(this.openButton);
       this.hamburgerButtonContent = new DOMElement('span');
       this.hamburgerButtonContent.addClasses([
-        ResponsiveMenu.BUTTON_INNER_CLASS,
+        MenuResponsive.BUTTON_INNER_CLASS,
         this.buttonType
       ]);
       this.hamburgerButtonContent.render(this.hamburgerButtonElement);
@@ -75,26 +75,26 @@ class ResponsiveMenu {
 
   private update(): void {
     if (window.isMobile()) {
-      this.openButton.addEventListener(ResponsiveMenu.EVENT, this.open);
+      this.openButton.addEventListener(MenuResponsive.EVENT, this.open);
     } else {
-      this.openButton.removeEventListener(ResponsiveMenu.EVENT, this.open);
+      this.openButton.removeEventListener(MenuResponsive.EVENT, this.open);
     }
   }
 
   private open(event): void {
     event.stopPropagation();
-    document.addEventListener(ResponsiveMenu.EVENT, this.close);
-    this.openButton.removeEventListener(ResponsiveMenu.EVENT, this.open);
+    document.addEventListener(MenuResponsive.EVENT, this.close);
+    this.openButton.removeEventListener(MenuResponsive.EVENT, this.open);
 
-    DOMUtils.addClass(this.menu, ResponsiveMenu.MENU_ANIMATE_CLASS);
-    DOMUtils.addClass(this.menu, ResponsiveMenu.ACTIVE_CLASS);
-    DOMUtils.addClass(document.body, ResponsiveMenu.MENU_ANIMATE_CLASS);
-    DOMUtils.addClass(document.body, ResponsiveMenu.ACTIVE_CLASS);
+    DOMUtils.addClass(this.menu, MenuResponsive.MENU_ANIMATE_CLASS);
+    DOMUtils.addClass(this.menu, MenuResponsive.ACTIVE_CLASS);
+    DOMUtils.addClass(document.body, MenuResponsive.MENU_ANIMATE_CLASS);
+    DOMUtils.addClass(document.body, MenuResponsive.ACTIVE_CLASS);
 
     if (this.isMainMenu) {
       DOMUtils.addClass(
         this.hamburgerButtonContent.getElement(),
-        ResponsiveMenu.ACTIVE_CLASS
+        MenuResponsive.ACTIVE_CLASS
       );
 
       if (this.type === 'over') {
@@ -148,15 +148,15 @@ class ResponsiveMenu {
 
     if (!isClickInside) {
       event.stopPropagation();
-      document.removeEventListener(ResponsiveMenu.EVENT, this.close);
-      this.openButton.addEventListener(ResponsiveMenu.EVENT, this.open);
-      DOMUtils.removeClass(this.menu, ResponsiveMenu.ACTIVE_CLASS);
-      DOMUtils.removeClass(document.body, ResponsiveMenu.ACTIVE_CLASS);
+      document.removeEventListener(MenuResponsive.EVENT, this.close);
+      this.openButton.addEventListener(MenuResponsive.EVENT, this.open);
+      DOMUtils.removeClass(this.menu, MenuResponsive.ACTIVE_CLASS);
+      DOMUtils.removeClass(document.body, MenuResponsive.ACTIVE_CLASS);
 
       if (this.isMainMenu) {
         DOMUtils.removeClass(
           this.hamburgerButtonContent.getElement(),
-          ResponsiveMenu.ACTIVE_CLASS
+          MenuResponsive.ACTIVE_CLASS
         );
 
         if (this.type === 'over') {
@@ -188,4 +188,4 @@ class ResponsiveMenu {
   }
 }
 
-export { ResponsiveMenu };
+export { MenuResponsive };

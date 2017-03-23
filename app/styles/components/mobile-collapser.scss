@@ -6,13 +6,13 @@
   }
 
   .collapsable {
-    height: 0;
     display: none;
+    height: 0;
     transition: height $collapser-transition-duration ease-out;
 
     &.active {
-      height: auto !important;
       display: block;
+      height: auto;
     }
   }
 }

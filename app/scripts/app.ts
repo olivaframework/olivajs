@@ -4,9 +4,9 @@ import { DOMUtils } from './components/DOMUtils';
 import { Dropdown } from './components/Dropdown';
 import { Jump } from './components/Jump';
 import { Loader } from './components/Loader';
+import { MenuResponsive } from './components/MenuResponsive';
 import { Modal } from './components/Modal';
 import { Mosaic } from './components/Mosaic';
-import { ResponsiveMenu } from './components/ResponsiveMenu';
 import { ScrollSpy } from './components/ScrollSpy';
 import { Swiper } from './components/Swiper';
 import { Tab } from './components/Tab';
@@ -62,7 +62,7 @@ window.onload = () => {
   }, mosaics);
 
   DOMUtils.syncForEach(responsiveMenu => {
-    new ResponsiveMenu(responsiveMenu);
+    new MenuResponsive(responsiveMenu);
   }, responsiveMenus);
 
   let loader = Loader.getInstance();
