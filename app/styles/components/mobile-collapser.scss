@@ -1,0 +1,18 @@
+@include media-breakpoint-down(sm) {
+  .collapser {
+    display: block;
+    position: relative;
+    width: 100%;
+  }
+
+  .collapsable {
+    height: 0;
+    display: none;
+    transition: height $collapser-transition-duration ease-out;
+
+    &.active {
+      height: auto !important;
+      display: block;
+    }
+  }
+}
