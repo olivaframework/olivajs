@@ -4,6 +4,7 @@ import { DOMUtils } from './components/DOMUtils';
 import { Dropdown } from './components/Dropdown';
 import { Jump } from './components/Jump';
 import { Loader } from './components/Loader';
+import { MenuCollapser } from './components/MenuCollapser';
 import { MenuResponsive } from './components/MenuResponsive';
 import { Modal } from './components/Modal';
 import { Mosaic } from './components/Mosaic';
@@ -20,6 +21,7 @@ let dropdowns = document.querySelectorAll('[data-dropdown]');
 let mosaics = document.querySelectorAll('[data-mosaic]');
 let scrollSpies = document.querySelectorAll('[data-scroll-spy]');
 let responsiveMenus = document.querySelectorAll('[data-responsive-menu]');
+let menuCollapsers = document.querySelectorAll('[data-menu-collapser]');
 
 window.onload = () => {
   new Swiper(swiper, {
@@ -64,6 +66,10 @@ window.onload = () => {
   DOMUtils.syncForEach(responsiveMenu => {
     new MenuResponsive(responsiveMenu);
   }, responsiveMenus);
+
+  DOMUtils.syncForEach(menuCollapser => {
+    new MenuCollapser(menuCollapser);
+  }, menuCollapsers);
 
   let loader = Loader.getInstance();
 

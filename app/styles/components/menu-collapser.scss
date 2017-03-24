@@ -1,6 +1,15 @@
+.collapsable {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
+
 @include media-breakpoint-down(sm) {
   .collapser {
     display: block;
+    float: none;
     position: relative;
     width: 100%;
   }
@@ -8,6 +17,7 @@
   .collapsable {
     display: none;
     height: 0;
+    overflow: hidden;
     transition: height $collapser-transition-duration ease-out;
 
     &.active {
