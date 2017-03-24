@@ -1,11 +1,11 @@
 # Typescript, Webpack, Bootstrap 4, Nunjucks, Karma
 
-### To run this project on view mode you need:
+### Requirements
+* UNIX O.S. like Mac OSX or Linux.
+* NodeJs v7.0.
 
-* S.O. UNIX like Mac OSX or Linux.
-* NodeJv v7.0 o sup.
 
-#### Steps:
+### To watch this project in action you need:
   1. npm install -g yarn
   2. yarn install
   3. npm run build
@@ -14,11 +14,7 @@
   6. open your browser on http://localhost:8000
 
 
-### To run this project how develop mode you need:
-
-NodeJs v7.0 o sup
-
-#### Steps:
+### To start developing on this project you need:
   1. npm install -g yarn
   2. yarn install
   3. npm start
