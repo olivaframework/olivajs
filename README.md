@@ -1,4 +1,4 @@
-# Angular app with Webpack
+# Typescript, Webpack, Bootstrap 4, Nunjucks, Karma
 
 ### To run this project on view mode you need:
 
@@ -22,4 +22,4 @@ NodeJs v7.0 o sup
   1. npm install -g yarn
   2. yarn install
   3. npm start
-  4. open your browser on http://localhost:8080
+  4. open your browser on http://localhost:3000
