@@ -66,7 +66,11 @@ class Swiper {
     this.update = this.update.bind(this);
     this.init(swiper, options);
     this.activeControlsByIndexes(swiper);
-    this.activeControls();
+
+    if (this.options.showControls) {
+      this.createControls();
+      this.activeControls();
+    }
   }
 
   public init(swiper: Element, options: SwiperOptions): void {
@@ -93,23 +97,6 @@ class Swiper {
       }
     });
 
-    if (this.options.showControls) {
-      this.prevCtrl = new DOMElement('div');
-      this.nextCtrl = new DOMElement('div');
-      this.prevCtrl.addClasses(this.options.prevCtrlClasses);
-      this.nextCtrl.addClasses(this.options.nextCtrlClasses);
-      this.prevCtrl.render(this.swiper);
-      this.nextCtrl.render(this.swiper);
-      this.prevCtrl.addEvents([{
-        callback: this.showPrev,
-        name: Swiper.ACTIVE_EVENT_CTRL
-      }]);
-      this.nextCtrl.addEvents([{
-        callback: this.showNext,
-        name: Swiper.ACTIVE_EVENT_CTRL
-      }]);
-    }
-
     window.onEvent(Swiper.WINDOW_EVENT, this.update, 1);
   }
 
@@ -121,17 +108,36 @@ class Swiper {
   }
 
   public activeControls(): void {
-    if (this.index > 0) {
-      this.prevCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
-    } else {
-      this.prevCtrl.removeClasses([Swiper.ACTIVE_CTRL_CLASS]);
-    }
+    if (this.options.showControls) {
+      if (this.index > 0) {
+        this.prevCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
+      } else {
+        this.prevCtrl.removeClasses([Swiper.ACTIVE_CTRL_CLASS]);
+      }
 
-    if (this.index < this.lastToShow()) {
-      this.nextCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
-    } else {
-      this.nextCtrl.removeClasses([Swiper.ACTIVE_CTRL_CLASS]);
+      if (this.index < this.lastToShow()) {
+        this.nextCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
+      } else {
+        this.nextCtrl.removeClasses([Swiper.ACTIVE_CTRL_CLASS]);
+      }
     }
+  }
+
+  public createControls(): void {
+    this.prevCtrl = new DOMElement('div');
+    this.nextCtrl = new DOMElement('div');
+    this.prevCtrl.addClasses(this.options.prevCtrlClasses);
+    this.nextCtrl.addClasses(this.options.nextCtrlClasses);
+    this.prevCtrl.render(this.swiper);
+    this.nextCtrl.render(this.swiper);
+    this.prevCtrl.addEvents([{
+      callback: this.showPrev,
+      name: Swiper.ACTIVE_EVENT_CTRL
+    }]);
+    this.nextCtrl.addEvents([{
+      callback: this.showNext,
+      name: Swiper.ACTIVE_EVENT_CTRL
+    }]);
   }
 
   public containerFullWidth(): number {
@@ -203,8 +209,6 @@ class Swiper {
   }
 
   public swipe(moveEvent: any): void {
-    moveEvent.preventDefault();
-
     const distanceEvent = (this.supportEvents.move === Swiper.TOUCH_EVENTS.move)
       ? moveEvent.touches[0].clientX
       : moveEvent.screenX;

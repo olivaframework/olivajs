@@ -33,8 +33,11 @@ class Carousel extends Swiper {
   public autoplay(): void {
     this.interval = setInterval(() => {
       this.showNext();
-      this.prevCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
-      this.nextCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
+
+      if (this.options.showControls) {
+        this.prevCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
+        this.nextCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
+      }
     }, this.options.autoplayMs);
   }
 
