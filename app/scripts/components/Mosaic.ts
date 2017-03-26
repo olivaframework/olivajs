@@ -39,7 +39,7 @@ class Mosaic {
     this.renderDetail = this.renderDetail.bind(this);
     this.renderDetail();
 
-    let activeEvent = window.supportTouchEvents()
+    const activeEvent = window.supportTouchEvents()
       ? Mosaic.TOUCH_EVENT
       : Mosaic.MOUSE_EVENT;
 
@@ -51,8 +51,8 @@ class Mosaic {
   }
 
   public showDetail(event): void {
-    let target = event.target;
-    let item = DOMUtils.findParentElementByClass(target, Mosaic.ITEM_CLASS);
+    const target = event.target;
+    const item = DOMUtils.findParentElementByClass(target, Mosaic.ITEM_CLASS);
 
     DOMUtils.removeClassToItems(this.items, Mosaic.ACTIVE_CLASS);
     this.activedItem = item;
@@ -65,19 +65,19 @@ class Mosaic {
 
     DOMUtils.addClass(this.activedItem, Mosaic.ACTIVE_CLASS);
 
-    let mosaicWidth = this.mosaic.offsetWidth;
-    let itemsContainerWitdh = this.itemsContainer.offsetWidth;
-    let availableDistance = mosaicWidth - itemsContainerWitdh;
-    let minimumDistance = (mosaicWidth * Mosaic.MIN_CONTAINER_PERCENT) / 100;
+    const mosaicWidth = this.mosaic.offsetWidth;
+    const itemsContainerWitdh = this.itemsContainer.offsetWidth;
+    const availableDistance = mosaicWidth - itemsContainerWitdh;
+    const minimumDistance = (mosaicWidth * Mosaic.MIN_CONTAINER_PERCENT) / 100;
 
     if (availableDistance >= minimumDistance) {
-      let styles = { height: `${ this.itemsContainer.offsetHeight }px` };
+      const styles = { height: `${ this.itemsContainer.offsetHeight }px` };
 
       this.detailContainer.setStyles(styles);
       this.detailContainer.render(this.mosaic);
     } else {
-      let indexToInsert = this.lastItemOfActivedRow();
-      let styles = { width: `${ itemsContainerWitdh }px` };
+      const indexToInsert = this.lastItemOfActivedRow();
+      const styles = { width: `${ itemsContainerWitdh }px` };
 
       this.detailContainer.setStyles(styles);
       this.detailContainer.renderBefore(this.itemsContainer, indexToInsert);
@@ -86,12 +86,12 @@ class Mosaic {
 
   public createDetailContainer(): void {
     let template = Mosaic.DETAIL_TEMPLATE;
-    let attrsToRenderSize = Mosaic.ATTRS_TO_RENDER.length;
+    const attrsToRenderSize = Mosaic.ATTRS_TO_RENDER.length;
 
     for (let i = 0; i < attrsToRenderSize; i++) {
-      let attribute = Mosaic.ATTRS_TO_RENDER[i];
-      let keyAttribute = Mosaic.KEY_ATRRS_TO_RENDER.replace('[]', attribute);
-      let value = this.activedItem.getAttribute(keyAttribute);
+      const attribute = Mosaic.ATTRS_TO_RENDER[i];
+      const keyAttribute = Mosaic.KEY_ATRRS_TO_RENDER.replace('[]', attribute);
+      const value = this.activedItem.getAttribute(keyAttribute);
 
       template = template.replace(`[${ attribute }]`, value);
     }
@@ -102,13 +102,13 @@ class Mosaic {
   }
 
   public itemsPerRow(): Array<number> {
-    let itemsSize = this.items.length;
     let distance = 0;
     let itemsCount = 0;
-    let itemsPerRow = [];
+    const itemsPerRow = [];
+    const itemsSize = this.items.length;
 
     for (let i = 0; i < itemsSize; i++) {
-      let item = this.items[i] as HTMLElement;
+      const item = this.items[i] as HTMLElement;
 
       distance = distance + item.offsetWidth;
 
@@ -127,10 +127,10 @@ class Mosaic {
   }
 
   public lastItemOfActivedRow(): number {
-    let itemsPerRow = this.itemsPerRow();
-    let rows = itemsPerRow.length;
     let item = 0;
-    let indexElement = DOMUtils.getIndexNode(this.activedItem);
+    const itemsPerRow = this.itemsPerRow();
+    const rows = itemsPerRow.length;
+    const indexElement = DOMUtils.getIndexNode(this.activedItem);
 
     for (let i = 0; i < rows; i++) {
       item = item + itemsPerRow[i];

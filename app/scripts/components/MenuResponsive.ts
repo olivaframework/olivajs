@@ -137,14 +137,14 @@ class MenuResponsive {
     }
   }
 
-  private scrollHamburger(posY: number = 0): void {
+  private scrollHamburger(posY : number = 0): void {
     if (this.isMainMenu) {
       this.hamburgerButtonElement.style.top = `${ posY }px`;
     }
   }
 
   private close(event): void {
-    let isClickInside = this.menu.contains(event.target);
+    const isClickInside = this.menu.contains(event.target);
 
     if (!isClickInside) {
       event.stopPropagation();

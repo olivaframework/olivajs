@@ -11,7 +11,7 @@ class DOMUtils {
     elements: NodeListOf<Element>,
     className: string
   ): void {
-    let elementsSize = elements.length;
+    const elementsSize = elements.length;
 
     for (let i = 0; i < elementsSize; i++) {
       this.removeClass(elements[i], className);
@@ -22,7 +22,7 @@ class DOMUtils {
     callback: (elements: HTMLElement) => void,
     elements: NodeListOf<Element>
   ): void {
-    let elementsSize = elements.length;
+    const elementsSize = elements.length;
 
     for (let i = 0; i < elementsSize; i++) {
       callback(elements[i] as HTMLElement);
@@ -43,7 +43,7 @@ class DOMUtils {
   }
 
   static removeElements(elements: NodeListOf<Element>): void {
-    let elementsSize = elements.length;
+    const elementsSize = elements.length;
 
     for (let i = 0; i < elementsSize; i++) {
       elements[i].parentNode.removeChild(elements[i]);
@@ -51,9 +51,9 @@ class DOMUtils {
   }
 
   static getIndexNode(nodeElement: Element): number {
-    let parent = nodeElement.parentNode as HTMLElement;
-    let children = parent.children;
-    let childrenSize = children.length;
+    const parent = nodeElement.parentNode as HTMLElement;
+    const children = parent.children;
+    const childrenSize = children.length;
 
     for (let i = 0; i < childrenSize; i++) {
       if (nodeElement === children[i]) {
@@ -63,7 +63,7 @@ class DOMUtils {
   }
 
   static addClass(nodeElement: Element, className: string): void {
-    let classes = nodeElement.className;
+    const classes = nodeElement.className;
 
     if (classes.indexOf(className) === -1) {
       if (classes === '') {
@@ -75,7 +75,7 @@ class DOMUtils {
   }
 
   static removeClass(nodeElement: Element, className: string): void {
-    let regex = new RegExp('(^|\\s+)' + className);
+    const regex = new RegExp('(^|\\s+)' + className);
 
     nodeElement.className = nodeElement.className.replace(regex, '');
   }
@@ -89,7 +89,7 @@ class DOMUtils {
   }
 
   static containsClass(nodeElement: Element, className: string): boolean {
-    let regex = new RegExp('(^|\\s+)' + className + '(\\s+|$)');
+    const regex = new RegExp('(^|\\s+)' + className + '(\\s+|$)');
 
     return regex.test(nodeElement.className);
   }

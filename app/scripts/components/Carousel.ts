@@ -44,10 +44,10 @@ class Carousel extends Swiper {
 
   public showNext(): void {
     ++this.index;
-    let lastToShow = this.lastToShow();
+    const lastToShow = this.lastToShow();
 
     if (this.index <= lastToShow) {
-      let currentItem = this.items[this.index] as HTMLElement;
+      const currentItem = this.items[this.index] as HTMLElement;
 
       this.animate(currentItem.offsetLeft, this.options.animationMs);
 
@@ -59,9 +59,10 @@ class Carousel extends Swiper {
   }
 
   public createClones(): void {
-    let clons = this.container.querySelectorAll(`.${ Carousel.CLONED_CLASS }`);
-    let last = this.items[this.items.length - 1] as HTMLElement;
     let clonedAmount = this.items.length - 1 - this.lastToShow();
+    const last = this.items[this.items.length - 1] as HTMLElement;
+    const clons = this.container
+    .querySelectorAll(`.${ Carousel.CLONED_CLASS }`);
 
     if (last.offsetWidth < this.container.offsetWidth && clonedAmount === 0) {
       this.isPartialItem = true;
@@ -71,13 +72,13 @@ class Carousel extends Swiper {
     }
 
     for (let i = 0; i <= clonedAmount; i++) {
-      let currentItem = this.items[i] as HTMLElement;
+      const currentItem = this.items[i] as HTMLElement;
 
       if (currentItem.offsetLeft > this.container.offsetWidth) {
         break;
       }
 
-      let clonedItem = currentItem.cloneNode(true) as HTMLElement;
+      const clonedItem = currentItem.cloneNode(true) as HTMLElement;
 
       DOMUtils.addClass(clonedItem, Carousel.CLONED_CLASS);
       this.container.appendChild(clonedItem);
@@ -88,7 +89,7 @@ class Carousel extends Swiper {
   }
 
   public restartPosition(): void {
-    let timeout = setTimeout(() => {
+    const timeout = setTimeout(() => {
       this.animate(0, 0);
       this.index = 0;
       clearTimeout(timeout);

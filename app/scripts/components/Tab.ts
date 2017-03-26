@@ -18,8 +18,8 @@ class Tab {
   public toggle(event): void {
     event.preventDefault();
 
-    let contentItems = this.content.parentElement.children;
-    let handlerItems = this.handler.parentElement.children;
+    const contentItems = this.content.parentElement.children;
+    const handlerItems = this.handler.parentElement.children;
 
     DOMUtils.removeClassToItems(contentItems, Tab.ACTIVE_CLASS);
     DOMUtils.removeClassToItems(handlerItems, Tab.ACTIVE_CLASS);

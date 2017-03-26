@@ -12,16 +12,16 @@ import { ScrollSpy } from './components/ScrollSpy';
 import { Swiper } from './components/Swiper';
 import { Tab } from './components/Tab';
 
-let tabs = document.querySelectorAll('[data-tab-content-id]');
-let modals = document.querySelectorAll('[data-modal-content-id]');
-let jumps = document.querySelectorAll('[data-jump-content-id]');
-let swiper = document.querySelector('[data-swiper]');
-let carousel = document.querySelector('[data-carousel]');
-let dropdowns = document.querySelectorAll('[data-dropdown]');
-let mosaics = document.querySelectorAll('[data-mosaic]');
-let scrollSpies = document.querySelectorAll('[data-scroll-spy]');
-let responsiveMenus = document.querySelectorAll('[data-responsive-menu]');
-let menuCollapsers = document.querySelectorAll('[data-menu-collapser]');
+const tabs = document.querySelectorAll('[data-tab-content-id]');
+const modals = document.querySelectorAll('[data-modal-content-id]');
+const jumps = document.querySelectorAll('[data-jump-content-id]');
+const swiper = document.querySelector('[data-swiper]');
+const carousel = document.querySelector('[data-carousel]');
+const dropdowns = document.querySelectorAll('[data-dropdown]');
+const mosaics = document.querySelectorAll('[data-mosaic]');
+const scrollSpies = document.querySelectorAll('[data-scroll-spy]');
+const responsiveMenus = document.querySelectorAll('[data-responsive-menu]');
+const menuCollapsers = document.querySelectorAll('[data-menu-collapser]');
 
 window.onload = () => {
   new Swiper(swiper, {
@@ -71,7 +71,7 @@ window.onload = () => {
     new MenuCollapser(menuCollapser);
   }, menuCollapsers);
 
-  let loader = Loader.getInstance();
+  const loader = Loader.getInstance();
 
   loader.show();
 

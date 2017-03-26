@@ -16,7 +16,7 @@ class ScrollSpy {
   }
 
   public validatePosition(): void {
-    let scrollLimit = (window.innerHeight * ScrollSpy.SCROLL_PERCENT) / 100;
+    const scrollLimit = (window.innerHeight * ScrollSpy.SCROLL_PERCENT) / 100;
 
     if (window.scrollTop() > scrollLimit) {
       DOMUtils.addClass(this.handler, ScrollSpy.ACTIVE_CLASS);

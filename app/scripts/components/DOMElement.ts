@@ -25,19 +25,19 @@ class DOMElement {
   }
 
   public addClasses(classes: Array<string>): void {
-    for (let item of classes) {
+    for (const item of classes) {
       DOMUtils.addClass(this.element, item);
     }
   }
 
   public removeClasses(classes: Array<string>): void {
-    for (let item of classes) {
+    for (const item of classes) {
       DOMUtils.removeClass(this.element, item);
     }
   }
 
   public setStyles(styles: Object): void {
-    for (let property in styles) {
+    for (const property in styles) {
       this.element.style[property] = styles[property];
     }
   }
@@ -53,19 +53,19 @@ class DOMElement {
   }
 
   public renderBefore(node, index: number) {
-    let childrenNodes = node.children;
+    const childrenNodes = node.children;
 
     node.insertBefore(this.element, childrenNodes[index]);
   }
 
   public addEvents(events: Array<Events>): void {
-    for (let item of events) {
+    for (const item of events) {
       this.element.addEventListener(item.name, item.callback);
     }
   }
 
   public removeEvents(events: Array<Events>): void {
-    for (let item of events) {
+    for (const item of events) {
       this.element.removeEventListener(item.name, item.callback);
     }
   }
