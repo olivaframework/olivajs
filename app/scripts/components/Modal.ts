@@ -25,14 +25,15 @@ class Modal {
   }
 
   public setFunctionClose(): void {
-    let closeElements = this.modal.querySelectorAll(`[${ Modal.ATTR_CLOSE }]`);
+    const closeElements = this.modal
+      .querySelectorAll(`[${ Modal.ATTR_CLOSE }]`);
 
     DOMUtils.syncForEach(item => {
       item.addEventListener(Modal.EVENT_CLOSE, this.hide);
     }, closeElements);
 
     if (this.modal.getAttribute(Modal.ATTR_CLOSE_ON_OVERLAY) !== 'false') {
-      let overlay = this.overlay.getOverlay().getElement();
+      const overlay = this.overlay.getOverlay().getElement();
 
       overlay.addEventListener(Modal.EVENT_CLOSE, this.hide);
     }

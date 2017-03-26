@@ -114,7 +114,7 @@ class MenuCollapser {
 
   private closeAttempt(event): void {
     if (window.isMobile()) {
-      let isInside = this.menu.contains(event.target);
+      const isInside = this.menu.contains(event.target);
 
       if (!isInside) {
         this.close();

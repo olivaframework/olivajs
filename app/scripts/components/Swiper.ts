@@ -114,7 +114,7 @@ class Swiper {
   }
 
   public animate(distance: number, velocity: number): void {
-    let translate = `translate3d(${ -1 * distance }px, 0px, 0px)`;
+    const translate = `translate3d(${ -1 * distance }px, 0px, 0px)`;
 
     this.container.style.transform = translate;
     this.container.style.transitionDuration = `${ velocity }ms`;
@@ -140,10 +140,10 @@ class Swiper {
 
   public lastToShow(): number {
     let distance = 0;
-    let totalItems = this.items.length - 1;
+    const totalItems = this.items.length - 1;
 
     for (let i = totalItems; i >= 0; i--) {
-      let item = this.items[i] as HTMLElement;
+      const item = this.items[i] as HTMLElement;
 
       distance = distance + item.offsetWidth;
 
@@ -162,7 +162,7 @@ class Swiper {
   public showPrev(): void {
     if (this.index > 0) {
       this.index = --this.index;
-      let currentItem = this.items[this.index] as HTMLElement;
+      const currentItem = this.items[this.index] as HTMLElement;
 
       this.animate(currentItem.offsetLeft, this.options.animationMs);
       this.activeControls();
@@ -170,13 +170,13 @@ class Swiper {
   }
 
   public showNext(): void {
-    let lastToShow = this.lastToShow();
+    const lastToShow = this.lastToShow();
 
     if (this.index + 1 <= lastToShow) {
       ++this.index;
 
       if (this.index < lastToShow) {
-        let currentItem = this.items[this.index] as HTMLElement;
+        const currentItem = this.items[this.index] as HTMLElement;
 
         this.animate(currentItem.offsetLeft, this.options.animationMs);
       } else {
@@ -188,10 +188,10 @@ class Swiper {
   }
 
   public update(): void {
-    let lastToShow = this.lastToShow();
+    const lastToShow = this.lastToShow();
 
     if (this.index < lastToShow) {
-      let currentItem = this.items[this.index] as HTMLElement;
+      const currentItem = this.items[this.index] as HTMLElement;
 
       this.animate(currentItem.offsetLeft, 0);
     } else {
@@ -205,14 +205,14 @@ class Swiper {
   public swipe(moveEvent: any): void {
     moveEvent.preventDefault();
 
-    let distanceEvent = (this.supportEvents.move === Swiper.TOUCH_EVENTS.move)
+    const distanceEvent = (this.supportEvents.move === Swiper.TOUCH_EVENTS.move)
       ? moveEvent.touches[0].clientX
       : moveEvent.screenX;
 
     let distance = this.firstPoint - distanceEvent + this.initDistance;
-    let outRange = this.container.offsetWidth / Swiper.SWIPE_OUT_RANGE;
-    let minDistance = Math.round(outRange) * -1;
-    let maxDistance = outRange + this.containerFullWidth();
+    const outRange = this.container.offsetWidth / Swiper.SWIPE_OUT_RANGE;
+    const minDistance = Math.round(outRange) * -1;
+    const maxDistance = outRange + this.containerFullWidth();
 
     if (distance < minDistance) {
       distance = minDistance;
@@ -251,19 +251,20 @@ class Swiper {
   }
 
   public actionUp(upEvent: any): void {
-    let distanceEvent = (this.supportEvents.up === Swiper.TOUCH_EVENTS.up)
+    const distanceEvent = (this.supportEvents.up === Swiper.TOUCH_EVENTS.up)
       ? upEvent.changedTouches[0].clientX
       : upEvent.screenX;
 
     this.traveledDistance = this.firstPoint - distanceEvent;
 
-    let distance = this.traveledDistance + this.initDistance;
-    let lastToShow = this.lastToShow();
+    const distance = this.traveledDistance + this.initDistance;
+    const lastToShow = this.lastToShow();
 
     for (let i = 0; i <= lastToShow; i++) {
-      let item = this.items[i] as HTMLElement;
-      let ajustDistance = (item.offsetWidth * Swiper.SWIPE_PERCENT_AJUST) / 100;
-      let minDistance = this.traveledDistance > 0
+      const item = this.items[i] as HTMLElement;
+      const ajustDistance = (item.offsetWidth * Swiper.SWIPE_PERCENT_AJUST)
+        / 100;
+      const minDistance = this.traveledDistance > 0
         ? item.offsetLeft + ajustDistance
         : item.offsetLeft + item.offsetWidth - ajustDistance;
 
@@ -286,20 +287,20 @@ class Swiper {
   }
 
   public activeControlsByIndexes(swiper): void {
-    let thumbsContainer = swiper
+    const thumbsContainer = swiper
       .querySelector(`.${ Swiper.THUMBNAILS_CONTAINER_CLASS }`);
 
     if (thumbsContainer) {
       this.thumbnails = thumbsContainer
         .querySelectorAll(`.${ Swiper.THUMBNAIL_ITEM_CLASS }`);
 
-      let itemsSize = this.items.length;
-      let thumbnailsSize = this.thumbnails.length;
+      const itemsSize = this.items.length;
+      const thumbnailsSize = this.thumbnails.length;
 
       if (itemsSize === thumbnailsSize) {
         for (let i = 0; i < itemsSize; i++) {
-          let thumbnail = this.thumbnails[i] as HTMLElement;
-          let item = this.items[i] as HTMLElement;
+          const thumbnail = this.thumbnails[i] as HTMLElement;
+          const item = this.items[i] as HTMLElement;
 
           thumbnail.addEventListener(Swiper.ACTIVE_EVENT, this.showByIndex);
           item.style.width = Swiper.ITEM_MAGNIFY_WIDTH;
@@ -311,17 +312,16 @@ class Swiper {
   }
 
   public showByIndex(event: Event): void {
-    let thumbnail = event.target as HTMLElement;
-    let thumbnailsSize = this.thumbnails.length;
-
-    thumbnail = DOMUtils.findParentElementByClass(
-      thumbnail,
+    const target = event.target as HTMLElement;
+    const thumbnailsSize = this.thumbnails.length;
+    const thumbnail = DOMUtils.findParentElementByClass(
+      target,
       Swiper.THUMBNAIL_ITEM_CLASS
     );
 
     for (let i = 0; i < thumbnailsSize; i++) {
       if (this.thumbnails[i] === thumbnail) {
-        let itemToShow = this.items[i] as HTMLElement;
+        const itemToShow = this.items[i] as HTMLElement;
 
         this.index = i;
         this.activeControls();

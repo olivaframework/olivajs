@@ -15,7 +15,7 @@ class Dropdown {
   }
 
   public close(event): void {
-    let isClickInside = this.handler.contains(event.target);
+    const isClickInside = this.handler.contains(event.target);
 
     if (!isClickInside) {
       DOMUtils.removeClass(this.handler, Dropdown.ACTIVE_CLASS);

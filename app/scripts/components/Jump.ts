@@ -17,8 +17,8 @@ class Jump {
   public jump(event): void {
     event.preventDefault();
 
-    let elementTop = this.getOffsetTop(this.element);
-    let handlerTop = window.scrollTop();
+    const elementTop = this.getOffsetTop(this.element);
+    const handlerTop = window.scrollTop();
 
     if (handlerTop < elementTop) {
       this.scrollDown(handlerTop, elementTop);
@@ -41,8 +41,8 @@ class Jump {
 
   public scrollDown(init: number, end: number): void {
     let top = init;
-    let maxEnd = document.body.offsetHeight - window.getInnerHeight();
-    let finalEnd = (end > maxEnd) ? maxEnd : end;
+    const maxEnd = document.body.offsetHeight - window.getInnerHeight();
+    const finalEnd = (end > maxEnd) ? maxEnd : end;
 
     setTimeout(() => {
       if (top <= finalEnd) {
@@ -54,9 +54,9 @@ class Jump {
   }
 
   public scrollVelocity(from: number, to: number): number {
-    let distance = to - from;
-    let velocity = distance / Jump.SCROLL_VELOCITY_PX;
-    let finalVelocity = (velocity > 1) ? Math.round(velocity) : 1;
+    const distance = to - from;
+    const velocity = distance / Jump.SCROLL_VELOCITY_PX;
+    const finalVelocity = (velocity > 1) ? Math.round(velocity) : 1;
 
     return finalVelocity;
   }
