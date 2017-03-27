@@ -67,11 +67,11 @@ class Swiper {
     this.swipe = this.swipe.bind(this);
     this.update = this.update.bind(this);
     this.init(swiper, options);
-    this.activeControlsByIndexes(swiper);
+    this.activateControlsByIndexes(swiper);
 
     if (this.options.showControls) {
       this.createControls();
-      this.activeControls();
+      this.activateControls();
     }
   }
 
@@ -109,7 +109,7 @@ class Swiper {
     this.container.style.transitionDuration = `${ velocity }ms`;
   }
 
-  public activeControls(): void {
+  public activateControls(): void {
     if (this.options.showControls) {
       if (this.index > 0) {
         this.prevCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
@@ -173,7 +173,7 @@ class Swiper {
       const currentItem = this.items[this.index] as HTMLElement;
 
       this.animate(currentItem.offsetLeft, this.options.animationMs);
-      this.activeControls();
+      this.activateControls();
     }
   }
 
@@ -192,7 +192,7 @@ class Swiper {
       }
     }
 
-    this.activeControls();
+    this.activateControls();
   }
 
   public update(): void {
@@ -207,7 +207,7 @@ class Swiper {
       this.animate(this.containerFullWidth(), 0);
     }
 
-    this.activeControls();
+    this.activateControls();
   }
 
   public swipe(moveEvent: any): void {
@@ -306,14 +306,14 @@ class Swiper {
       }
     }
 
-    this.activeControls();
+    this.activateControls();
     this.swiper.removeEventListener(this.supportEvents.move, this.swipe);
     this.swiper.removeEventListener(this.supportEvents.up, this.actionUp);
     window.removeEventListener(this.supportEvents.move, this.swipe);
     window.removeEventListener(this.supportEvents.up, this.actionUp);
   }
 
-  public activeControlsByIndexes(swiper): void {
+  public activateControlsByIndexes(swiper): void {
     const thumbsContainer = swiper
       .querySelector(`.${ Swiper.THUMBNAILS_CONTAINER_CLASS }`);
 
@@ -351,7 +351,7 @@ class Swiper {
         const itemToShow = this.items[i] as HTMLElement;
 
         this.index = i;
-        this.activeControls();
+        this.activateControls();
         this.animate(itemToShow.offsetLeft, this.options.animationMs);
 
         break;
