@@ -36,7 +36,7 @@ window.onload = () => {
     autoplayMs: 1200,
     nextCtrlClasses: ['arrow-right'],
     prevCtrlClasses: ['arrow-left'],
-    showControls: true
+    showControls: false
   });
 
   DOMUtils.syncForEach(scrollSpy => {
