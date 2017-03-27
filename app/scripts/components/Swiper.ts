@@ -258,6 +258,11 @@ class Swiper {
     }
 
     this.swiper.addEventListener(this.supportEvents.move, this.activateSwipe);
+    this.swiper.addEventListener(this.supportEvents.up, () => {
+      this.swiper.removeEventListener(
+        this.supportEvents.move, this.activateSwipe
+      );
+    });
   }
 
   public activateSwipe(moveEvent: any): void {
