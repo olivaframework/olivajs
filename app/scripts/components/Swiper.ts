@@ -270,11 +270,11 @@ class Swiper {
       this.swiper.addEventListener(this.supportEvents.up, this.actionUp);
       window.addEventListener(this.supportEvents.move, this.swipe);
       window.addEventListener(this.supportEvents.up, this.actionUp);
-    } else {
-      this.swiper.removeEventListener(
-        this.supportEvents.move, this.activateSwipe
-      );
     }
+
+    this.swiper.removeEventListener(
+      this.supportEvents.move, this.activateSwipe
+    );
   }
 
   public actionUp(upEvent: any): void {
