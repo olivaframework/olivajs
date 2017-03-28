@@ -6,7 +6,7 @@ describe('Modal component specification', () => {
   let modalContent;
 
   beforeEach(() => {
-    let modalContentId = 'modal-content-id';
+    const modalContentId = 'modal-content-id';
 
     modalHandler = document.createElement('div');
     modalHandler.setAttribute(Modal.ATTR, modalContentId);
@@ -18,7 +18,7 @@ describe('Modal component specification', () => {
   });
 
   it('should create a Modal with correct properties', () => {
-    let modalComponent = new Modal(modalHandler);
+    const modalComponent = new Modal(modalHandler);
 
     expect(modalHandler).to.be.equal(modalComponent.handler);
 
@@ -33,7 +33,7 @@ describe('Modal component specification', () => {
   });
 
   it('should close a Modal when click on overlay', () => {
-    let modalComponent = new Modal(modalHandler);
+    const modalComponent = new Modal(modalHandler);
 
     modalHandler.click();
     expect(modalContent.classList.contains(Modal.ACTIVE_CLASS)).to.be.true;
@@ -43,7 +43,7 @@ describe('Modal component specification', () => {
   });
 
   it('should close a Modal when click on close element', () => {
-    let closeElement = document.createElement('div');
+    const closeElement = document.createElement('div');
 
     closeElement.setAttribute(Modal.ATTR_CLOSE, '');
     closeElement.textContent = 'x';
@@ -62,7 +62,7 @@ describe('Modal component specification', () => {
   it('should not close a Modalwhen click on overlay', () => {
     modalContent.setAttribute(Modal.ATTR_CLOSE_ON_OVERLAY, false);
 
-    let modalComponent = new Modal(modalHandler);
+    const modalComponent = new Modal(modalHandler);
 
     modalHandler.click();
     expect(modalContent.classList.contains(Modal.ACTIVE_CLASS)).to.be.true;

@@ -127,13 +127,13 @@ describe('DOMElement component specification', () => {
   });
 
   it('should render in correct position with renderBefore method', () => {
-    let positionToInsert = 2;
-    let container = document.createElement('div');
+    const positionToInsert = 2;
+    const container = document.createElement('div');
 
     document.body.appendChild(container);
 
     for (let i = 0; i < 5; i++) {
-      let item = new DOMElement('div');
+      const item = new DOMElement('div');
 
       item.addClasses(['item']);
       item.render(container);
@@ -143,11 +143,11 @@ describe('DOMElement component specification', () => {
     domElement.addClasses(['item']);
     domElement.renderBefore(container, positionToInsert);
 
-    let items = document.querySelectorAll('.item');
-    let element = domElement.getElement();
+    const items = document.querySelectorAll('.item');
+    const element = domElement.getElement();
 
     for (let i = 0; i < items.length; i++) {
-      let item = items[i] as HTMLElement;
+      const item = items[i] as HTMLElement;
 
       if (i === positionToInsert) {
         expect(element.id).to.be.equals(item.id);

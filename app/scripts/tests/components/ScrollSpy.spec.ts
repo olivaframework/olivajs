@@ -10,11 +10,11 @@ describe('ScrollSpy component specification', () => {
   });
 
   it('should create a ScrollSpy component with correct properties', () => {
-    let spy = sinon.spy(window, 'onEvent');
-    let scrollSpyComponent = new ScrollSpy(scrollSpyHandler);
-    let calledFunction = scrollSpyComponent.validatePosition;
-    let calledTime = 1;
-    let calledEvent = ScrollSpy.EVENT_ACTIVE;
+    const spy = sinon.spy(window, 'onEvent');
+    const scrollSpyComponent = new ScrollSpy(scrollSpyHandler);
+    const calledFunction = scrollSpyComponent.validatePosition;
+    const calledTime = 1;
+    const calledEvent = ScrollSpy.EVENT_ACTIVE;
 
     expect(scrollSpyComponent.handler).to.equals(scrollSpyHandler);
 
@@ -22,8 +22,8 @@ describe('ScrollSpy component specification', () => {
   });
 
   it('should active or desactivate class on validatePosition method', () => {
-    let scrollSpyComponent = new ScrollSpy(scrollSpyHandler);
-    let stub = sinon.stub(window, 'scrollTop');
+    const scrollSpyComponent = new ScrollSpy(scrollSpyHandler);
+    const stub = sinon.stub(window, 'scrollTop');
 
     stub.onFirstCall().returns(1000);
     stub.onSecondCall().returns(0);

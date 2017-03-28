@@ -13,9 +13,9 @@ describe('Http component specification', () => {
   });
 
   it('Should get data on successful request', done => {
-    let data = { foo: 'bar' };
-    let dataJson = JSON.stringify(data);
-    let request = new Http({ url: '/testData' });
+    const data = { foo: 'bar' };
+    const dataJson = JSON.stringify(data);
+    const request = new Http({ url: '/testData' });
 
     request.get({
       failure: null,
@@ -29,9 +29,9 @@ describe('Http component specification', () => {
   });
 
   it('Should parse response when getting application/json content', done => {
-    let data = { foo: 'bar' };
-    let dataJson = JSON.stringify(data);
-    let request = new Http({ url: '/testData' });
+    const data = { foo: 'bar' };
+    const dataJson = JSON.stringify(data);
+    const request = new Http({ url: '/testData' });
 
     request.get({
       failure: null,
@@ -45,7 +45,7 @@ describe('Http component specification', () => {
   });
 
   it('Should get error on failing request', done => {
-    let request = new Http({ url: '/testError' });
+    const request = new Http({ url: '/testError' });
 
     request.get({
       failure: function (error) {
@@ -59,9 +59,9 @@ describe('Http component specification', () => {
   });
 
   it('Should run success callback on successful request', done => {
-    let request = new Http({ url: '/testCallback' });
-    let successFn = sinon.spy();
-    let errorFn = sinon.spy();
+    const request = new Http({ url: '/testCallback' });
+    const successFn = sinon.spy();
+    const errorFn = sinon.spy();
 
     request.get({
       failure: errorFn,
@@ -76,9 +76,9 @@ describe('Http component specification', () => {
   });
 
   it('Should run failure callback on failing request', done => {
-    let request = new Http({ url: '/testErrorCallback' });
-    let successFn = sinon.spy();
-    let errorFn = sinon.spy();
+    const request = new Http({ url: '/testErrorCallback' });
+    const successFn = sinon.spy();
+    const errorFn = sinon.spy();
 
     request.get({
       failure: errorFn,
@@ -93,7 +93,7 @@ describe('Http component specification', () => {
   });
 
   it('Should set the headers when provided', done => {
-    let request = new Http({
+    const request = new Http({
       headers: [{
         name: 'X-Foo',
         value: 'Bar'
@@ -118,9 +118,9 @@ describe('Http component specification', () => {
   });
 
   it('Should send data and make a POST on post', done => {
-    let request = new Http({ url: '/testPost' });
-    let data = { foo: 'bar'};
-    let callbacks = {
+    const request = new Http({ url: '/testPost' });
+    const data = { foo: 'bar'};
+    const callbacks = {
       failure: null,
       success: null
     };
@@ -132,9 +132,9 @@ describe('Http component specification', () => {
   });
 
   it('Should make a PUT on put', done => {
-    let request = new Http({ url: '/testPut' });
-    let data = { foo: 'bar'};
-    let callbacks = {
+    const request = new Http({ url: '/testPut' });
+    const data = { foo: 'bar'};
+    const callbacks = {
       failure: null,
       success: null
     };
@@ -146,8 +146,8 @@ describe('Http component specification', () => {
   });
 
   it('Should make a DELETE on delete', done => {
-    let request = new Http({ url: '/testDelete' });
-    let callbacks = {
+    const request = new Http({ url: '/testDelete' });
+    const callbacks = {
       failure: null,
       success: null
     };

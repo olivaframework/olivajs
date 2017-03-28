@@ -10,13 +10,13 @@ describe('Dropdown component specification', () => {
   });
 
   it('should create a Dropdown component with correct properties', () => {
-    let dropdownComponent = new Dropdown(handler);
+    const dropdownComponent = new Dropdown(handler);
 
     expect(dropdownComponent.handler).to.equal(handler);
   });
 
   it('should change class on click', () => {
-    let dropdownComponent = new Dropdown(handler);
+    const dropdownComponent = new Dropdown(handler);
 
     handler.click();
     expect(dropdownComponent.handler.classList.contains(Dropdown.ACTIVE_CLASS))
@@ -28,7 +28,7 @@ describe('Dropdown component specification', () => {
   });
 
   it('should remove active class when click on body', () => {
-    let dropdownComponent = new Dropdown(handler);
+    const dropdownComponent = new Dropdown(handler);
 
     handler.click();
     expect(dropdownComponent.handler.classList.contains(Dropdown.ACTIVE_CLASS))
