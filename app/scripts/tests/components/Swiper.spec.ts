@@ -6,9 +6,11 @@ describe('Swiper component specification', () => {
   let swiperContainer;
   let itemsAmount = 5;
   let swiperOptions = {
+    activateTumbnails: false,
     animationMs: 500,
     nextCtrlClasses: ['right-arrow'],
     prevCtrlClasses: ['left-arrow'],
+    showBullets: false,
     showControls: true
   };
 

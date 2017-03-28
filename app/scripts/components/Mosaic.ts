@@ -86,9 +86,8 @@ class Mosaic {
 
   public createDetailContainer(): void {
     let template = Mosaic.DETAIL_TEMPLATE;
-    const attrsToRenderSize = Mosaic.ATTRS_TO_RENDER.length;
 
-    for (let i = 0; i < attrsToRenderSize; i++) {
+    for (let i = 0; i < Mosaic.ATTRS_TO_RENDER.length; i++) {
       const attribute = Mosaic.ATTRS_TO_RENDER[i];
       const keyAttribute = Mosaic.KEY_ATRRS_TO_RENDER.replace('[]', attribute);
       const value = this.activedItem.getAttribute(keyAttribute);
@@ -101,40 +100,15 @@ class Mosaic {
     this.detailContainer.addClasses(Mosaic.DETAIL_CONTAINER_CLASSES);
   }
 
-  public itemsPerRow(): Array<number> {
-    let distance = 0;
-    let itemsCount = 0;
-    const itemsPerRow = [];
-    const itemsSize = this.items.length;
-
-    for (let i = 0; i < itemsSize; i++) {
-      const item = this.items[i] as HTMLElement;
-
-      distance = distance + item.offsetWidth;
-
-      if (distance > this.itemsContainer.offsetWidth) {
-        itemsPerRow.push(itemsCount);
-        distance = item.offsetWidth;
-        itemsCount = 0;
-      } else if (i === itemsSize - 1) {
-        itemsPerRow.push(itemsCount + 1);
-      }
-
-      ++itemsCount;
-    }
-
-    return itemsPerRow;
-  }
-
   public lastItemOfActivedRow(): number {
     let item = 0;
-    const itemsPerRow = this.itemsPerRow();
-    const rows = itemsPerRow.length;
     const indexElement = DOMUtils.getIndexNode(this.activedItem);
+    const itemsPerRow = DOMUtils.itemsPerSection(
+      this.items, this.itemsContainer
+    );
 
-    for (let i = 0; i < rows; i++) {
+    for (let i = 0; i < itemsPerRow.length; i++) {
       item = item + itemsPerRow[i];
-
       if (item >= indexElement) {
         return item;
       }

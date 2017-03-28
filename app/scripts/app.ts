@@ -25,17 +25,21 @@ const menuCollapsers = document.querySelectorAll('[data-menu-collapser]');
 
 window.onload = () => {
   new Swiper(swiper, {
+    activateTumbnails: false,
     animationMs: 300,
     nextCtrlClasses: ['arrow-right'],
     prevCtrlClasses: ['arrow-left'],
+    showBullets: true,
     showControls: true
   });
 
   new Carousel(carousel, {
+    activateTumbnails: false,
     animationMs: 400,
     autoplayMs: 1200,
     nextCtrlClasses: ['arrow-right'],
     prevCtrlClasses: ['arrow-left'],
+    showBullets: false,
     showControls: false
   });
 

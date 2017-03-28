@@ -50,6 +50,12 @@ class DOMUtils {
     }
   }
 
+  static removeAllChildren(nodeElement: Element): void {
+    while (nodeElement.firstChild) {
+      nodeElement.removeChild(nodeElement.firstChild);
+    }
+  }
+
   static getIndexNode(nodeElement: Element): number {
     const parent = nodeElement.parentNode as HTMLElement;
     const children = parent.children;
@@ -118,6 +124,36 @@ class DOMUtils {
     } while (currentElement = currentElement.offsetParent as HTMLElement);
 
     return offsetLeft;
+  }
+
+  static itemsPerSection(
+    elements: NodeListOf<Element>,
+    elementsContainer: HTMLElement
+  ): Array<number> {
+    let distance = 0;
+    let itemsCount = 1;
+    const itemsPerSection = [];
+    const itemsSize = elements.length;
+
+    for (let i = 0; i < itemsSize; i++) {
+      const item = elements[i] as HTMLElement;
+
+      distance = distance + item.offsetWidth;
+
+      if (distance > elementsContainer.offsetWidth) {
+        itemsPerSection.push(itemsCount - 1);
+        distance = item.offsetWidth;
+        itemsCount = 1;
+      }
+
+      if (i === itemsSize - 1) {
+        itemsPerSection.push(itemsCount);
+      }
+
+      itemsCount++;
+    }
+
+    return itemsPerSection;
   }
 }
 
