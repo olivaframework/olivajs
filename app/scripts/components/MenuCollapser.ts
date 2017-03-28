@@ -46,9 +46,6 @@ class MenuCollapser {
   }
 
   private init() {
-    this.events = window.supportTouchEvents()
-      ? MenuCollapser.TOUCH_EVENTS
-      : MenuCollapser.MOUSE_EVENTS;
     DOMUtils.addClass(this.menu, MenuCollapser.COLLAPSER_CLASS);
     DOMUtils.addClass(this.collapsableMenu, MenuCollapser.COLLAPSABLE_CLASS);
 
@@ -62,6 +59,9 @@ class MenuCollapser {
   }
 
   private update() {
+    this.events = window.supportTouchEvents()
+      ? MenuCollapser.TOUCH_EVENTS
+      : MenuCollapser.MOUSE_EVENTS;
     this.menu.addEventListener(this.events.inside, this.openAttempt);
     if (window.isMobile() && this.defaultActive) {
       this.isOpen = true;
@@ -84,13 +84,13 @@ class MenuCollapser {
   private open() {
     DOMUtils.addClass(this.collapsableMenu, MenuCollapser.ACTIVE_CLASS);
     this.menu.removeEventListener(this.events.inside, this.openAttempt);
-    let closer = this.menu;
-
-    if (window.isMobile()) {
-      closer = document.body;
+    if (window.isMobile() || window.supportTouchEvents()) {
+      document.body.addEventListener(this.events.outside, this.closeAttempt);
+    } else {
+      this.menu.addEventListener(this.events.outside, this.closeAttempt);
+      this.collapsableMenu.addEventListener(this.events.outside,
+        this.closeAttempt);
     }
-
-    closer.addEventListener(this.events.outside, this.closeAttempt);
     this.isOpen = true;
   }
 
@@ -109,17 +109,24 @@ class MenuCollapser {
     DOMUtils.removeClass(this.collapsableMenu, MenuCollapser.ACTIVE_CLASS);
     this.menu.addEventListener(this.events.inside, this.openAttempt);
     this.menu.removeEventListener(this.events.outside, this.closeAttempt);
+    this.collapsableMenu.removeEventListener(this.events.outside,
+      this.closeAttempt);
     this.isOpen = false;
   }
 
   private closeAttempt(event): void {
-    if (window.isMobile()) {
-      const isInside = this.menu.contains(event.target);
+    let isInside = this.collapsableMenu.contains(event.relatedTarget);
 
-      if (!isInside) {
-        this.close();
-      }
-    } else {
+    if (window.isMobile()) {
+      isInside = this.collapsableMenu.contains(event.target);
+    }
+
+    if (!window.isMobile() && window.supportTouchEvents()) {
+      isInside = this.collapsableMenu.contains(event.target)
+        || this.collapsableMenu.contains(event.target);
+    }
+
+    if (!isInside) {
       this.close();
     }
   }

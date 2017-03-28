@@ -2,10 +2,13 @@ nav {
   background-color: $navbar-bg;
   border-bottom: $border-sm $border-regular $light-gray-color;
   box-shadow: $box-shadow-md;
+  position: relative;
 
   .item {
     border-right: $border-sm $border-regular $light-gray-color;
+    cursor: pointer;
     float: left;
+    height: $navbar-item-height;
     padding: $space-md $space-xl $space-md $space-sm;
     position: relative;
 

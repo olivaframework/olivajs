@@ -6,6 +6,30 @@
   }
 }
 
+.collapsable-items {
+  background-color: $navbar-bg;
+  left: 0;
+  min-height: 200px;
+  position: absolute;
+  top: $navbar-item-height;
+  z-index: 10;
+}
+
+.collapsable-item {
+  padding: 10px;
+  position: relative;
+}
+
+.collapsable-menu-expanded {
+  background-color: $navbar-bg;
+  left: 100%;
+  min-height: 200px;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
 @include media-breakpoint-down(sm) {
   .collapser {
     display: block;
@@ -24,5 +48,13 @@
       display: block;
       height: auto;
     }
+  }
+
+  .collapsable-items {
+    min-height: 0;
+    position: relative;
+    top: 0;
+    width: 100%;
+    z-index: 10;
   }
 }
