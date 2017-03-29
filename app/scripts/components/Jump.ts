@@ -1,3 +1,5 @@
+import { DOMUtils } from './DOMUtils';
+
 class Jump {
   static readonly ATTR: string = 'data-jump-content-id';
   static readonly EVENT_ACTIVE: string = 'click';
@@ -17,7 +19,7 @@ class Jump {
   public jump(event): void {
     event.preventDefault();
 
-    const elementTop = this.getOffsetTop(this.element);
+    const elementTop = DOMUtils.getOffsetTop(this.element);
     const handlerTop = window.scrollTop();
 
     if (handlerTop < elementTop) {
@@ -59,19 +61,6 @@ class Jump {
     const finalVelocity = (velocity > 1) ? Math.round(velocity) : 1;
 
     return finalVelocity;
-  }
-
-  public getOffsetTop(element: HTMLElement): number {
-    let offsetTop = 0;
-    let currentElement = element;
-
-    do {
-      if (!isNaN(currentElement.offsetTop)) {
-        offsetTop += currentElement.offsetTop;
-      }
-    } while (currentElement = currentElement.offsetParent as HTMLElement);
-
-    return offsetTop;
   }
 }
 

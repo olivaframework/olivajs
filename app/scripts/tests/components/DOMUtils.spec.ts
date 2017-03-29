@@ -167,6 +167,24 @@ describe('DOMUtils component specification', () => {
     expect(DOMUtils.containsClass(container, className)).to.be.false;
   });
 
+  it('should top getBoundingClientRect to be equals than getOffsetTop', () => {
+    container.style.marginTop = '10px';
+    container.style.marginLeft = '10px';
+
+    let containerRect = container.getBoundingClientRect();
+
+    expect(DOMUtils.getOffsetTop(container)).to.be.equals(containerRect.top);
+    expect(DOMUtils.getOffsetLeft(container)).to.be.equals(containerRect.left);
+
+    container.style.marginTop = '120px';
+    container.style.marginLeft = '120px';
+
+    containerRect = container.getBoundingClientRect();
+
+    expect(DOMUtils.getOffsetTop(container)).to.be.equals(containerRect.top);
+    expect(DOMUtils.getOffsetLeft(container)).to.be.equals(containerRect.left);
+  });
+
   afterEach(() => {
     container.remove();
     container = null;

@@ -38,18 +38,6 @@ describe('Jump component specification', () => {
     assert(spy.calledOnce);
   });
 
-  it('should top getBoundingClientRect to be equals than getOffsetTop', () => {
-    let jumpComponent = new Jump(jumpHandler);
-    let handlerRect = jumpHandler.getBoundingClientRect();
-    let elementToJumpRect = elementToJump.getBoundingClientRect();
-
-    expect(jumpComponent.getOffsetTop(jumpHandler)).to.be
-    .equals(handlerRect.top);
-
-    expect(jumpComponent.getOffsetTop(elementToJump)).to.be
-    .equals(elementToJumpRect.top);
-  });
-
   it('should called scrollUp function', () => {
     elementToJump.style.position = 'absolute';
     elementToJump.style.top = '0px';
