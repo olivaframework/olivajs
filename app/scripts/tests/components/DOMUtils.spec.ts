@@ -10,23 +10,23 @@ describe('DOMUtils component specification', () => {
   });
 
   it('should trow error when create a new DOMUtils component', () => {
-    let domUtils = () => new DOMUtils();
+    const domUtils = () => new DOMUtils();
 
     expect(domUtils).to.throw(Error);
   });
 
   it('should remove classes to elements on removeClassToItems method', () => {
-    let className = 'className';
-    let amountElements = 5;
+    const className = 'className';
+    const amountElements = 5;
 
     for (let i = 0; i < amountElements; i++) {
-      let element = document.createElement('div');
+      const element = document.createElement('div');
 
       element.classList.add(className);
       container.appendChild(element);
     }
 
-    let elements = container.querySelectorAll(`.${ className }`);
+    const elements = container.querySelectorAll(`.${ className }`);
 
     for (let i = 0; i < amountElements; i++) {
       expect(elements[i].classList.contains(className)).to.be.true;
@@ -40,45 +40,45 @@ describe('DOMUtils component specification', () => {
   });
 
   it('should run callback on syncForEach method', () => {
-    let amountElements = 5;
-    let className = 'className';
+    const amountElements = 5;
+    const className = 'className';
 
     for (let i = 0; i < amountElements; i++) {
-      let element = document.createElement('div');
+      const element = document.createElement('div');
 
       element.classList.add(className);
       container.appendChild(element);
     }
 
-    let elements = container.querySelectorAll(`.${ className }`);
-    let callback = sinon.spy();
+    const elements = container.querySelectorAll(`.${ className }`);
+    const callback = sinon.spy();
 
     DOMUtils.syncForEach(callback, elements);
     assert.equal(callback.callCount, amountElements);
   });
 
   it('should find right parentNode on findParentElementByClass method', () => {
-    let childClass = 'childClass';
-    let parentClass = 'parentClass';
-    let child = document.createElement('div');
-    let parent = document.createElement('div');
+    const childClass = 'childClass';
+    const parentClass = 'parentClass';
+    const child = document.createElement('div');
+    const parent = document.createElement('div');
 
     child.classList.add(childClass);
     parent.appendChild(child);
     container.classList.add(parentClass);
     container.appendChild(parent);
 
-    let foundParent = DOMUtils.findParentElementByClass(child, parentClass);
+    const foundParent = DOMUtils.findParentElementByClass(child, parentClass);
 
     expect(container).to.be.equals(foundParent);
   });
 
   it('should remove all elements on removeElements method', () => {
-    let amountElements = 5;
-    let className = 'className';
+    const amountElements = 5;
+    const className = 'className';
 
     for (let i = 0; i < amountElements; i++) {
-      let element = document.createElement('div');
+      const element = document.createElement('div');
 
       element.classList.add(className);
       container.appendChild(element);
@@ -95,13 +95,13 @@ describe('DOMUtils component specification', () => {
   });
 
   it('should get correct index node on getIndexNode method', () => {
-    let amountElements = 5;
-    let indexNode = 3;
-    let className = 'className';
+    const amountElements = 5;
+    const indexNode = 3;
+    const className = 'className';
     let element = null;
 
     for (let i = 0; i < amountElements; i++) {
-      let item = document.createElement('div');
+      const item = document.createElement('div');
 
       item.classList.add(className);
       container.appendChild(item);
@@ -115,7 +115,7 @@ describe('DOMUtils component specification', () => {
   });
 
   it('should add class on addClass method', () => {
-    let className = 'className';
+    const className = 'className';
 
     expect(container.classList.contains(className)).to.be.false;
 
@@ -124,9 +124,9 @@ describe('DOMUtils component specification', () => {
   });
 
   it('should remove class on removeClass method', () => {
-    let className = 'className';
-    let className2 = 'className2';
-    let className3 = 'className3';
+    const className = 'className';
+    const className2 = 'className2';
+    const className3 = 'className3';
 
     container.classList.add(className);
     container.classList.add(className2);
@@ -144,7 +144,7 @@ describe('DOMUtils component specification', () => {
   });
 
   it('should toggle class on toggleClass method', () => {
-    let className = 'className';
+    const className = 'className';
 
     expect(container.classList.contains(className)).to.be.false;
 
@@ -156,7 +156,7 @@ describe('DOMUtils component specification', () => {
   });
 
   it('should check if an element has class on containsClass method', () => {
-    let className = 'className';
+    const className = 'className';
 
     expect(DOMUtils.containsClass(container, className)).to.be.false;
 

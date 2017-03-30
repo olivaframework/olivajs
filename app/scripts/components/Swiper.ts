@@ -10,9 +10,11 @@ interface SwiperEvents {
 }
 
 interface SwiperOptions {
+  activateTumbnails: boolean;
   animationMs: number;
   nextCtrlClasses: string[];
   prevCtrlClasses: string[];
+  showBullets: boolean;
   showControls: boolean;
 }
 
@@ -26,6 +28,8 @@ class Swiper {
   static readonly ITEM_CLASS: string = 'swiper-item';
   static readonly ACTIVE_CTRL_CLASS: string = 'active';
   static readonly ACTIVE_EVENT_CTRL: string = 'click';
+  static readonly BULLET_ATTR: string = 'data-swiper-go-page';
+  static readonly BULLET_CLASS: string = 'swiper-bullet';
   static readonly SWIPE_OUT_RANGE: number = 35;
   static readonly SWIPE_PERCENT_AJUST: number = 10;
   static readonly WINDOW_EVENT: string = 'resize';
@@ -55,6 +59,7 @@ class Swiper {
   public supportEvents: SwiperEvents;
   public thumbnails: NodeListOf<Element>;
   public options: SwiperOptions;
+  public bulletsContainer: DOMElement;
 
   constructor(swiper: Element, options: SwiperOptions) {
     this.actionDown = this.actionDown.bind(this);
@@ -64,18 +69,14 @@ class Swiper {
     this.showByIndex = this.showByIndex.bind(this);
     this.showPrev = this.showPrev.bind(this);
     this.showNext = this.showNext.bind(this);
+    this.changePage = this.changePage.bind(this);
     this.swipe = this.swipe.bind(this);
     this.update = this.update.bind(this);
-    this.init(swiper, options);
-    this.activateControlsByIndexes(swiper);
-
-    if (this.options.showControls) {
-      this.createControls();
-      this.activateControls();
-    }
+    this.init(swiper);
+    this.initFeatures(swiper, options);
   }
 
-  public init(swiper: Element, options: SwiperOptions): void {
+  public init(swiper: Element): void {
     this.supportEvents = window.supportTouchEvents()
       ? Swiper.TOUCH_EVENTS
       : Swiper.MOUSE_EVENTS;
@@ -83,7 +84,6 @@ class Swiper {
     this.index = 0;
     this.initDistance = 0;
     this.traveledDistance = 0;
-    this.options = options;
 
     this.swiper = swiper
       .querySelector(`.${ Swiper.SWIPER_CLASS }`) as HTMLElement;
@@ -102,11 +102,53 @@ class Swiper {
     window.onEvent(Swiper.WINDOW_EVENT, this.update, 1);
   }
 
+  public initFeatures(swiper: Element, options: SwiperOptions): void {
+    this.options = options;
+
+    if (this.options.activateTumbnails) {
+      this.activateControlsByIndexes(swiper);
+    }
+
+    if (this.options.showControls) {
+      this.createControls();
+      this.activateControls();
+    }
+
+    if (this.options.showBullets) {
+      this.bulletsContainer = new DOMElement('div');
+      this.bulletsContainer.addClasses(['swiper-bullets-container']);
+      this.bulletsContainer.render(this.swiper);
+      this.createBullets();
+      this.activateBullets();
+    }
+  }
+
   public animate(distance: number, velocity: number): void {
     const translate = `translate3d(${ -1 * distance }px, 0px, 0px)`;
 
     this.container.style.transform = translate;
     this.container.style.transitionDuration = `${ velocity }ms`;
+  }
+
+  public createBullets(): void {
+    this.bulletsContainer.removeAllChildren();
+
+    const itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
+
+    for (let i = 0; i < itemsPerPage.length; i++) {
+      const bullet = new DOMElement('div');
+
+      bullet.addClasses([Swiper.BULLET_CLASS]);
+      bullet.render(this.bulletsContainer.getElement());
+      bullet.addEvents([{
+        callback: this.changePage,
+        name: 'click'
+      }]);
+      bullet.setAttributes([{
+        name: Swiper.BULLET_ATTR,
+        value: i.toString()
+      }]);
+    }
   }
 
   public activateControls(): void {
@@ -173,8 +215,10 @@ class Swiper {
       const currentItem = this.items[this.index] as HTMLElement;
 
       this.animate(currentItem.offsetLeft, this.options.animationMs);
-      this.activateControls();
     }
+
+    this.activateBullets();
+    this.activateControls();
   }
 
   public showNext(): void {
@@ -192,6 +236,7 @@ class Swiper {
       }
     }
 
+    this.activateBullets();
     this.activateControls();
   }
 
@@ -207,6 +252,11 @@ class Swiper {
       this.animate(this.containerFullWidth(), 0);
     }
 
+    if (this.options.showBullets) {
+      this.createBullets();
+    }
+
+    this.activateBullets();
     this.activateControls();
   }
 
@@ -311,6 +361,7 @@ class Swiper {
       }
     }
 
+    this.activateBullets();
     this.activateControls();
     this.swiper.removeEventListener(this.supportEvents.move, this.swipe);
     this.swiper.removeEventListener(this.supportEvents.up, this.actionUp);
@@ -322,24 +373,22 @@ class Swiper {
     const thumbsContainer = swiper
       .querySelector(`.${ Swiper.THUMBNAILS_CONTAINER_CLASS }`);
 
-    if (thumbsContainer) {
-      this.thumbnails = thumbsContainer
-        .querySelectorAll(`.${ Swiper.THUMBNAIL_ITEM_CLASS }`);
+    this.thumbnails = thumbsContainer
+      .querySelectorAll(`.${ Swiper.THUMBNAIL_ITEM_CLASS }`);
 
-      const itemsSize = this.items.length;
-      const thumbnailsSize = this.thumbnails.length;
+    const itemsSize = this.items.length;
+    const thumbnailsSize = this.thumbnails.length;
 
-      if (itemsSize === thumbnailsSize) {
-        for (let i = 0; i < itemsSize; i++) {
-          const thumbnail = this.thumbnails[i] as HTMLElement;
-          const item = this.items[i] as HTMLElement;
+    if (itemsSize === thumbnailsSize) {
+      for (let i = 0; i < itemsSize; i++) {
+        const thumbnail = this.thumbnails[i] as HTMLElement;
+        const item = this.items[i] as HTMLElement;
 
-          thumbnail.addEventListener(Swiper.ACTIVE_EVENT, this.showByIndex);
-          item.style.width = Swiper.ITEM_MAGNIFY_WIDTH;
-        }
-      } else {
-        throw new Error('Error: Thumbnails and Items have different length');
+        thumbnail.addEventListener(Swiper.ACTIVE_EVENT, this.showByIndex);
+        item.style.width = Swiper.ITEM_MAGNIFY_WIDTH;
       }
+    } else {
+      throw new Error('Error: Thumbnails and Items have different length');
     }
   }
 
@@ -356,10 +405,51 @@ class Swiper {
         const itemToShow = this.items[i] as HTMLElement;
 
         this.index = i;
+        this.activateBullets();
         this.activateControls();
         this.animate(itemToShow.offsetLeft, this.options.animationMs);
 
         break;
+      }
+    }
+  }
+
+  public changePage(event: Event): void {
+    let item = 0;
+    const target = event.target as Element;
+    const pageNumber = parseInt(target.getAttribute(Swiper.BULLET_ATTR));
+    const itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
+
+    for (let i = 0; i < pageNumber; i++) {
+      item = item + itemsPerPage[i];
+    }
+
+    const lastPageItem = this.items[item] as HTMLElement;
+
+    this.index = item;
+    this.animate(lastPageItem.offsetLeft, this.options.animationMs);
+    this.activateBullets();
+    this.activateControls();
+  }
+
+  public activateBullets() {
+    if (this.options.showBullets) {
+      let item = 0;
+      const itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
+      const bullets = this.bulletsContainer.getElement().children;
+
+      DOMUtils.removeClassToItems(bullets, 'active');
+
+      for (let i = 0; i < itemsPerPage.length; i++) {
+        item = item + itemsPerPage[i];
+
+        if (item - 1 >= this.index) {
+          const bullet = bullets[i];
+
+          DOMUtils.addClass(bullet, 'active');
+
+          break;
+        }
       }
     }
   }

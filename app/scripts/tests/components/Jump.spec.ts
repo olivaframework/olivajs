@@ -7,7 +7,7 @@ describe('Jump component specification', () => {
   let clock;
 
   beforeEach(() => {
-    let contentId = 'jump-content-id';
+    const contentId = 'jump-content-id';
 
     jumpHandler = document.createElement('div');
     jumpHandler.setAttribute(Jump.ATTR, contentId);
@@ -21,16 +21,16 @@ describe('Jump component specification', () => {
   });
 
   it('should create a Jump component with correct properties', () => {
-    let jumpComponent = new Jump(jumpHandler);
+    const jumpComponent = new Jump(jumpHandler);
 
     expect(jumpComponent.handler).to.equal(jumpHandler);
     expect(jumpComponent.element).to.equal(elementToJump);
   });
 
   it('should called once jump function', () => {
-    let jumpComponent = new Jump(jumpHandler);
-    let spy = sinon.spy(jumpComponent, 'jump');
-    let event = { preventDefault: () => 0 };
+    const jumpComponent = new Jump(jumpHandler);
+    const spy = sinon.spy(jumpComponent, 'jump');
+    const event = { preventDefault: () => 0 };
 
     assert(spy.notCalled);
 
@@ -45,8 +45,8 @@ describe('Jump component specification', () => {
     jumpHandler.style.position = 'absolute';
     jumpHandler.style.top = '1000px';
 
-    let jumpComponent = new Jump(jumpHandler);
-    let spy = sinon.spy(jumpComponent, 'scrollUp');
+    const jumpComponent = new Jump(jumpHandler);
+    const spy = sinon.spy(jumpComponent, 'scrollUp');
 
     assert(spy.notCalled);
 
@@ -64,9 +64,9 @@ describe('Jump component specification', () => {
     jumpHandler.style.position = 'absolute';
     jumpHandler.style.top = '0px';
 
-    let jumpComponent = new Jump(jumpHandler);
-    let spy = sinon.spy(jumpComponent, 'scrollDown');
-    let stub = sinon.stub(window, 'getInnerHeight');
+    const jumpComponent = new Jump(jumpHandler);
+    const spy = sinon.spy(jumpComponent, 'scrollDown');
+    const stub = sinon.stub(window, 'getInnerHeight');
 
     stub.onFirstCall().returns(0);
     stub.onSecondCall().returns(-100);

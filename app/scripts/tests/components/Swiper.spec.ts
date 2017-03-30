@@ -4,11 +4,13 @@ import { Swiper } from '../../components/Swiper';
 describe('Swiper component specification', () => {
   let swiper;
   let swiperContainer;
-  let itemsAmount = 5;
-  let swiperOptions = {
+  const itemsAmount = 5;
+  const swiperOptions = {
+    activateTumbnails: false,
     animationMs: 500,
     nextCtrlClasses: ['right-arrow'],
     prevCtrlClasses: ['left-arrow'],
+    showBullets: false,
     showControls: true
   };
 
@@ -16,7 +18,7 @@ describe('Swiper component specification', () => {
     swiper = document.createElement('div');
     swiper.style.overflow = 'hidden';
 
-    let swiperSection = document.createElement('div');
+    const swiperSection = document.createElement('div');
 
     swiperSection.classList.add(Swiper.SWIPER_CLASS);
     swiperContainer = document.createElement('div');
@@ -25,7 +27,7 @@ describe('Swiper component specification', () => {
     swiperContainer.style.whiteSpace = 'nowrap';
 
     for (let i = 0; i < itemsAmount; i++) {
-      let item = document.createElement('div');
+      const item = document.createElement('div');
 
       item.style.width = '500px';
       item.style.display = 'inline-block';
@@ -39,7 +41,7 @@ describe('Swiper component specification', () => {
   });
 
   it('should create a Swiper component with correct properties', () => {
-    let swiperComponent = new Swiper(swiper, swiperOptions);
+    const swiperComponent = new Swiper(swiper, swiperOptions);
 
     expect(swiperComponent.container).to.equals(swiperContainer);
     expect(swiperComponent.items.length).to.equals(itemsAmount);
@@ -48,7 +50,7 @@ describe('Swiper component specification', () => {
   });
 
   it('should show correct item when showNext is called', () => {
-    let swiperComponent = new Swiper(swiper, swiperOptions);
+    const swiperComponent = new Swiper(swiper, swiperOptions);
 
     for (let i = 0; i <= swiperComponent.lastToShow(); i++) {
       if (i < swiperComponent.lastToShow()) {
@@ -62,7 +64,7 @@ describe('Swiper component specification', () => {
   });
 
   it('should show previous item when showPrev is called', () => {
-    let swiperComponent = new Swiper(swiper, swiperOptions);
+    const swiperComponent = new Swiper(swiper, swiperOptions);
 
     swiperComponent.showNext();
     swiperComponent.showNext();

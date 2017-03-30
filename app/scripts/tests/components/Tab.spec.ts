@@ -4,16 +4,16 @@ import { Tab } from '../../components/Tab';
 describe('Tab component specification', () => {
   let tabsContainer;
   let tabContentContainer;
-  let tabIdA = 'tab-id-A';
-  let tabIdB = 'tab-id-B';
-  let tabContentAId = 'tab-content-A';
-  let tabContentBId = 'tab-content-B';
+  const tabIdA = 'tab-id-A';
+  const tabIdB = 'tab-id-B';
+  const tabContentAId = 'tab-content-A';
+  const tabContentBId = 'tab-content-B';
 
   beforeEach(() => {
-    let tabA = document.createElement('a');
-    let tabB = document.createElement('a');
-    let tabContentA = document.createElement('div');
-    let tabContentB = document.createElement('div');
+    const tabA = document.createElement('a');
+    const tabB = document.createElement('a');
+    const tabContentA = document.createElement('div');
+    const tabContentB = document.createElement('div');
 
     tabsContainer = document.createElement('div');
     tabContentContainer = document.createElement('div');
@@ -38,8 +38,8 @@ describe('Tab component specification', () => {
   });
 
   it('should create a Tab with correct properties', () => {
-    let tab = document.getElementById(tabIdA) as HTMLAnchorElement;
-    let tabComponent = new Tab(tab);
+    const tab = document.getElementById(tabIdA) as HTMLAnchorElement;
+    const tabComponent = new Tab(tab);
 
     expect(document.getElementById(tabIdA)).to.be
     .equal(tabComponent.handler);
@@ -48,13 +48,13 @@ describe('Tab component specification', () => {
   });
 
   it('should active the correct tab when toggle is called', () => {
-    let tabA = document.getElementById(tabIdA) as HTMLAnchorElement;
-    let tabB = document.getElementById(tabIdB) as HTMLAnchorElement;
-    let tabComponentA = new Tab(tabA);
-    let tabComponentB = new Tab(tabB);
-    let tabContentA = document.getElementById(tabContentAId);
-    let tabContentB = document.getElementById(tabContentBId);
-    let event = { preventDefault: () => 0 };
+    const tabA = document.getElementById(tabIdA) as HTMLAnchorElement;
+    const tabB = document.getElementById(tabIdB) as HTMLAnchorElement;
+    const tabComponentA = new Tab(tabA);
+    const tabComponentB = new Tab(tabB);
+    const tabContentA = document.getElementById(tabContentAId);
+    const tabContentB = document.getElementById(tabContentBId);
+    const event = { preventDefault: () => 0 };
 
     tabComponentA.toggle(event);
     expect(tabA.classList.contains(Tab.ACTIVE_CLASS)).to.be.true;

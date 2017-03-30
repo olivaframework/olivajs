@@ -50,7 +50,7 @@ class Http {
     this.xhr.open(method, this.config.url, true);
 
     if (this.config.headers) {
-      for (let header of this.config.headers) {
+      for (const header of this.config.headers) {
         this.xhr.setRequestHeader(header.name, header.value);
       }
     }
@@ -72,8 +72,8 @@ class Http {
         document.dispatchEvent(Http.finishedEvent);
 
         if (this.status === 200) {
-          let responseType = this.getResponseHeader('Content-Type');
-          let response = (responseType.indexOf('application/json') >= 0)
+          const responseType = this.getResponseHeader('Content-Type');
+          const response = (responseType.indexOf('application/json') >= 0)
             ? JSON.parse(this.responseText)
             : this.responseText;
 

@@ -1,8 +1,13 @@
 import { DOMUtils } from './DOMUtils';
 
 interface Events {
-  callback: () => void;
+  callback: (event?: any) => void;
   name: string;
+}
+
+interface Attributes {
+  name: string;
+  value: string;
 }
 
 class DOMElement {
@@ -24,13 +29,23 @@ class DOMElement {
     this.element.innerHTML = content;
   }
 
-  public addClasses(classes: Array<string>): void {
+  public setAttributes(atributes: Attributes[]): void {
+    for (const item of atributes) {
+      this.element.setAttribute(item.name, item.value);
+    }
+  }
+
+  public removeAllChildren(): void {
+    DOMUtils.removeAllChildren(this.element);
+  }
+
+  public addClasses(classes: string[]): void {
     for (const item of classes) {
       DOMUtils.addClass(this.element, item);
     }
   }
 
-  public removeClasses(classes: Array<string>): void {
+  public removeClasses(classes: string[]): void {
     for (const item of classes) {
       DOMUtils.removeClass(this.element, item);
     }
@@ -58,13 +73,13 @@ class DOMElement {
     node.insertBefore(this.element, childrenNodes[index]);
   }
 
-  public addEvents(events: Array<Events>): void {
+  public addEvents(events: Events[]): void {
     for (const item of events) {
       this.element.addEventListener(item.name, item.callback);
     }
   }
 
-  public removeEvents(events: Array<Events>): void {
+  public removeEvents(events: Events[]): void {
     for (const item of events) {
       this.element.removeEventListener(item.name, item.callback);
     }
