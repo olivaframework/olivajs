@@ -12,22 +12,29 @@
   min-height: 200px;
   position: absolute;
   top: $navbar-item-height;
+  width: 100%;
   z-index: 10;
 }
 
 .collapsable-item {
   padding: 10px;
-  position: relative;
+  position: static;
+  width: $collapsable-item-width;
 }
 
 .collapsable-menu-expanded {
   background-color: $navbar-bg;
-  left: 100%;
-  min-height: 200px;
   padding: 20px;
-  position: absolute;
+  position: relative;
   top: 0;
-  width: 100%;
+
+  @include media-breakpoint-up(md) {
+    left: $collapsable-item-width;
+    min-height: 200px;
+    position: absolute;
+    top: 0;
+    width: calc(100% - #{$collapsable-item-width});
+  }
 }
 
 @include media-breakpoint-down(sm) {
