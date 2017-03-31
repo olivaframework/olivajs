@@ -10,10 +10,11 @@ class MenuCollapser {
   private static COLLAPSER_CLASS: string = 'collapser';
   private static COLLAPSABLE_CLASS: string = 'collapsable';
   private static ACTIVE_CLASS: string = 'active';
+  private static OPEN_TIMER: number = 120;
   private static readonly TOUCH_EVENTS: CollapserEvents = {
-    click: 'touchend',
-    inside: 'touchend',
-    outside: 'touchend'
+    click: 'click',
+    inside: 'click',
+    outside: 'click'
   };
   private static readonly MOUSE_EVENTS: CollapserEvents = {
     click: 'mouseover',
@@ -96,7 +97,9 @@ class MenuCollapser {
   }
 
   private openAttempt() {
-    const timer = window.isMobile() || window.supportTouchEvents() ? 0 : 120;
+    const timer = window.isMobile() || window.supportTouchEvents()
+      ? 0
+      : MenuCollapser.OPEN_TIMER;
 
     this.openIntent = setTimeout(this.open, timer);
     this.menu.addEventListener(this.events.outside, this.cancelOpenIntent);
@@ -119,12 +122,10 @@ class MenuCollapser {
 
   private closeAttempt(event): void {
     event.stopPropagation();
-    let isInside = this.collapsableMenu.contains(event.relatedTarget);
-
-    if ((!window.isMobile() && window.supportTouchEvents())
-      || window.isMobile()) {
-      isInside = this.collapsableMenu.contains(event.target);
-    }
+    const isInside = (!window.isMobile() && window.supportTouchEvents())
+      || window.isMobile()
+      ? this.collapsableMenu.contains(event.target)
+      : this.collapsableMenu.contains(event.relatedTarget);
 
     if (!isInside) {
       this.close();

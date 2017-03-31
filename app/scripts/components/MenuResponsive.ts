@@ -9,9 +9,9 @@ class MenuResponsive {
   static readonly ACTIVE_CLASS: string = 'active';
   static readonly BUTTON_OUTER_CLASS: string = 'menu-hamburger-btn';
   static readonly BUTTON_INNER_CLASS: string = 'hamburger';
+  static readonly EVENT: string = 'click';
 
   private menu: HTMLElement;
-  private eventTrigger: string;
   private openButton: Element;
   private hamburgerButton: DOMElement;
   private hamburgerButtonContent: DOMElement;
@@ -25,7 +25,6 @@ class MenuResponsive {
 
   constructor(menu: HTMLElement) {
     this.menu = menu;
-    this.eventTrigger = window.supportTouchEvents() ? 'touchend' : 'click';
     this.type = this.menu.getAttribute('data-responsive-menu') || 'over';
     this.openButtonId = this.menu.getAttribute('data-menu-open-button-id');
     this.openButton = document.getElementById(this.openButtonId);
@@ -76,16 +75,16 @@ class MenuResponsive {
 
   private update(): void {
     if (window.isMobile()) {
-      this.openButton.addEventListener(this.eventTrigger, this.open);
+      this.openButton.addEventListener(MenuResponsive.EVENT, this.open);
     } else {
-      this.openButton.removeEventListener(this.eventTrigger, this.open);
+      this.openButton.removeEventListener(MenuResponsive.EVENT, this.open);
     }
   }
 
   private open(event): void {
     event.stopPropagation();
-    document.addEventListener(this.eventTrigger, this.close);
-    this.openButton.removeEventListener(this.eventTrigger, this.open);
+    document.addEventListener(MenuResponsive.EVENT, this.close);
+    this.openButton.removeEventListener(MenuResponsive.EVENT, this.open);
 
     DOMUtils.addClass(this.menu, MenuResponsive.MENU_ANIMATE_CLASS);
     DOMUtils.addClass(this.menu, MenuResponsive.ACTIVE_CLASS);
@@ -149,8 +148,8 @@ class MenuResponsive {
 
     if (!isClickInside) {
       event.stopPropagation();
-      document.removeEventListener(this.eventTrigger, this.close);
-      this.openButton.addEventListener(this.eventTrigger, this.open);
+      document.removeEventListener(MenuResponsive.EVENT, this.close);
+      this.openButton.addEventListener(MenuResponsive.EVENT, this.open);
       DOMUtils.removeClass(this.menu, MenuResponsive.ACTIVE_CLASS);
       DOMUtils.removeClass(document.body, MenuResponsive.ACTIVE_CLASS);
 
