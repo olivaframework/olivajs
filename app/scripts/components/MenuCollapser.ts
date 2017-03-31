@@ -1,4 +1,4 @@
-import { DOMUtils } from './DOMUtils';
+import {DOMUtils} from './DOMUtils';
 
 interface CollapserEvents {
   click: string;
@@ -62,23 +62,11 @@ class MenuCollapser {
     this.events = window.supportTouchEvents()
       ? MenuCollapser.TOUCH_EVENTS
       : MenuCollapser.MOUSE_EVENTS;
-
-    if (window.isMobile() && this.defaultActive) {
-      this.isOpen = true;
-      DOMUtils.addClass(this.collapsableMenu, MenuCollapser.ACTIVE_CLASS);
-      this.menu.addEventListener(this.events.inside, this.closeAttempt);
-    } else {
-      this.menu.addEventListener(this.events.inside, this.openAttempt);
-    }
-
-    if (!window.isMobile() && this.defaultActive) {
-      this.isOpen = null;
-      DOMUtils.removeClass(this.collapsableMenu, MenuCollapser.ACTIVE_CLASS);
-    }
+    this.menu.addEventListener(this.events.inside, this.openAttempt);
   }
 
   private updateDefaultActive() {
-    if (this.defaultActive) {
+    if (this.defaultActive && !window.isMobile()) {
       DOMUtils.addClass(this.collapsableMenu, MenuCollapser.ACTIVE_CLASS);
       this.isOpen = true;
     }
@@ -110,25 +98,22 @@ class MenuCollapser {
   }
 
   private close() {
-    event.stopPropagation();
-    DOMUtils.removeClass(this.collapsableMenu, MenuCollapser.ACTIVE_CLASS);
-    this.menu.addEventListener(this.events.inside, this.openAttempt);
+    document.body.removeEventListener(this.events.outside, this.closeAttempt);
     this.menu.removeEventListener(this.events.outside, this.closeAttempt);
     this.collapsableMenu.removeEventListener(this.events.outside,
       this.closeAttempt);
+    DOMUtils.removeClass(this.collapsableMenu, MenuCollapser.ACTIVE_CLASS);
+    this.menu.addEventListener(this.events.inside, this.openAttempt);
     this.isOpen = false;
   }
 
   private closeAttempt(event): void {
+    event.stopPropagation();
     let isInside = this.collapsableMenu.contains(event.relatedTarget);
 
-    if (window.isMobile()) {
+    if ((!window.isMobile() && window.supportTouchEvents())
+      || window.isMobile()) {
       isInside = this.collapsableMenu.contains(event.target);
-    }
-
-    if (!window.isMobile() && window.supportTouchEvents()) {
-      isInside = this.collapsableMenu.contains(event.target)
-        || this.collapsableMenu.contains(event.target);
     }
 
     if (!isInside) {
@@ -137,4 +122,4 @@ class MenuCollapser {
   }
 }
 
-export { MenuCollapser };
+export {MenuCollapser};
