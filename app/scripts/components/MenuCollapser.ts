@@ -49,6 +49,10 @@ class MenuCollapser {
     DOMUtils.addClass(this.menu, MenuCollapser.COLLAPSER_CLASS);
     DOMUtils.addClass(this.collapsableMenu, MenuCollapser.COLLAPSABLE_CLASS);
 
+    this.events = window.supportTouchEvents()
+      ? MenuCollapser.TOUCH_EVENTS
+      : MenuCollapser.MOUSE_EVENTS;
+
     this.update();
     this.updateDefaultActive();
     window.onEvent('resize', this.update, 200);
@@ -59,16 +63,22 @@ class MenuCollapser {
   }
 
   private update() {
-    this.events = window.supportTouchEvents()
-      ? MenuCollapser.TOUCH_EVENTS
-      : MenuCollapser.MOUSE_EVENTS;
-    this.menu.addEventListener(this.events.inside, this.openAttempt);
+    if (this.isOpen) {
+      this.menu.removeEventListener(this.events.inside, this.openAttempt);
+      this.menu.addEventListener(this.events.outside, this.closeAttempt);
+    } else {
+      this.menu.removeEventListener(this.events.outside, this.closeAttempt);
+      this.menu.addEventListener(this.events.inside, this.openAttempt);
+    }
   }
 
   private updateDefaultActive() {
     if (this.defaultActive && !window.isMobile()) {
       DOMUtils.addClass(this.collapsableMenu, MenuCollapser.ACTIVE_CLASS);
       this.isOpen = true;
+    } else {
+      DOMUtils.removeClass(this.collapsableMenu, MenuCollapser.ACTIVE_CLASS);
+      this.isOpen = false;
     }
   }
 
