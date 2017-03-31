@@ -1,4 +1,4 @@
-import {DOMUtils} from './DOMUtils';
+import { DOMUtils } from './DOMUtils';
 
 interface CollapserEvents {
   click: string;
@@ -133,4 +133,4 @@ class MenuCollapser {
   }
 }
 
-export {MenuCollapser};
+export { MenuCollapser };
