@@ -1,8 +1,43 @@
 .collapsable {
-  display: none;
+  opacity: 0;
+  transition: visibility 200ms ease-out,
+    opacity 200ms ease-out;
+  visibility: hidden;
 
   &.active {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.collapsable-items {
+  background-color: $navbar-bg;
+  left: 0;
+  min-height: 200px;
+  position: absolute;
+  top: $navbar-item-height;
+  width: 100%;
+  z-index: 10;
+}
+
+.collapsable-item {
+  padding: 10px;
+  position: static;
+  width: $collapsable-item-width;
+}
+
+.collapsable-menu-expanded {
+  background-color: $navbar-bg;
+  padding: 20px;
+  position: relative;
+  top: 0;
+
+  @include media-breakpoint-up(md) {
+    left: $collapsable-item-width;
+    min-height: 200px;
+    position: absolute;
+    top: 0;
+    width: calc(100% - #{$collapsable-item-width});
   }
 }
 
@@ -24,5 +59,13 @@
       display: block;
       height: auto;
     }
+  }
+
+  .collapsable-items {
+    min-height: 0;
+    position: relative;
+    top: 0;
+    width: 100%;
+    z-index: 10;
   }
 }

@@ -6,10 +6,10 @@ class MenuResponsive {
   private static BODY_CLASS: string = 'responsive-menu-body';
   private static MENU_ANIMATE_CLASS: string = 'responsive-menu-animated';
   private static MENU_CLASS: string = 'responsive-menu';
-  static readonly EVENT: string = 'click';
   static readonly ACTIVE_CLASS: string = 'active';
   static readonly BUTTON_OUTER_CLASS: string = 'menu-hamburger-btn';
   static readonly BUTTON_INNER_CLASS: string = 'hamburger';
+  static readonly EVENT: string = 'click';
 
   private menu: HTMLElement;
   private openButton: Element;
