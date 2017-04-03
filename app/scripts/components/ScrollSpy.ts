@@ -6,9 +6,9 @@ class ScrollSpy {
   static readonly EVENT_ACTIVE: string = 'scroll';
   static readonly SCROLL_PERCENT: number = 25;
 
-  public handler: HTMLElement;
+  public handler: Element;
 
-  constructor(handler: HTMLElement) {
+  constructor(handler: Element) {
     this.handler = handler;
     this.validatePosition = this.validatePosition.bind(this);
 

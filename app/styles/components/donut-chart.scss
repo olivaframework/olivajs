@@ -1,0 +1,67 @@
+.donut-chart {
+  height: $donut-chart-size;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  width: $donut-chart-size;
+  $donut-chart-middle-size: ($donut-chart-size - 8) / 2;
+
+  .donut-chart-content {
+    box-sizing: content-box;
+    clip: rect(0, $donut-chart-size / 2, $donut-chart-size, 0);
+    height: $donut-chart-size;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: $donut-chart-size;
+  }
+
+  .donut-chart-summary {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .donut-chart-circle {
+    border-color: $donut-chart-bar-default-color;
+    border-radius: 50%;
+    border-style: $donut-chart-bar-style;
+    border-width: $donut-chart-bar-size / 2;
+    box-sizing: content-box;
+    height: $donut-chart-size * 0.86;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: $donut-chart-size * 0.86;
+  }
+
+  .donut-chart-bar,
+  .donut-chart-fill {
+    border: $donut-chart-bar-size $donut-chart-bar-style $donut-chart-bar-color;
+    border-radius: 50%;
+    box-sizing: content-box;
+    height: $donut-chart-size * 0.84;
+    left: 0;
+    margin-left: $donut-chart-bar-size / 2;
+    margin-top: $donut-chart-bar-size / 2;
+    position: absolute;
+    top: 0;
+    transform: rotate(0);
+    width: $donut-chart-size * 0.84;
+  }
+
+  .donut-chart-bar {
+    clip: rect(0,
+    $donut-chart-size,
+    $donut-chart-size,
+    $donut-chart-middle-size);
+  }
+
+  .donut-chart-fill {
+    clip: rect(0, $donut-chart-middle-size, $donut-chart-size, 0);
+    visibility: hidden;
+  }
+}

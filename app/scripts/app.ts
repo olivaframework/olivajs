@@ -1,6 +1,7 @@
 import '../styles/main.scss';
 import { Carousel } from './components/Carousel';
 import { DOMUtils } from './components/DOMUtils';
+import { DonutChart } from './components/DonutChart';
 import { Dropdown } from './components/Dropdown';
 import { Jump } from './components/Jump';
 import { Loader } from './components/Loader';
@@ -22,6 +23,7 @@ const mosaics = document.querySelectorAll('[data-mosaic]');
 const scrollSpies = document.querySelectorAll('[data-scroll-spy]');
 const responsiveMenus = document.querySelectorAll('[data-responsive-menu]');
 const menuCollapsers = document.querySelectorAll('[data-menu-collapser]');
+const donutCharts = document.querySelectorAll('[data-donut-chart]');
 
 window.onload = () => {
   new Swiper(swiper, {
@@ -74,6 +76,10 @@ window.onload = () => {
   DOMUtils.syncForEach(menuCollapser => {
     new MenuCollapser(menuCollapser);
   }, menuCollapsers);
+
+  DOMUtils.syncForEach(donut => {
+    new DonutChart(donut);
+  }, donutCharts);
 
   const loader = Loader.getInstance();
 
