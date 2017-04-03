@@ -30,7 +30,7 @@ class Swiper {
   static readonly ACTIVE_EVENT_CTRL: string = 'click';
   static readonly BULLET_ATTR: string = 'data-swiper-go-page';
   static readonly BULLET_CLASS: string = 'swiper-bullet';
-  static readonly SWIPE_OUT_RANGE: number = 35;
+  static readonly SWIPE_OUT_RANGE: number = 10;
   static readonly SWIPE_PERCENT_AJUST: number = 10;
   static readonly WINDOW_EVENT: string = 'resize';
   static readonly TOUCH_EVENTS: SwiperEvents = {
@@ -269,8 +269,8 @@ class Swiper {
       : moveEvent.screenX;
 
     let distance = this.firstPointX - distanceEvent + this.initDistance;
-    const outRange = this.container.offsetWidth / Swiper.SWIPE_OUT_RANGE;
-    const minDistance = Math.round(outRange) * -1;
+    const outRange = this.container.offsetWidth / 100 * Swiper.SWIPE_OUT_RANGE;
+    const minDistance = outRange * -1;
     const maxDistance = outRange + this.containerFullWidth();
 
     if (distance < minDistance) {
