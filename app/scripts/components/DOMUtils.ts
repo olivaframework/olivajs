@@ -141,12 +141,18 @@ class DOMUtils {
       distance = distance + item.offsetWidth;
 
       if (distance > elementsContainer.offsetWidth) {
-        itemsPerSection.push(itemsCount - 1);
-        distance = item.offsetWidth;
-        itemsCount = 1;
+        if (distance < elementsContainer.offsetWidth + itemsSize) {
+          itemsPerSection.push(itemsCount);
+          distance = 0;
+          itemsCount = 0;
+        } else {
+          itemsPerSection.push(itemsCount - 1);
+          distance = item.offsetWidth;
+          itemsCount = 1;
+        }
       }
 
-      if (i === itemsSize - 1) {
+      if (i === itemsSize - 1 && itemsCount > 0) {
         itemsPerSection.push(itemsCount);
       }
 

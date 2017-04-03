@@ -30,8 +30,8 @@ class Swiper {
   static readonly ACTIVE_EVENT_CTRL: string = 'click';
   static readonly BULLET_ATTR: string = 'data-swiper-go-page';
   static readonly BULLET_CLASS: string = 'swiper-bullet';
-  static readonly SWIPE_OUT_RANGE: number = 35;
-  static readonly SWIPE_PERCENT_AJUST: number = 10;
+  static readonly SWIPE_OUT_PERCENT: number = 10;
+  static readonly SWIPE_PERCENT_ADJUST: number = 10;
   static readonly WINDOW_EVENT: string = 'resize';
   static readonly TOUCH_EVENTS: SwiperEvents = {
     click: 'touchend',
@@ -60,6 +60,8 @@ class Swiper {
   public thumbnails: NodeListOf<Element>;
   public options: SwiperOptions;
   public bulletsContainer: DOMElement;
+  public lastIndexToShow: number;
+  public itemsPerPage: number[];
 
   constructor(swiper: Element, options: SwiperOptions) {
     this.actionDown = this.actionDown.bind(this);
@@ -72,6 +74,7 @@ class Swiper {
     this.changePage = this.changePage.bind(this);
     this.swipe = this.swipe.bind(this);
     this.update = this.update.bind(this);
+    this.cancelRedirect = this.cancelRedirect.bind(this);
     this.init(swiper);
     this.initFeatures(swiper, options);
   }
@@ -90,16 +93,26 @@ class Swiper {
     this.container = swiper
       .querySelector(`.${ Swiper.CONTAINER_CLASS }`) as HTMLElement;
     this.items = this.container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
+    this.lastIndexToShow = this.lastToShow();
+    this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
 
     this.swiper.addEventListener(this.supportEvents.down, this.actionDown);
-    this.swiper.addEventListener(this.supportEvents.click, event => {
-      if (this.traveledDistance !== 0
-        && this.supportEvents.down === Swiper.MOUSE_EVENTS.down) {
-        event.preventDefault();
-      }
-    });
+    this.swiper.addEventListener(this.supportEvents.click, this.cancelRedirect);
 
     window.onEvent(Swiper.WINDOW_EVENT, this.update, 1);
+  }
+
+  public cancelRedirect(event: any) {
+    const distanceEvent = (this.supportEvents.up === Swiper.TOUCH_EVENTS.up)
+      ? event.changedTouches[0].clientX
+      : event.screenX;
+
+    this.traveledDistance = this.firstPointX - distanceEvent;
+
+    if (this.traveledDistance !== 0
+      && this.supportEvents.down === Swiper.MOUSE_EVENTS.down) {
+      event.preventDefault();
+    }
   }
 
   public initFeatures(swiper: Element, options: SwiperOptions): void {
@@ -133,9 +146,7 @@ class Swiper {
   public createBullets(): void {
     this.bulletsContainer.removeAllChildren();
 
-    const itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
-
-    for (let i = 0; i < itemsPerPage.length; i++) {
+    for (let i = 0; i < this.itemsPerPage.length; i++) {
       const bullet = new DOMElement('div');
 
       bullet.addClasses([Swiper.BULLET_CLASS]);
@@ -159,7 +170,7 @@ class Swiper {
         this.prevCtrl.removeClasses([Swiper.ACTIVE_CTRL_CLASS]);
       }
 
-      if (this.index < this.lastToShow()) {
+      if (this.index < this.lastIndexToShow) {
         this.nextCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
       } else {
         this.nextCtrl.removeClasses([Swiper.ACTIVE_CTRL_CLASS]);
@@ -222,12 +233,10 @@ class Swiper {
   }
 
   public showNext(): void {
-    const lastToShow = this.lastToShow();
-
-    if (this.index + 1 <= lastToShow) {
+    if (this.index + 1 <= this.lastIndexToShow) {
       ++this.index;
 
-      if (this.index < lastToShow) {
+      if (this.index < this.lastIndexToShow) {
         const currentItem = this.items[this.index] as HTMLElement;
 
         this.animate(currentItem.offsetLeft, this.options.animationMs);
@@ -241,14 +250,15 @@ class Swiper {
   }
 
   public update(): void {
-    const lastToShow = this.lastToShow();
+    this.lastIndexToShow = this.lastToShow();
+    this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
 
-    if (this.index < lastToShow) {
+    if (this.index < this.lastIndexToShow) {
       const currentItem = this.items[this.index] as HTMLElement;
 
       this.animate(currentItem.offsetLeft, 0);
     } else {
-      this.index = lastToShow;
+      this.index = this.lastIndexToShow;
       this.animate(this.containerFullWidth(), 0);
     }
 
@@ -262,14 +272,16 @@ class Swiper {
 
   public swipe(moveEvent: any): void {
     moveEvent.preventDefault();
+    moveEvent.stopPropagation();
 
     const distanceEvent = (this.supportEvents.move === Swiper.TOUCH_EVENTS.move)
       ? moveEvent.touches[0].clientX
       : moveEvent.screenX;
 
     let distance = this.firstPointX - distanceEvent + this.initDistance;
-    const outRange = this.container.offsetWidth / Swiper.SWIPE_OUT_RANGE;
-    const minDistance = Math.round(outRange) * -1;
+    const containerWidth = this.container.offsetWidth;
+    const outRange = containerWidth / 100 * Swiper.SWIPE_OUT_PERCENT;
+    const minDistance = outRange * -1;
     const maxDistance = outRange + this.containerFullWidth();
 
     if (distance < minDistance) {
@@ -340,24 +352,23 @@ class Swiper {
     this.traveledDistance = this.firstPointX - distanceEvent;
 
     const distance = this.traveledDistance + this.initDistance;
-    const lastToShow = this.lastToShow();
 
-    for (let i = 0; i <= lastToShow; i++) {
+    for (let i = 0; i <= this.lastIndexToShow; i++) {
       const item = this.items[i] as HTMLElement;
-      const ajustDistance = (item.offsetWidth * Swiper.SWIPE_PERCENT_AJUST)
+      const ajustDistance = (item.offsetWidth * Swiper.SWIPE_PERCENT_ADJUST)
         / 100;
       const minDistance = this.traveledDistance > 0
         ? item.offsetLeft + ajustDistance
         : item.offsetLeft + item.offsetWidth - ajustDistance;
 
-      if (i < lastToShow && minDistance > distance) {
+      if (i < this.lastIndexToShow && minDistance > distance) {
         this.animate(item.offsetLeft, this.options.animationMs);
         this.index = i;
 
         break;
-      } else if (i === lastToShow) {
+      } else if (i === this.lastIndexToShow) {
         this.animate(this.containerFullWidth(), this.options.animationMs);
-        this.index = lastToShow;
+        this.index = this.lastIndexToShow;
       }
     }
 
@@ -415,41 +426,45 @@ class Swiper {
   }
 
   public changePage(event: Event): void {
-    let item = 0;
+    let itemIndex = 0;
     const target = event.target as Element;
     const pageNumber = parseInt(target.getAttribute(Swiper.BULLET_ATTR));
-    const itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
 
     for (let i = 0; i < pageNumber; i++) {
-      item = item + itemsPerPage[i];
+      itemIndex = itemIndex + this.itemsPerPage[i];
     }
 
-    const lastPageItem = this.items[item] as HTMLElement;
+    if (itemIndex + 1 <= this.lastIndexToShow) {
+      const lastPageItem = this.items[itemIndex] as HTMLElement;
 
-    this.index = item;
-    this.animate(lastPageItem.offsetLeft, this.options.animationMs);
+      this.animate(lastPageItem.offsetLeft, this.options.animationMs);
+      this.index = itemIndex;
+    } else {
+      this.animate(this.containerFullWidth(), this.options.animationMs);
+      this.index = this.lastIndexToShow;
+    }
+
     this.activateBullets();
     this.activateControls();
   }
 
   public activateBullets() {
     if (this.options.showBullets) {
-      let item = 0;
-      const itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
+      let itemIndex = 0;
       const bullets = this.bulletsContainer.getElement().children;
 
       DOMUtils.removeClassToItems(bullets, 'active');
 
-      for (let i = 0; i < itemsPerPage.length; i++) {
-        item = item + itemsPerPage[i];
-
-        if (item - 1 >= this.index) {
+      for (let i = 0; i < this.itemsPerPage.length; i++) {
+        if (itemIndex >= this.index) {
           const bullet = bullets[i];
 
           DOMUtils.addClass(bullet, 'active');
 
           break;
         }
+
+        itemIndex = itemIndex + this.itemsPerPage[i];
       }
     }
   }
