@@ -74,6 +74,7 @@ class Swiper {
     this.changePage = this.changePage.bind(this);
     this.swipe = this.swipe.bind(this);
     this.update = this.update.bind(this);
+    this.cancelRedirect = this.cancelRedirect.bind(this);
     this.init(swiper);
     this.initFeatures(swiper, options);
   }
@@ -96,14 +97,22 @@ class Swiper {
     this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
 
     this.swiper.addEventListener(this.supportEvents.down, this.actionDown);
-    this.swiper.addEventListener(this.supportEvents.click, event => {
-      if (this.traveledDistance !== 0
-        && this.supportEvents.down === Swiper.MOUSE_EVENTS.down) {
-        event.preventDefault();
-      }
-    });
+    this.swiper.addEventListener(this.supportEvents.click, this.cancelRedirect);
 
     window.onEvent(Swiper.WINDOW_EVENT, this.update, 1);
+  }
+
+  public cancelRedirect(event: any) {
+    const distanceEvent = (this.supportEvents.up === Swiper.TOUCH_EVENTS.up)
+      ? event.changedTouches[0].clientX
+      : event.screenX;
+
+    this.traveledDistance = this.firstPointX - distanceEvent;
+
+    if (this.traveledDistance !== 0
+      && this.supportEvents.down === Swiper.MOUSE_EVENTS.down) {
+      event.preventDefault();
+    }
   }
 
   public initFeatures(swiper: Element, options: SwiperOptions): void {
@@ -263,6 +272,7 @@ class Swiper {
 
   public swipe(moveEvent: any): void {
     moveEvent.preventDefault();
+    moveEvent.stopPropagation();
 
     const distanceEvent = (this.supportEvents.move === Swiper.TOUCH_EVENTS.move)
       ? moveEvent.touches[0].clientX
