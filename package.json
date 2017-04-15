@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rimraf dist && webpack --bail --progress --profile",
     "coverage": "karma start && remap-istanbul -i app/scripts/tests/coverage/coverage-final.json -o app/scripts/tests/coverage/html -t html",
-    "postinstall": "typings install --overwrite --save",
+    "typings": "typings install --overwrite --save",
     "start": "webpack-dev-server --history-api-fallback --progress --port 3000 --host 0.0.0.0",
     "test": "karma start"
   },
