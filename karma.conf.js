@@ -11,7 +11,7 @@ var webpackConfig = require('./webpack.config.js');
 webpackConfig.module.postLoaders = [{
     test: /\.ts$/,
     loader: 'istanbul-instrumenter-loader',
-    exclude: [/node_modules/,/\.spec\.ts$/]
+    exclude: [/node_modules/]
   }
 ];
 
@@ -20,14 +20,14 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['mocha', 'chai', 'sinon', 'source-map-support'],
     files: [{
-      pattern: 'app/scripts/tests/**/*.ts',
+      pattern: 'app/scripts/tests/**/*.js',
       watched: false
     }],
     exclude: [
     ],
     preprocessors: {
       'app/scripts/**/*.ts': ['webpack'],
-      'app/scripts/tests/**/*.ts': ['webpack']
+      'app/scripts/tests/**/*.js': ['webpack']
     },
     webpack: {
       entry: {},
