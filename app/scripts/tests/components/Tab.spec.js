@@ -38,7 +38,7 @@ describe('Tab component specification', () => {
   });
 
   it('should create a Tab with correct properties', () => {
-    const tab = document.getElementById(tabIdA) as HTMLAnchorElement;
+    const tab = document.getElementById(tabIdA);
     const tabComponent = new Tab(tab);
 
     expect(document.getElementById(tabIdA)).to.be
@@ -48,8 +48,8 @@ describe('Tab component specification', () => {
   });
 
   it('should active the correct tab when toggle is called', () => {
-    const tabA = document.getElementById(tabIdA) as HTMLAnchorElement;
-    const tabB = document.getElementById(tabIdB) as HTMLAnchorElement;
+    const tabA = document.getElementById(tabIdA);
+    const tabB = document.getElementById(tabIdB);
     const tabComponentA = new Tab(tabA);
     const tabComponentB = new Tab(tabB);
     const tabContentA = document.getElementById(tabContentAId);

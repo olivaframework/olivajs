@@ -23,5 +23,5 @@ npm-debug.log
 *.iml
 
 #Typescript Maps
-/app/scripts/**/*.js.map
-/app/scripts/**/*.js
+/app/scripts/components/**/*.js.map
+/app/scripts/components/**/*.js

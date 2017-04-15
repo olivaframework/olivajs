@@ -147,7 +147,7 @@ describe('DOMElement component specification', () => {
     const element = domElement.getElement();
 
     for (let i = 0; i < items.length; i++) {
-      const item = items[i] as HTMLElement;
+      const item = items[i];
 
       if (i === positionToInsert) {
         expect(element.id).to.be.equals(item.id);
