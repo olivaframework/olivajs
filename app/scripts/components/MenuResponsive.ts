@@ -22,6 +22,7 @@ class MenuResponsive {
   private showOverlay: boolean;
   private isMainMenu: boolean;
   private buttonType: string; // hamburger-x, hamburger-back
+  private isVertical: boolean;
 
   constructor(menu: HTMLElement) {
     this.menu = menu;
@@ -32,6 +33,7 @@ class MenuResponsive {
     this.showOverlay = this.menu.getAttribute('data-menu-overlay') === 'true';
     this.isMainMenu = this.menu.getAttribute('data-is-main') === 'true';
     this.buttonType = 'hamburger-x';
+    this.isVertical = (this.position === 'top' || this.position === 'bottom');
     this.init = this.init.bind(this);
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
@@ -81,6 +83,36 @@ class MenuResponsive {
     }
   }
 
+  private openOver():void {
+    if (this.isVertical) {
+      this.hamburgerButtonElement.style[this.position]
+        = `${ this.menu.offsetHeight }px`;
+    } else {
+      this.hamburgerButtonElement.style[this.position]
+        = `${ this.menu.offsetWidth }px`;
+    }
+  }
+
+  private openDiscover():void {
+    if (this.position === 'top') {
+      document.body.style.top = `${ this.menu.offsetHeight }px`;
+    } else {
+      this.menu.style.top = `${ window.scrollY }px`;
+      this.scrollHamburger(window.scrollY);
+    }
+  }
+
+  private openPush():void {
+    if (this.position === 'top') {
+      document.body.style.top = `${ this.menu.offsetHeight }px`;
+    } else if (this.position === 'bottom') {
+      document.body.style.top = `-${ this.menu.offsetHeight }px`;
+    } else {
+      this.menu.style.top = `${ window.scrollY }px`;
+      this.scrollHamburger(window.scrollY);
+    }
+  }
+
   private open(event): void {
     event.stopPropagation();
     document.addEventListener(MenuResponsive.EVENT, this.close);
@@ -98,19 +130,7 @@ class MenuResponsive {
       );
 
       if (this.type === 'over') {
-        switch (this.position) {
-          case 'top':
-          case 'bottom':
-            this.hamburgerButtonElement.style[this.position]
-              = `${ this.menu.offsetHeight }px`;
-            break;
-          case 'left':
-          case 'right':
-          default:
-            this.hamburgerButtonElement.style[this.position]
-              = `${ this.menu.offsetWidth }px`;
-            break;
-        }
+        this.openOver();
       }
     }
 
@@ -118,28 +138,42 @@ class MenuResponsive {
       Overlay.getInstance().show();
     }
 
-    if (this.type === 'push' || this.type === 'discover') {
-      switch (this.position) {
-        case 'top':
-          document.body.style.top = `${ this.menu.offsetHeight }px`;
-          break;
-        case 'left':
-        case 'right':
-        default:
-          this.menu.style.top = `${ window.scrollY }px`;
-          this.scrollHamburger(window.scrollY);
-          break;
-      }
+    if (this.type === 'push') {
+      this.openPush();
     }
 
-    if (this.position === 'bottom' && this.type === 'push') {
-      document.body.style.top = `-${ this.menu.offsetHeight }px`;
+    if (this.type === 'discover') {
+      this.openDiscover();
     }
   }
 
   private scrollHamburger(posY : number = 0): void {
     if (this.isMainMenu) {
       this.hamburgerButtonElement.style.top = `${ posY }px`;
+    }
+  }
+
+  private closeOver():void {
+    this.hamburgerButtonElement.style[this.position] = '0px';
+  }
+
+  private closeDiscover():void {
+    if (this.position === 'top') {
+      document.body.style.top = '0px';
+    } else {
+      this.scrollHamburger();
+      this.menu.style.top = '0px';
+    }
+  }
+
+  private closePush():void {
+    if (this.position === 'top') {
+      document.body.style.top = '0px';
+    } else if (this.position === 'bottom') {
+      document.body.style.top = '0px';
+    } else {
+      this.scrollHamburger();
+      this.menu.style.top = '0px';
     }
   }
 
@@ -160,25 +194,16 @@ class MenuResponsive {
         );
 
         if (this.type === 'over') {
-          this.hamburgerButtonElement.style[this.position] = '0px';
+          this.closeOver();
         }
       }
 
-      if (this.type === 'push' || this.type === 'discover') {
-        switch (this.position) {
-          case 'top':
-            document.body.style.top = '0px';
-            break;
-          case 'left':
-          case 'right':
-          default:
-            this.scrollHamburger();
-            this.menu.style.top = '0px';
-            break;
-        }
+      if (this.type === 'discover') {
+        this.closeDiscover();
       }
-      if (this.position === 'bottom' && this.type === 'push') {
-        document.body.style.top = '0px';
+
+      if (this.type === 'push') {
+        this.closePush();
       }
 
       if (this.showOverlay) {
