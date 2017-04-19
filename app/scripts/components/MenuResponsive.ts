@@ -41,7 +41,7 @@ class MenuResponsive {
     this.openButton = document.getElementById(this.openButtonId);
     this.position = this.menu.getAttribute('data-menu-position') || 'left';
     this.showOverlay = this.menu.getAttribute('data-menu-overlay') === 'true';
-    this.isMainMenu = this.menu.getAttribute('data-is-main') === 'true';
+    this.isMainMenu = this.menu.getAttribute('data-menu-is-main') === 'true';
     this.buttonType = 'hamburger-x';
     this.isVertical = (this.position === 'top' || this.position === 'bottom');
     this.init = this.init.bind(this);
