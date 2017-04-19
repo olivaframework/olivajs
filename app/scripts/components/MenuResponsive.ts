@@ -2,6 +2,21 @@ import { DOMElement } from './DOMElement';
 import { DOMUtils } from './DOMUtils';
 import { Overlay } from './Overlay';
 
+/**
+ * Menu responsive class.
+ *
+ * Converts any DOMElement in a mobile menu when the viewport width matches
+ * the window.isMobile() condition (default: 768px).
+ *
+ * Menu types:
+ *  - Discover: pushes the body to the direction selected and reveals the menu
+ *              in the background
+ *  - Push: pushes the
+ *
+ * Note: Discover and Push on bottom don't have sense since the menu can't be
+ * discovered/pushed if there is remaining body below to be scrolled. (However
+ * you can try it)
+ */
 class MenuResponsive {
   private static BODY_CLASS: string = 'responsive-menu-body';
   private static MENU_ANIMATE_CLASS: string = 'responsive-menu-animated';
@@ -71,6 +86,7 @@ class MenuResponsive {
         MenuResponsive.BUTTON_INNER_CLASS,
         this.buttonType
       ]);
+      this.hamburgerButtonElement = this.hamburgerButton.getElement();
       this.hamburgerButtonContent.render(this.hamburgerButtonElement);
     }
   }
@@ -94,11 +110,13 @@ class MenuResponsive {
   }
 
   private openDiscover():void {
-    if (this.position === 'top') {
-      document.body.style.top = `${ this.menu.offsetHeight }px`;
+    if (this.isVertical) {
+      document.body.style[this.position] = `${ this.menu.offsetHeight }px`;
+      this.hamburgerButtonElement.style[this.position]
+        = `${ this.menu.offsetHeight }px`;
     } else {
-      this.menu.style.top = `${ window.scrollY }px`;
-      this.scrollHamburger(window.scrollY);
+      this.hamburgerButtonElement.style[this.position]
+        = `${ this.menu.offsetWidth }px`;
     }
   }
 
@@ -158,12 +176,10 @@ class MenuResponsive {
   }
 
   private closeDiscover():void {
-    if (this.position === 'top') {
-      document.body.style.top = '0px';
-    } else {
-      this.scrollHamburger();
-      this.menu.style.top = '0px';
+    if (this.isVertical) {
+      document.body.style[this.position] = '0';
     }
+    this.hamburgerButtonElement.style[this.position] = '0';
   }
 
   private closePush():void {
