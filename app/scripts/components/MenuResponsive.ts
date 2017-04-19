@@ -2,6 +2,16 @@ import { DOMElement } from './DOMElement';
 import { DOMUtils } from './DOMUtils';
 import { Overlay } from './Overlay';
 
+/**
+ * Menu responsive class.
+ *
+ * Base class to create any kind of responsive menu.
+ *
+ * Don't use this class in your application, use one of the implementations
+ * instead (discover, over or push).
+ *
+ * Use it only to create a new type of menu according to your needs.
+ */
 class MenuResponsive {
   private static BODY_CLASS: string = 'responsive-menu-body';
   private static MENU_ANIMATE_CLASS: string = 'responsive-menu-animated';
@@ -11,27 +21,29 @@ class MenuResponsive {
   static readonly BUTTON_INNER_CLASS: string = 'hamburger';
   static readonly EVENT: string = 'click';
 
-  private menu: HTMLElement;
+  protected isVertical: boolean;
+  protected menu: HTMLElement;
+  protected position: string; // bottom, left, right, top
+  protected type: string; // discover, over, push
+  protected isMainMenu: boolean;
+  protected hamburgerButtonElement: HTMLElement;
   private openButton: Element;
   private hamburgerButton: DOMElement;
   private hamburgerButtonContent: DOMElement;
-  private hamburgerButtonElement: HTMLElement;
   private openButtonId: string;
-  private position: string; // bottom, left, right, top
-  private type: string; // discover, over, push
   private showOverlay: boolean;
-  private isMainMenu: boolean;
   private buttonType: string; // hamburger-x, hamburger-back
 
-  constructor(menu: HTMLElement) {
+  constructor(menu: HTMLElement, type: string) {
     this.menu = menu;
-    this.type = this.menu.getAttribute('data-responsive-menu') || 'over';
+    this.type = type;
     this.openButtonId = this.menu.getAttribute('data-menu-open-button-id');
     this.openButton = document.getElementById(this.openButtonId);
     this.position = this.menu.getAttribute('data-menu-position') || 'left';
     this.showOverlay = this.menu.getAttribute('data-menu-overlay') === 'true';
-    this.isMainMenu = this.menu.getAttribute('data-is-main') === 'true';
+    this.isMainMenu = this.menu.getAttribute('data-menu-is-main') === 'true';
     this.buttonType = 'hamburger-x';
+    this.isVertical = (this.position === 'top' || this.position === 'bottom');
     this.init = this.init.bind(this);
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
@@ -53,7 +65,7 @@ class MenuResponsive {
     window.onEvent('resize', this.update, 200);
   }
 
-  private renderHamburgerBtn(): void {
+  protected renderHamburgerBtn(): void {
     if (this.isMainMenu) {
       this.openButton.innerHTML = null;
       this.hamburgerButton = new DOMElement('div');
@@ -69,6 +81,7 @@ class MenuResponsive {
         MenuResponsive.BUTTON_INNER_CLASS,
         this.buttonType
       ]);
+      this.hamburgerButtonElement = this.hamburgerButton.getElement();
       this.hamburgerButtonContent.render(this.hamburgerButtonElement);
     }
   }
@@ -81,7 +94,7 @@ class MenuResponsive {
     }
   }
 
-  private open(event): void {
+  protected open(event): void {
     event.stopPropagation();
     document.addEventListener(MenuResponsive.EVENT, this.close);
     this.openButton.removeEventListener(MenuResponsive.EVENT, this.open);
@@ -96,54 +109,20 @@ class MenuResponsive {
         this.hamburgerButtonContent.getElement(),
         MenuResponsive.ACTIVE_CLASS
       );
-
-      if (this.type === 'over') {
-        switch (this.position) {
-          case 'top':
-          case 'bottom':
-            this.hamburgerButtonElement.style[this.position]
-              = `${ this.menu.offsetHeight }px`;
-            break;
-          case 'left':
-          case 'right':
-          default:
-            this.hamburgerButtonElement.style[this.position]
-              = `${ this.menu.offsetWidth }px`;
-            break;
-        }
-      }
     }
 
     if (this.showOverlay) {
       Overlay.getInstance().show();
     }
-
-    if (this.type === 'push' || this.type === 'discover') {
-      switch (this.position) {
-        case 'top':
-          document.body.style.top = `${ this.menu.offsetHeight }px`;
-          break;
-        case 'left':
-        case 'right':
-        default:
-          this.menu.style.top = `${ window.scrollY }px`;
-          this.scrollHamburger(window.scrollY);
-          break;
-      }
-    }
-
-    if (this.position === 'bottom' && this.type === 'push') {
-      document.body.style.top = `-${ this.menu.offsetHeight }px`;
-    }
   }
 
-  private scrollHamburger(posY : number = 0): void {
+  protected scrollHamburger(posY : number = 0): void {
     if (this.isMainMenu) {
       this.hamburgerButtonElement.style.top = `${ posY }px`;
     }
   }
 
-  private close(event): void {
+  protected close(event): void {
     const isClickInside = this.menu.contains(event.target);
 
     if (!isClickInside) {
@@ -158,27 +137,6 @@ class MenuResponsive {
           this.hamburgerButtonContent.getElement(),
           MenuResponsive.ACTIVE_CLASS
         );
-
-        if (this.type === 'over') {
-          this.hamburgerButtonElement.style[this.position] = '0px';
-        }
-      }
-
-      if (this.type === 'push' || this.type === 'discover') {
-        switch (this.position) {
-          case 'top':
-            document.body.style.top = '0px';
-            break;
-          case 'left':
-          case 'right':
-          default:
-            this.scrollHamburger();
-            this.menu.style.top = '0px';
-            break;
-        }
-      }
-      if (this.position === 'bottom' && this.type === 'push') {
-        document.body.style.top = '0px';
       }
 
       if (this.showOverlay) {
