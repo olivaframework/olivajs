@@ -5,7 +5,7 @@ import { Dropdown } from './components/Dropdown';
 import { Jump } from './components/Jump';
 import { Loader } from './components/Loader';
 import { MenuCollapser } from './components/MenuCollapser';
-import { MenuResponsive } from './components/MenuResponsive';
+import { MenuOver } from './components/MenuOver';
 import { Modal } from './components/Modal';
 import { Mosaic } from './components/Mosaic';
 import { ScrollSpy } from './components/ScrollSpy';
@@ -68,7 +68,7 @@ window.onload = () => {
   }, mosaics);
 
   DOMUtils.syncForEach(responsiveMenu => {
-    new MenuResponsive(responsiveMenu);
+    new MenuOver(responsiveMenu);
   }, responsiveMenus);
 
   DOMUtils.syncForEach(menuCollapser => {
