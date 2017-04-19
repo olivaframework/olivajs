@@ -20,7 +20,7 @@ const carousel = document.querySelector('[data-carousel]');
 const dropdowns = document.querySelectorAll('[data-dropdown]');
 const mosaics = document.querySelectorAll('[data-mosaic]');
 const scrollSpies = document.querySelectorAll('[data-scroll-spy]');
-const responsiveMenus = document.querySelectorAll('[data-responsive-menu]');
+const responsiveMenuOver = document.querySelector('[data-menu-over]');
 const menuCollapsers = document.querySelectorAll('[data-menu-collapser]');
 
 window.onload = () => {
@@ -42,6 +42,8 @@ window.onload = () => {
     showBullets: false,
     showControls: false
   });
+
+  new MenuOver(responsiveMenuOver as HTMLElement);
 
   DOMUtils.syncForEach(scrollSpy => {
     new ScrollSpy(scrollSpy);
@@ -66,10 +68,6 @@ window.onload = () => {
   DOMUtils.syncForEach(mosaic => {
     new Mosaic(mosaic);
   }, mosaics);
-
-  DOMUtils.syncForEach(responsiveMenu => {
-    new MenuOver(responsiveMenu);
-  }, responsiveMenus);
 
   DOMUtils.syncForEach(menuCollapser => {
     new MenuCollapser(menuCollapser);
