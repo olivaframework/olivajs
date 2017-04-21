@@ -1,4 +1,4 @@
-import { MenuResponsive } from './MenuResponsive';
+import * as MenuResponsive from './MenuResponsive';
 
 /**
  * Menu Over
@@ -10,11 +10,12 @@ import { MenuResponsive } from './MenuResponsive';
  * The menu comes from the desired edge of the screen and places itself
  * floating over the body.
  */
-class MenuOver extends MenuResponsive {
+class MenuOver extends MenuResponsive.MenuResponsive {
   protected type;
 
-  constructor(menu: HTMLElement) {
-    super(menu, 'over');
+  constructor(menu: HTMLElement, config: MenuResponsive.MenuConfig) {
+    config.type = 'over';
+    super(menu, config);
   }
 
   protected open(event): void {

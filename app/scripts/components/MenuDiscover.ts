@@ -1,4 +1,4 @@
-import { MenuResponsive } from './MenuResponsive';
+import * as MenuResponsive from './MenuResponsive';
 
 /**
  * Menu discover
@@ -14,11 +14,12 @@ import { MenuResponsive } from './MenuResponsive';
  * discovered if there is remaining body below to be scrolled. (However
  * you can try it)
  */
-class MenuDiscover extends MenuResponsive {
+class MenuDiscover extends MenuResponsive.MenuResponsive {
   protected type;
 
-  constructor(menu: HTMLElement) {
-    super(menu, 'discover');
+  constructor(menu: HTMLElement, config: MenuResponsive.MenuConfig) {
+    config.type = 'discover';
+    super(menu, config);
   }
 
   protected open(event): void {

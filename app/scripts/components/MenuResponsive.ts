@@ -3,6 +3,14 @@ import { DOMElement } from './DOMElement';
 import { DOMUtils } from './DOMUtils';
 import { Overlay } from './Overlay';
 
+interface MenuConfig {
+  position: string;
+  showOverlay: boolean;
+  isMainMenu: boolean;
+  buttonType: string;
+  type?: string;
+}
+
 /**
  * Menu responsive class.
  *
@@ -35,15 +43,15 @@ class MenuResponsive {
   private showOverlay: boolean;
   private buttonType: string; // hamburger-x, hamburger-back
 
-  constructor(menu: HTMLElement, type: string) {
+  constructor(menu: HTMLElement, config: MenuConfig) {
     this.menu = menu;
-    this.type = type;
+    this.type = config.type;
     this.openButtonId = this.menu.getAttribute('data-menu-open-button-id');
     this.openButton = document.getElementById(this.openButtonId);
-    this.position = this.menu.getAttribute('data-menu-position') || 'left';
-    this.showOverlay = this.menu.getAttribute('data-menu-overlay') === 'true';
-    this.isMainMenu = this.menu.getAttribute('data-menu-is-main') === 'true';
-    this.buttonType = 'hamburger-x';
+    this.position = config.position;
+    this.showOverlay = config.showOverlay;
+    this.isMainMenu = config.isMainMenu;
+    this.buttonType = config.buttonType;
     this.isVertical = (this.position === 'top' || this.position === 'bottom');
     this.init = this.init.bind(this);
     this.open = this.open.bind(this);
@@ -156,3 +164,4 @@ class MenuResponsive {
 }
 
 export { MenuResponsive };
+export { MenuConfig };

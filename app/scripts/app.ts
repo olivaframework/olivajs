@@ -43,7 +43,12 @@ window.onload = () => {
     showControls: false
   });
 
-  new MenuOver(responsiveMenuOver as HTMLElement);
+  new MenuOver(responsiveMenuOver as HTMLElement, {
+    buttonType: 'hamburger-x',
+    isMainMenu: false,
+    position: 'left',
+    showOverlay: true
+  });
 
   DOMUtils.syncForEach(scrollSpy => {
     new ScrollSpy(scrollSpy);

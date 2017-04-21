@@ -1,4 +1,4 @@
-import { MenuResponsive } from './MenuResponsive';
+import * as MenuResponsive from './MenuResponsive';
 
 /**
  * Menu Push
@@ -14,11 +14,12 @@ import { MenuResponsive } from './MenuResponsive';
  * push the body up if there is remaining body below to be scrolled.
  * (However you can try it)
  */
-class MenuPush extends MenuResponsive {
+class MenuPush extends MenuResponsive.MenuResponsive {
   protected type;
 
-  constructor(menu: HTMLElement) {
-    super(menu, 'push');
+  constructor(menu: HTMLElement, config: MenuResponsive.MenuConfig) {
+    config.type = 'push';
+    super(menu, config);
   }
 
   protected open(event): void {
