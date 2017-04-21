@@ -8,16 +8,34 @@
   font-size: 0;
   height: $hamburger-button-height;
   margin: 0;
-  overflow: hidden;
   padding: 0;
   position: relative;
-  text-indent: -9999px;
   transition: background $hamburger-button-transistion-duration,
     left $hamburger-button-transistion-duration,
     right $hamburger-button-transistion-duration,
     bottom $hamburger-button-transistion-duration,
     top $hamburger-button-transistion-duration;
   width: $hamburger-button-width;
+
+  &::after {
+    background-color: $hamburger-button-bg;
+    color: $white-color;
+    content: $hamburger-button-open-text;
+    display: block;
+    font-size: 8px;
+    padding-bottom: $space-xxs;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    top: 100%;
+    width: $hamburger-button-width;
+  }
+
+  &.active {
+    &::after {
+      content: $hamburger-button-close-text;
+    }
+  }
 
   &.bottom,
   &.left,

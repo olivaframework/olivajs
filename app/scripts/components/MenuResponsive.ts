@@ -1,3 +1,4 @@
+import './Window';
 import { DOMElement } from './DOMElement';
 import { DOMUtils } from './DOMUtils';
 import { Overlay } from './Overlay';
@@ -109,6 +110,10 @@ class MenuResponsive {
         this.hamburgerButtonContent.getElement(),
         MenuResponsive.ACTIVE_CLASS
       );
+      DOMUtils.addClass(
+        this.hamburgerButton.getElement(),
+        MenuResponsive.ACTIVE_CLASS
+      );
     }
 
     if (this.showOverlay) {
@@ -135,6 +140,10 @@ class MenuResponsive {
       if (this.isMainMenu) {
         DOMUtils.removeClass(
           this.hamburgerButtonContent.getElement(),
+          MenuResponsive.ACTIVE_CLASS
+        );
+        DOMUtils.removeClass(
+          this.hamburgerButton.getElement(),
           MenuResponsive.ACTIVE_CLASS
         );
       }
