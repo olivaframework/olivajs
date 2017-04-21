@@ -19,7 +19,7 @@
 
   &::after {
     background-color: $hamburger-button-bg;
-    color: $white-color;
+    color: $hamburger-button-text-color;
     content: $hamburger-button-open-text;
     display: block;
     font-size: 8px;

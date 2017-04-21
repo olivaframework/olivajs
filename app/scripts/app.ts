@@ -45,7 +45,7 @@ window.onload = () => {
 
   new MenuOver(responsiveMenuOver as HTMLElement, {
     buttonType: 'hamburger-x',
-    isMainMenu: false,
+    isMainMenu: true,
     position: 'left',
     showOverlay: true
   });
