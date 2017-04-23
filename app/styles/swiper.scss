@@ -33,10 +33,6 @@
 
       &.active {
         display: block;
-
-        @include media-breakpoint-down(lg) {
-          //display: none;
-        }
       }
     }
 

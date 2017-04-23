@@ -11,11 +11,11 @@
 }
 
 .collapsable-items {
-  background-color: $navbar-bg;
+  background-color: #FFFFFF;
   left: 0;
   min-height: 200px;
   position: absolute;
-  top: $navbar-item-height;
+  top: 60px;
   width: 100%;
   z-index: 10;
 }
@@ -27,12 +27,12 @@
 }
 
 .collapsable-menu-expanded {
-  background-color: $navbar-bg;
+  background-color: #FFFFFF;
   padding: 20px;
   position: relative;
   top: 0;
 
-  @include media-breakpoint-up(md) {
+  @media (max-width: 600px) {
     left: $collapsable-item-width;
     min-height: 200px;
     position: absolute;
@@ -41,7 +41,7 @@
   }
 }
 
-@include media-breakpoint-down(sm) {
+@media (max-width: 600px) {
   .collapser {
     display: block;
     float: none;
