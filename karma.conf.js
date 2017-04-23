@@ -8,33 +8,27 @@ if (isCoverage) {
 
 var webpackConfig = require('./webpack.config.js');
 
-webpackConfig.module.postLoaders = [{
-    test: /\.ts$/,
-    loader: 'istanbul-instrumenter-loader',
-    exclude: [/node_modules/]
-  }
-];
+webpackConfig.module.loaders.push({
+  enforce: 'post',
+  test: /\.ts$/,
+  loader: 'istanbul-instrumenter-loader'
+});
 
 module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['mocha', 'chai', 'sinon', 'source-map-support'],
     files: [{
-      pattern: 'app/scripts/tests/**/*.js',
+      pattern: 'app/tests/*.spec.js',
       watched: false
     }],
     exclude: [
     ],
     preprocessors: {
-      'app/scripts/**/*.ts': ['webpack'],
-      'app/scripts/tests/**/*.js': ['webpack']
+      'app/scripts/*.ts': ['webpack'],
+      'app/tests/*.js': ['webpack']
     },
-    webpack: {
-      entry: {},
-      module: webpackConfig.module,
-      resolve: webpackConfig.resolve,
-      devtool: 'inline-source-map'
-    },
+    webpack: webpackConfig,
     webpackMiddleware: {
       quiet: false,
       noInfo: true,
@@ -48,7 +42,7 @@ module.exports = function (config) {
     reporters: reporters,
     coverageReporter: {
       type: 'json',
-      dir: 'app/scripts/tests/coverage',
+      dir: 'app/tests/coverage',
       subdir: '.'
     },
     port: 9876,
