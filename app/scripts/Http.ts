@@ -17,17 +17,21 @@ class Http {
   private xhr: XMLHttpRequest;
   private config: HttpConfig;
 
-  private static openedEvent: Event = Http.createEvent('http-opened');
-  private static sentEvent: Event = Http.createEvent('http-sent');
-  private static loadingEvent: Event = Http.createEvent('http-loading');
-  private static finishedEvent: Event = Http.createEvent('http-finished');
+  private openedEvent: Event;
+  private sentEvent: Event;
+  private loadingEvent: Event;
+  private finishedEvent: Event;
 
   constructor(config: HttpConfig) {
     this.xhr = new XMLHttpRequest();
     this.config = config;
+    this.openedEvent = this.createEvent('http-opened');
+    this.sentEvent = this.createEvent('http-sent');
+    this.loadingEvent = this.createEvent('http-loading');
+    this.finishedEvent = this.createEvent('http-finished');
   }
 
-  private static createEvent(name: string): Event {
+  private createEvent(name: string): Event {
     let event: Event;
 
     try {
@@ -55,21 +59,23 @@ class Http {
       }
     }
 
+    const self = this;
+
     this.xhr.onreadystatechange = function () {
       if (this.readyState === 1) {
-        document.dispatchEvent(Http.openedEvent);
+        document.dispatchEvent(self.openedEvent);
       }
 
       if (this.readyState === 2) {
-        document.dispatchEvent(Http.sentEvent);
+        document.dispatchEvent(self.sentEvent);
       }
 
       if (this.readyState === 3) {
-        document.dispatchEvent(Http.loadingEvent);
+        document.dispatchEvent(self.loadingEvent);
       }
 
       if (this.readyState === 4) {
-        document.dispatchEvent(Http.finishedEvent);
+        document.dispatchEvent(self.finishedEvent);
 
         if (this.status === 200) {
           const responseType = this.getResponseHeader('Content-Type');
