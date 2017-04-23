@@ -1,4 +1,4 @@
-@include media-breakpoint-down('sm') {
+@media (max-width: 600px) {
   .responsive-menu-body {
     overflow-x: hidden;
 
@@ -30,7 +30,7 @@
 
     &.discover {
       // To avoid seeing the menu below transparent body content.
-      background: $body-bg-color;
+      background: #FFFFFF;
       position: absolute;
 
       &.left {
