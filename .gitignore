@@ -1,27 +1,24 @@
-#OSX Files
+# Ignore configuration files that may contain sensitive information.
+
+# Node JS
+node_modules
+
+# Logs
+*.log
+
+# Mac OSX
 .DS_Store
 
-#NodeJs Files
-/node_modules
-npm-debug.log
+# Builds
+dist
 
-#Sprites Files
-/app/sprites
-/app/styles/sprite-base.scss
+# TypeScript Compiled Files
+app/scripts/*.js
+app/scripts/*.js.map
 
-#Dist Files
-/dist
+# Coverage Test Files
+/app/tests/coverage
 
-#Typing Files
-/typings
-
-#Coverage Test Files
-/app/scripts/tests/coverage
-
-#JetBrains Files
+# JetBrains Files
 .idea
 *.iml
-
-#Typescript Maps
-/app/scripts/components/**/*.js.map
-/app/scripts/components/**/*.js
