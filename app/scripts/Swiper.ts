@@ -12,10 +12,11 @@ interface SwiperEvents {
 interface SwiperOptions {
   activateTumbnails: boolean;
   animationMs: number;
+  changePerPage: boolean;
+  createControls: boolean;
   nextCtrlClasses: string[];
   prevCtrlClasses: string[];
   showBullets: boolean;
-  showControls: boolean;
 }
 
 class Swiper {
@@ -26,6 +27,9 @@ class Swiper {
   static readonly SWIPER_CLASS: string = 'swiper-section';
   static readonly CONTAINER_CLASS: string = 'swiper-container';
   static readonly ITEM_CLASS: string = 'swiper-item';
+  static readonly CTRLS_CONTAINER_CLASS: string = 'swiper-controls-container';
+  static readonly NEXT_CTRL_ATTR: string = 'data-swiper-next-control';
+  static readonly PREV_CTRL_ATTR: string = 'data-swiper-prev-control';
   static readonly ACTIVE_CTRL_CLASS: string = 'active';
   static readonly ACTIVE_EVENT_CTRL: string = 'click';
   static readonly BULLET_ATTR: string = 'data-swiper-go-page';
@@ -53,8 +57,9 @@ class Swiper {
   public initDistance: number;
   public traveledDistance: number;
   public items: NodeListOf<Element>;
-  public nextCtrl: DOMElement;
-  public prevCtrl: DOMElement;
+  public nextCtrls: NodeListOf<Element>;
+  public prevCtrls: NodeListOf<Element>;
+  public controlsContainer: DOMElement;
   public swiper: HTMLElement;
   public supportEvents: SwiperEvents;
   public thumbnails: NodeListOf<Element>;
@@ -71,7 +76,7 @@ class Swiper {
     this.showByIndex = this.showByIndex.bind(this);
     this.showPrev = this.showPrev.bind(this);
     this.showNext = this.showNext.bind(this);
-    this.changePage = this.changePage.bind(this);
+    this.changePageByBullet = this.changePageByBullet.bind(this);
     this.swipe = this.swipe.bind(this);
     this.update = this.update.bind(this);
     this.cancelRedirect = this.cancelRedirect.bind(this);
@@ -99,7 +104,7 @@ class Swiper {
     this.swiper.addEventListener(this.supportEvents.down, this.actionDown);
     this.swiper.addEventListener(this.supportEvents.click, this.cancelRedirect);
 
-    window.onEvent(Swiper.WINDOW_EVENT, this.update, 1);
+    window.onEvent(Swiper.WINDOW_EVENT, this.update, 100);
   }
 
   public cancelRedirect(event: any) {
@@ -118,22 +123,32 @@ class Swiper {
   public initFeatures(swiper: Element, options: SwiperOptions): void {
     this.options = options;
 
+    this.setSwiperWidth();
+
     if (this.options.activateTumbnails) {
       this.activateControlsByIndexes(swiper);
     }
 
-    if (this.options.showControls) {
-      this.createControls();
-      this.activateControls();
+    if (this.options.createControls || this.options.showBullets) {
+      this.controlsContainer = new DOMElement('div');
+      this.controlsContainer.addClasses([Swiper.CTRLS_CONTAINER_CLASS]);
+      this.controlsContainer.render(this.swiper.parentNode);
+
+      if (this.options.createControls) {
+        this.createControls();
+        this.activateControls();
+      }
+
+      if (this.options.showBullets) {
+        this.bulletsContainer = new DOMElement('div');
+        this.bulletsContainer.addClasses(['swiper-bullets-container']);
+        this.bulletsContainer.render(this.controlsContainer.getElement());
+        this.createBullets();
+        this.activateBullets();
+      }
     }
 
-    if (this.options.showBullets) {
-      this.bulletsContainer = new DOMElement('div');
-      this.bulletsContainer.addClasses(['swiper-bullets-container']);
-      this.bulletsContainer.render(this.swiper);
-      this.createBullets();
-      this.activateBullets();
-    }
+    this.setControls();
   }
 
   public animate(distance: number, velocity: number): void {
@@ -152,7 +167,7 @@ class Swiper {
       bullet.addClasses([Swiper.BULLET_CLASS]);
       bullet.render(this.bulletsContainer.getElement());
       bullet.addEvents([{
-        callback: this.changePage,
+        callback: this.changePageByBullet,
         name: 'click'
       }]);
       bullet.setAttributes([{
@@ -163,36 +178,54 @@ class Swiper {
   }
 
   public activateControls(): void {
-    if (this.options.showControls) {
+    if (this.nextCtrls && this.prevCtrls) {
       if (this.index > 0) {
-        this.prevCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
+        DOMUtils.addClassToItems(this.prevCtrls, Swiper.ACTIVE_CTRL_CLASS);
       } else {
-        this.prevCtrl.removeClasses([Swiper.ACTIVE_CTRL_CLASS]);
+        DOMUtils.removeClassToItems(this.prevCtrls, Swiper.ACTIVE_CTRL_CLASS);
       }
 
       if (this.index < this.lastIndexToShow) {
-        this.nextCtrl.addClasses([Swiper.ACTIVE_CTRL_CLASS]);
+        DOMUtils.addClassToItems(this.nextCtrls, Swiper.ACTIVE_CTRL_CLASS);
       } else {
-        this.nextCtrl.removeClasses([Swiper.ACTIVE_CTRL_CLASS]);
+        DOMUtils.removeClassToItems(this.nextCtrls, Swiper.ACTIVE_CTRL_CLASS);
       }
     }
   }
 
+  public setControls(): void {
+    const swiper = this.swiper.parentNode as HTMLElement;
+
+    this.nextCtrls = swiper.querySelectorAll(`[${ Swiper.NEXT_CTRL_ATTR }]`);
+    this.prevCtrls = swiper.querySelectorAll(`[${ Swiper.PREV_CTRL_ATTR }]`);
+
+    for (let i = 0; i < this.nextCtrls.length; i++) {
+      this.nextCtrls[i]
+        .addEventListener(Swiper.ACTIVE_EVENT_CTRL, this.showNext);
+    }
+
+    for (let i = 0; i < this.prevCtrls.length; i++) {
+      this.prevCtrls[i]
+        .addEventListener(Swiper.ACTIVE_EVENT_CTRL, this.showPrev);
+    }
+  }
+
   public createControls(): void {
-    this.prevCtrl = new DOMElement('div');
-    this.nextCtrl = new DOMElement('div');
-    this.prevCtrl.addClasses(this.options.prevCtrlClasses);
-    this.nextCtrl.addClasses(this.options.nextCtrlClasses);
-    this.prevCtrl.render(this.swiper);
-    this.nextCtrl.render(this.swiper);
-    this.prevCtrl.addEvents([{
-      callback: this.showPrev,
-      name: Swiper.ACTIVE_EVENT_CTRL
+    const prevCtrl = new DOMElement('div');
+    const nextCtrl = new DOMElement('div');
+
+    prevCtrl.addClasses(this.options.prevCtrlClasses);
+    nextCtrl.addClasses(this.options.nextCtrlClasses);
+    nextCtrl.setAttributes([{
+      name: Swiper.NEXT_CTRL_ATTR,
+      value: ''
     }]);
-    this.nextCtrl.addEvents([{
-      callback: this.showNext,
-      name: Swiper.ACTIVE_EVENT_CTRL
+    prevCtrl.setAttributes([{
+      name: Swiper.PREV_CTRL_ATTR,
+      value: ''
     }]);
+    prevCtrl.render(this.controlsContainer.getElement());
+    nextCtrl.render(this.controlsContainer.getElement());
   }
 
   public containerFullWidth(): number {
@@ -222,10 +255,16 @@ class Swiper {
 
   public showPrev(): void {
     if (this.index > 0) {
-      this.index = --this.index;
-      const currentItem = this.items[this.index] as HTMLElement;
+      if (this.options.changePerPage) {
+        const page = this.getCurrentPage();
 
-      this.animate(currentItem.offsetLeft, this.options.animationMs);
+        this.goToPage(page - 1);
+      } else {
+        this.index = --this.index;
+        const currentItem = this.items[this.index] as HTMLElement;
+
+        this.animate(currentItem.offsetLeft, this.options.animationMs);
+      }
     }
 
     this.activateBullets();
@@ -234,14 +273,20 @@ class Swiper {
 
   public showNext(): void {
     if (this.index + 1 <= this.lastIndexToShow) {
-      ++this.index;
+      if (this.options.changePerPage) {
+        const page = this.getCurrentPage();
 
-      if (this.index < this.lastIndexToShow) {
-        const currentItem = this.items[this.index] as HTMLElement;
-
-        this.animate(currentItem.offsetLeft, this.options.animationMs);
+        this.goToPage(page + 1);
       } else {
-        this.animate(this.containerFullWidth(), this.options.animationMs);
+        ++this.index;
+
+        if (this.index < this.lastIndexToShow) {
+          const currentItem = this.items[this.index] as HTMLElement;
+
+          this.animate(currentItem.offsetLeft, this.options.animationMs);
+        } else {
+          this.animate(this.containerFullWidth(), this.options.animationMs);
+        }
       }
     }
 
@@ -266,8 +311,18 @@ class Swiper {
       this.createBullets();
     }
 
+    this.setSwiperWidth();
     this.activateBullets();
     this.activateControls();
+  }
+
+  public setSwiperWidth(): void {
+    const offsetLeft = DOMUtils.getOffsetLeft(this.swiper);
+    const scrollBarWidth = DOMUtils.getScrollbarWidth();
+    const lateralSpace = offsetLeft * 2;
+    const swiperWidth = window.getInnerWidth() - lateralSpace - scrollBarWidth;
+
+    this.swiper.style.width = `${ swiperWidth }px`;
   }
 
   public swipe(moveEvent: any): void {
@@ -425,10 +480,32 @@ class Swiper {
     }
   }
 
-  public changePage(event: Event): void {
-    let itemIndex = 0;
+  public changePageByBullet(event: Event): void {
     const target = event.target as Element;
     const pageNumber = parseInt(target.getAttribute(Swiper.BULLET_ATTR));
+
+    this.goToPage(pageNumber);
+  }
+
+  public getCurrentPage(): number {
+    let page = 0;
+    let itemsPerPage = 0;
+
+    for (let i = 0; i < this.items.length; i++) {
+      itemsPerPage = itemsPerPage + this.itemsPerPage[i];
+
+      if (itemsPerPage >= this.index + 1) {
+        page = i;
+
+        break;
+      }
+    }
+
+    return page;
+  }
+
+  public goToPage(pageNumber: number): void {
+    let itemIndex = 0;
 
     for (let i = 0; i < pageNumber; i++) {
       itemIndex = itemIndex + this.itemsPerPage[i];

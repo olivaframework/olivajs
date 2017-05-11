@@ -1,5 +1,6 @@
 interface Window {
   getInnerHeight: () => number;
+  getInnerWidth: () => number;
   isMobile: () => boolean;
   onEvent: (eventName: string, callback: () => void, time: number) => void;
   redirect: (url: string) => void;
@@ -9,7 +10,9 @@ interface Window {
 
 window.getInnerHeight = () => window.innerHeight;
 
-window.isMobile = () => 768 > Math.max(
+window.getInnerWidth = () => window.innerWidth;
+
+window.isMobile = () => 1280 > Math.max(
   0 || document.documentElement.clientWidth, window.innerWidth
 );
 

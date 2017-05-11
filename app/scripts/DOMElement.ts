@@ -51,6 +51,12 @@ class DOMElement {
     }
   }
 
+  public toggleClasses(classes: string[]): void {
+    for (const item of classes) {
+      DOMUtils.toggleClass(this.element, item);
+    }
+  }
+
   public setStyles(styles: Object): void {
     for (const property in styles) {
       this.element.style[property] = styles[property];

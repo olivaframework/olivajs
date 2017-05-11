@@ -39,7 +39,8 @@ class Modal {
     }
   }
 
-  public show(): void {
+  public show(event: Event): void {
+    event.preventDefault();
     DOMUtils.addClass(this.modal, Modal.ACTIVE_CLASS);
     this.overlay.show();
   }

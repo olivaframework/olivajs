@@ -7,6 +7,17 @@ class DOMUtils {
     }
   }
 
+  static addClassToItems(
+    elements: NodeListOf<Element>,
+    className: string
+  ): void {
+    const elementsSize = elements.length;
+
+    for (let i = 0; i < elementsSize; i++) {
+      this.addClass(elements[i], className);
+    }
+  }
+
   static removeClassToItems(
     elements: NodeListOf<Element>,
     className: string
@@ -160,6 +171,29 @@ class DOMUtils {
     }
 
     return itemsPerSection;
+  }
+
+  static getScrollbarWidth() {
+    const outer = document.createElement('div');
+    const inner = document.createElement('div');
+
+    outer.style.visibility = 'hidden';
+    outer.style.width = '100px';
+    outer.style.msOverflowStyle = 'scrollbar';
+
+    document.body.appendChild(outer);
+
+    const widthNoScroll = outer.offsetWidth;
+
+    outer.style.overflow = 'scroll';
+    inner.style.width = '100%';
+    outer.appendChild(inner);
+
+    const withScroll = widthNoScroll - inner.offsetWidth;
+
+    outer.parentNode.removeChild(outer);
+
+    return withScroll;
   }
 }
 
