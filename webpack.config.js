@@ -15,7 +15,7 @@ module.exports = function makeWebpackConfig () {
 
 	config.devtool = isProd ? 'cheap-module-source-map': 'eval';
 
-	config.entry = { olivajs: './app/entry.ts' };
+	config.entry = { oliva: './app/entry.ts' };
 
 	config.output = {
 		filename: 'js/[name].js',
