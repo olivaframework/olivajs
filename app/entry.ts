@@ -27,20 +27,22 @@ window.onload = () => {
   new Swiper(swiper, {
     activateTumbnails: false,
     animationMs: 300,
+    changePerPage: true,
+    createControls: true,
     nextCtrlClasses: ['arrow-right'],
     prevCtrlClasses: ['arrow-left'],
-    showBullets: true,
-    showControls: true
+    showBullets: true
   });
 
   new Carousel(carousel, {
     activateTumbnails: false,
-    animationMs: 400,
+    animationMs: 300,
     autoplayMs: 1200,
+    changePerPage: true,
+    createControls: true,
     nextCtrlClasses: ['arrow-right'],
     prevCtrlClasses: ['arrow-left'],
-    showBullets: false,
-    showControls: false
+    showBullets: true
   });
 
   new MenuOver(responsiveMenuOver as HTMLElement);
