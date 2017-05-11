@@ -2,7 +2,7 @@
   "name": "olivajs",
   "version": "0.0.4",
   "description": "A framework based on Typescript and Sass.",
-  "main": "app/entry.ts",
+  "main": "index.js",
   "scripts": {
     "build": "rimraf dist && webpack --progress --hide-modules",
     "coverage": "karma start && npm run coverage:html",
