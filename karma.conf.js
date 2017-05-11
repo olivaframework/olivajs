@@ -1,5 +1,6 @@
 var ENV = process.env.npm_lifecycle_event;
 var isCoverage = ENV === 'coverage';
+var isPublish = ENV === 'prepare';
 var reporters = ['progress'];
 
 if (isCoverage) {
@@ -68,7 +69,7 @@ module.exports = function (config) {
         debug: true
       }
     },
-    singleRun: isCoverage,
+    singleRun: isCoverage || isPublish,
     concurrency: Infinity
   })
 }
