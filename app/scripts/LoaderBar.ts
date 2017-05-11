@@ -1,5 +1,4 @@
 import { DOMElement } from './DOMElement';
-import { DOMUtils } from './DOMUtils';
 
 class LoaderBar {
   private static readonly ACTIVE_CLASS: string = 'loading';

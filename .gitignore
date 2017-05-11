@@ -12,6 +12,8 @@ node_modules
 # TypeScript Compiled Files
 app/scripts/*.js
 app/scripts/*.js.map
+app/entry.js
+app/entry.js.map
 
 # Coverage Test Files
 /app/tests/coverage

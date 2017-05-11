@@ -1,85 +1,46 @@
 import './main.scss';
 import { Carousel } from './scripts/Carousel';
+import { DOMElement } from './scripts/DOMElement';
 import { DOMUtils } from './scripts/DOMUtils';
 import { Dropdown } from './scripts/Dropdown';
+import { Http } from './scripts/Http';
 import { Jump } from './scripts/Jump';
+import { LineClamp } from './scripts/LineClamp';
 import { Loader } from './scripts/Loader';
+import { LoaderBar } from './scripts/LoaderBar';
+import { Menu } from './scripts/Menu';
 import { MenuCollapser } from './scripts/MenuCollapser';
+import { MenuDiscover } from './scripts/MenuDiscover';
 import { MenuOver } from './scripts/MenuOver';
+import { MenuPush } from './scripts/MenuPush';
+import { MenuResponsive } from './scripts/MenuResponsive';
 import { Modal } from './scripts/Modal';
 import { Mosaic } from './scripts/Mosaic';
+import { Overlay } from './scripts/Overlay';
 import { ScrollSpy } from './scripts/ScrollSpy';
 import { Swiper } from './scripts/Swiper';
 import { Tab } from './scripts/Tab';
 
-const tabs = document.querySelectorAll('[data-tab-content-id]');
-const modals = document.querySelectorAll('[data-modal-content-id]');
-const jumps = document.querySelectorAll('[data-jump-content-id]');
-const swiper = document.querySelector('[data-swiper]');
-const carousel = document.querySelector('[data-carousel]');
-const dropdowns = document.querySelectorAll('[data-dropdown]');
-const mosaics = document.querySelectorAll('[data-mosaic]');
-const scrollSpies = document.querySelectorAll('[data-scroll-spy]');
-const responsiveMenuOver = document.querySelector('[data-menu-over]');
-const menuCollapsers = document.querySelectorAll('[data-menu-collapser]');
-
-window.onload = () => {
-  new Swiper(swiper, {
-    activateTumbnails: false,
-    animationMs: 300,
-    changePerPage: true,
-    createControls: true,
-    nextCtrlClasses: ['arrow-right'],
-    prevCtrlClasses: ['arrow-left'],
-    showBullets: true
-  });
-
-  new Carousel(carousel, {
-    activateTumbnails: false,
-    animationMs: 300,
-    autoplayMs: 1200,
-    changePerPage: true,
-    createControls: true,
-    nextCtrlClasses: ['arrow-right'],
-    prevCtrlClasses: ['arrow-left'],
-    showBullets: true
-  });
-
-  new MenuOver(responsiveMenuOver as HTMLElement);
-
-  DOMUtils.syncForEach(scrollSpy => {
-    new ScrollSpy(scrollSpy);
-  }, scrollSpies);
-
-  DOMUtils.syncForEach(tab => {
-    new Tab(tab as HTMLAnchorElement);
-  }, tabs);
-
-  DOMUtils.syncForEach(modal => {
-    new Modal(modal);
-  }, modals);
-
-  DOMUtils.syncForEach(jump => {
-    new Jump(jump as HTMLAnchorElement);
-  }, jumps);
-
-  DOMUtils.syncForEach(dropdown => {
-    new Dropdown(dropdown);
-  }, dropdowns);
-
-  DOMUtils.syncForEach(mosaic => {
-    new Mosaic(mosaic);
-  }, mosaics);
-
-  DOMUtils.syncForEach(menuCollapser => {
-    new MenuCollapser(menuCollapser);
-  }, menuCollapsers);
-
-  const loader = Loader.getInstance();
-
-  loader.show();
-
-  setTimeout(() => {
-    loader.hide();
-  }, 1000);
-};
+export {
+  Carousel,
+  DOMElement,
+  DOMUtils,
+  Dropdown,
+  Http,
+  Jump,
+  LineClamp,
+  Loader,
+  LoaderBar,
+  Menu,
+  MenuCollapser,
+  MenuDiscover,
+  MenuOver,
+  MenuPush,
+  MenuResponsive,
+  Modal,
+  Mosaic,
+  Overlay,
+  ScrollSpy,
+  Swiper,
+  Tab
+ };

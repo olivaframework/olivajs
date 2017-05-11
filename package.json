@@ -1,13 +1,13 @@
 {
   "name": "olivajs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A framework based on Typescript and Sass.",
   "main": "entry.ts",
   "scripts": {
     "build": "rimraf dist && webpack --progress --hide-modules",
     "coverage": "karma start && npm run coverage:html",
     "coverage:html": "remap-istanbul -i app/tests/coverage/coverage-final.json -o app/tests/coverage/html -t html",
-    "prepare": "karma start",
+    "prepare": "karma start && npm run build",
     "start": "webpack-dev-server --progress",
     "test": "karma start"
   },

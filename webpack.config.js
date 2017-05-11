@@ -15,12 +15,14 @@ module.exports = function makeWebpackConfig () {
 
 	config.devtool = isProd ? 'cheap-module-source-map': 'eval';
 
-	config.entry = { bundle: './app/entry.ts' };
+	config.entry = { olivajs: './app/entry.ts' };
 
 	config.output = {
 		filename: 'js/[name].js',
 		path: __dirname + '/dist',
-		publicPath: '/'
+		publicPath: '/',
+		library: 'olivajs',
+    libraryTarget: 'umd'
 	};
 
 	config.resolve = { extensions: ['.ts', '.js'] };
@@ -101,7 +103,10 @@ module.exports = function makeWebpackConfig () {
     config.plugins.push(
       new webpack.NoEmitOnErrorsPlugin(),
 			new webpack.optimize.UglifyJsPlugin({
- 				compress: { warnings: false }
+				mangle: false,
+				comments: false,
+ 				compress: { warnings: false },
+				beautify: false
  			})
     );
 	}
