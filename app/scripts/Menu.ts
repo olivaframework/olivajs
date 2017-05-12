@@ -62,12 +62,12 @@ class Menu {
   public openSubMenu(event): void {
     const handler = event.target;
 
-    if (DOMUtils.containsClass(handler, Menu.MENU_ITEM_CLASS)
-      || DOMUtils.containsClass(handler.parentNode, Menu.MENU_ITEM_CLASS)) {
+    if ((DOMUtils.containsClass(handler, Menu.MENU_ITEM_CLASS)
+      || DOMUtils.containsClass(handler.parentNode, Menu.MENU_ITEM_CLASS))
+      && window.isMobile()) {
       event.preventDefault();
-      const item = DOMUtils.findParentElementByClass(
-        handler, Menu.MENU_ITEM_CLASS
-      );
+      const item = DOMUtils
+                  .findParentElementByClass(handler, Menu.MENU_ITEM_CLASS);
       const submenu = item.querySelector(`.${ Menu.SUBMENU_CONTAINER_CLASS }`);
 
       DOMUtils.addClass(submenu, Menu.SUBMENU_ACTIVE_CLASS);
