@@ -22,30 +22,32 @@ class Menu {
 
   constructor(menu) {
     this.menu = menu;
-    this.update = this.update.bind(this);
     this.openMenu = this.openMenu.bind(this);
     this.openSubMenu = this.openSubMenu.bind(this);
-    this.closeSubMenus = this.closeSubMenus.bind(this);
     this.items = menu.querySelectorAll(`.${ Menu.MENU_ITEM_CLASS }`);
     this.submenus = menu.querySelectorAll(`.${ Menu.SUBMENU_CONTAINER_CLASS }`);
     this.menuContainer = menu.querySelector(`.${ Menu.MENU_CONTAINER_CLASS }`);
     this.buttonOpen = menu.querySelector(`[${ Menu.MENU_OPEN_ATTR }]`);
     this.buttonOpen.addEventListener(Menu.ACTIVE_EVENT, this.openMenu);
-
-    this.setFunctionCloseSubmenu();
-    this.update();
-
+    this.addEventListeners();
     DOMUtils.addClass(document.body, Menu.BODY_MENU_CLASS);
-    window.onEvent('resize', this.update, 100);
+
+    if (window.isMobile()) {
+      DOMUtils.removeClassToItems(this.submenus, Menu.SUBMENU_ACTIVE_CLASS);
+    }
   }
 
-  public setFunctionCloseSubmenu(): void {
+  public addEventListeners(): void {
     const closeElements = this.menuContainer
       .querySelectorAll(`[${ Menu.SUBMENU_CLOSE_ATTR }]`);
 
     DOMUtils.syncForEach(item => {
       item.addEventListener(Menu.ACTIVE_EVENT, this.closeSubMenus);
     }, closeElements);
+
+    DOMUtils.syncForEach(item => {
+      item.addEventListener(Menu.ACTIVE_EVENT, this.openSubMenu);
+    }, this.items);
   }
 
   public openMenu(): void {
@@ -59,16 +61,16 @@ class Menu {
 
   public openSubMenu(event): void {
     const handler = event.target;
-    const item = DOMUtils.findParentElementByClass(
-      handler, Menu.MENU_ITEM_CLASS
-    );
 
-    if (item) {
+    if (DOMUtils.containsClass(handler, Menu.MENU_ITEM_CLASS)
+      || DOMUtils.containsClass(handler.parentNode, Menu.MENU_ITEM_CLASS)) {
       event.preventDefault();
-      const submenuContainer = item
-        .querySelector(`.${ Menu.SUBMENU_CONTAINER_CLASS }`);
+      const item = DOMUtils.findParentElementByClass(
+        handler, Menu.MENU_ITEM_CLASS
+      );
+      const submenu = item.querySelector(`.${ Menu.SUBMENU_CONTAINER_CLASS }`);
 
-      DOMUtils.addClass(submenuContainer, Menu.SUBMENU_ACTIVE_CLASS);
+      DOMUtils.addClass(submenu, Menu.SUBMENU_ACTIVE_CLASS);
     }
   }
 
@@ -81,26 +83,6 @@ class Menu {
     );
 
     DOMUtils.removeClass(submenuContainer, Menu.SUBMENU_ACTIVE_CLASS);
-  }
-
-  public closeSubmenus(): void {
-    DOMUtils.removeClassToItems(this.submenus, Menu.SUBMENU_ACTIVE_CLASS);
-    DOMUtils.removeClass(document.body, Menu.BODY_MENU_OPEN_CLASS);
-  }
-
-  public update(): void {
-    if (window.isMobile()) {
-      this.closeSubmenus();
-
-      for (let i = 0; i < this.items.length; i++) {
-        this.items[i].addEventListener(Menu.ACTIVE_EVENT, this.openSubMenu);
-      }
-    } else {
-      for (let i = 0; i < this.items.length; i++) {
-        this.items[i]
-          .removeEventListener(Menu.ACTIVE_EVENT, this.openSubMenu);
-      }
-    }
   }
 }
 
