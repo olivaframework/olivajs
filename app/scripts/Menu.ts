@@ -1,23 +1,22 @@
 import './Window';
-import { DOMElement } from './DOMElement';
 import { DOMUtils } from './DOMUtils';
 
 class Menu {
   static readonly ACTIVE_EVENT = 'click';
-  static readonly MENU_CONTAINER_CLASS = 'mainmenu-container';
-  static readonly MENU_ACTIVE_CLASS = 'active';
-  static readonly SUBMENU_CONTAINER_CLASS = 'submenu-container';
-  static readonly SUBMENU_CLOSE_ATTR = 'data-submenu-close';
-  static readonly SUBMENU_CLASS = 'submenu';
-  static readonly SUBMENU_ATTR = 'data-submenu-id';
-  static readonly SUBMENU_ACTIVE_CLASS = 'active';
   static readonly BODY_MENU_CLASS = 'body-menu';
   static readonly BODY_MENU_OPEN_CLASS = 'menu-open';
+  static readonly MENU_CONTAINER_CLASS = 'menu-container';
+  static readonly MENU_ACTIVE_CLASS = 'active';
+  static readonly MENU_ITEM_CLASS = 'menu-item';
+  static readonly SUBMENU_CONTAINER_CLASS = 'submenu-container';
+  static readonly SUBMENU_ACTIVE_CLASS = 'active';
+  static readonly SUBMENU_CLOSE_ATTR = 'data-submenu-close';
+  static readonly MENU_OPEN_ATTR = 'data-menu-open';
+  static readonly MENU_OPEN_ACTIVE_CLASS = 'active';
 
-  public button: DOMElement;
+  public buttonOpen: HTMLElement;
   public menu: HTMLElement;
-  public mainMenu: HTMLElement;
-  public submenu: HTMLElement;
+  public menuContainer: HTMLElement;
   public submenus: NodeListOf<Element>;
   public items: NodeListOf<Element>;
 
@@ -27,11 +26,12 @@ class Menu {
     this.openMenu = this.openMenu.bind(this);
     this.openSubMenu = this.openSubMenu.bind(this);
     this.closeSubMenus = this.closeSubMenus.bind(this);
-    this.mainMenu = menu.querySelector(`.${ Menu.MENU_CONTAINER_CLASS }`);
-    this.items = menu.querySelectorAll('li');
-    this.submenu = menu.querySelector(`.${ Menu.SUBMENU_CONTAINER_CLASS }`);
-    this.submenus = menu.querySelectorAll(`.${ Menu.SUBMENU_CLASS }`);
-    this.button = new DOMElement('div');
+    this.items = menu.querySelectorAll(`.${ Menu.MENU_ITEM_CLASS }`);
+    this.submenus = menu.querySelectorAll(`.${ Menu.SUBMENU_CONTAINER_CLASS }`);
+    this.menuContainer = menu.querySelector(`.${ Menu.MENU_CONTAINER_CLASS }`);
+    this.buttonOpen = menu.querySelector(`[${ Menu.MENU_OPEN_ATTR }]`);
+    this.buttonOpen.addEventListener(Menu.ACTIVE_EVENT, this.openMenu);
+
     this.setFunctionCloseSubmenu();
     this.update();
 
@@ -40,7 +40,7 @@ class Menu {
   }
 
   public setFunctionCloseSubmenu(): void {
-    const closeElements = this.menu
+    const closeElements = this.menuContainer
       .querySelectorAll(`[${ Menu.SUBMENU_CLOSE_ATTR }]`);
 
     DOMUtils.syncForEach(item => {
@@ -48,60 +48,49 @@ class Menu {
     }, closeElements);
   }
 
-  public closeSubMenus(): void {
-    DOMUtils.removeClass(this.submenu, Menu.SUBMENU_ACTIVE_CLASS);
-
-    setTimeout(() => {
-      DOMUtils.removeClassToItems(this.submenus, Menu.SUBMENU_ACTIVE_CLASS);
-    }, 300);
-  }
-
-  public createMenuButton(): void {
-    this.button = new DOMElement('div');
-    this.button.addClasses(['menu-hamburger-btn']);
-    this.button.setContent('<span class="hamburger-btn"></span>');
-    this.button.render(this.menu.parentNode);
-    this.button.addEvents([{
-      callback: this.openMenu,
-      name: Menu.ACTIVE_EVENT
-    }]);
-  }
-
   public openMenu(): void {
     event.stopPropagation();
-    DOMUtils.toggleClass(this.menu, Menu.MENU_ACTIVE_CLASS);
-    DOMUtils.toggleClass(document.body, Menu.BODY_MENU_OPEN_CLASS);
 
-    if (window.isMobile()) {
-      this.button.toggleClasses(['active']);
-    }
+    DOMUtils.toggleClass(this.menuContainer, Menu.MENU_ACTIVE_CLASS);
+    DOMUtils.toggleClass(document.body, Menu.BODY_MENU_OPEN_CLASS);
+    DOMUtils.removeClassToItems(this.submenus, Menu.SUBMENU_ACTIVE_CLASS);
+    DOMUtils.toggleClass(this.buttonOpen, Menu.MENU_OPEN_ACTIVE_CLASS);
   }
 
   public openSubMenu(event): void {
     const handler = event.target;
-    const subMenuId = handler.getAttribute(Menu.SUBMENU_ATTR);
-    const submenu = this.submenu.querySelector(`#${ subMenuId }`);
+    const item = DOMUtils.findParentElementByClass(
+      handler, Menu.MENU_ITEM_CLASS
+    );
 
-    if (submenu) {
+    if (item) {
       event.preventDefault();
-      DOMUtils.addClass(this.submenu, Menu.SUBMENU_ACTIVE_CLASS);
-      DOMUtils.addClass(submenu, Menu.SUBMENU_ACTIVE_CLASS);
+      const submenuContainer = item
+        .querySelector(`.${ Menu.SUBMENU_CONTAINER_CLASS }`);
+
+      DOMUtils.addClass(submenuContainer, Menu.SUBMENU_ACTIVE_CLASS);
     }
+  }
+
+  public closeSubMenus(event): void {
+    event.stopPropagation();
+
+    const handler = event.target;
+    const submenuContainer = DOMUtils.findParentElementByClass(
+      handler, Menu.SUBMENU_CONTAINER_CLASS
+    );
+
+    DOMUtils.removeClass(submenuContainer, Menu.SUBMENU_ACTIVE_CLASS);
   }
 
   public closeSubmenus(): void {
     DOMUtils.removeClassToItems(this.submenus, Menu.SUBMENU_ACTIVE_CLASS);
-    DOMUtils.removeClass(this.mainMenu, Menu.MENU_ACTIVE_CLASS);
     DOMUtils.removeClass(document.body, Menu.BODY_MENU_OPEN_CLASS);
-    DOMUtils.removeClass(this.submenu, Menu.MENU_ACTIVE_CLASS);
   }
 
   public update(): void {
-    this.button.destroy();
-
     if (window.isMobile()) {
       this.closeSubmenus();
-      this.createMenuButton();
 
       for (let i = 0; i < this.items.length; i++) {
         this.items[i].addEventListener(Menu.ACTIVE_EVENT, this.openSubMenu);
