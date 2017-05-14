@@ -101,7 +101,7 @@ class MenuCollapser {
       ? 0
       : MenuCollapser.OPEN_TIMER;
 
-    this.openIntent = setTimeout(this.open, timer);
+    this.openIntent = window.setTimeout(this.open, timer);
     this.menu.addEventListener(this.events.outside, this.cancelOpenIntent);
   }
 

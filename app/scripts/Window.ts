@@ -21,7 +21,7 @@ window.onEvent = (eventName, callback, time) => {
 
   window.addEventListener(eventName, event => {
     clearTimeout(timeout);
-    timeout = setTimeout(callback, time, event);
+    timeout = window.setTimeout(callback, time, event);
   });
 };
 

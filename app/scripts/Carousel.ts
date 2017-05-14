@@ -31,7 +31,7 @@ class Carousel extends Swiper {
   }
 
   public autoplay(): void {
-    this.interval = setInterval(() => {
+    this.interval = window.setInterval(() => {
       this.showNext();
 
       if (this.options.createControls) {
