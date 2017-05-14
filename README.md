@@ -6,7 +6,7 @@ A framework based on Typescript and Sass.
 
 ## Quick start
 
-### Install
+### Install
 
 This package can be installed with:
 
