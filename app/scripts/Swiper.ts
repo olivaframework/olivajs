@@ -12,14 +12,18 @@ interface SwiperEvents {
 interface SwiperOptions {
   activateTumbnails: boolean;
   animationMs: number;
+  autoplay: boolean;
+  autoplayMs: number;
   changePerPage: boolean;
   createControls: boolean;
+  loop: boolean;
   nextCtrlClasses: string[];
   prevCtrlClasses: string[];
   showBullets: boolean;
 }
 
 class Swiper {
+  static readonly CLONED_CLASS = 'clone';
   static readonly ACTIVE_EVENT: string = 'click';
   static readonly THUMBNAILS_CONTAINER_CLASS: string = 'thumbnails-container';
   static readonly THUMBNAIL_ITEM_CLASS: string = 'thumbnail-item';
@@ -67,6 +71,7 @@ class Swiper {
   public bulletsContainer: DOMElement;
   public lastIndexToShow: number;
   public itemsPerPage: number[];
+  public interval: number;
 
   constructor(swiper: Element, options: SwiperOptions) {
     this.actionDown = this.actionDown.bind(this);
@@ -80,6 +85,10 @@ class Swiper {
     this.swipe = this.swipe.bind(this);
     this.update = this.update.bind(this);
     this.cancelRedirect = this.cancelRedirect.bind(this);
+    this.createClones = this.createClones.bind(this);
+    this.stopAutoplay = this.stopAutoplay.bind(this);
+    this.autoplay = this.autoplay.bind(this);
+
     this.init(swiper);
     this.initFeatures(swiper, options);
   }
@@ -146,6 +155,18 @@ class Swiper {
         this.createBullets();
         this.activateBullets();
       }
+    }
+
+    if (this.options.loop) {
+      this.createClones();
+    }
+
+    if (this.options.autoplay) {
+      this.container.addEventListener(
+        this.supportEvents.move, this.stopAutoplay
+      );
+      this.container.addEventListener('mouseout', this.autoplay);
+      this.autoplay();
     }
 
     this.setControls();
@@ -254,6 +275,16 @@ class Swiper {
   }
 
   public showPrev(): void {
+    if (this.options.loop && this.index === 0) {
+      this.animate(this.containerFullWidth(), 0);
+      this.index = this.lastIndexToShow;
+      this.activateBullets();
+      this.activateControls();
+      this.showPrev();
+
+      return;
+    }
+
     if (this.index > 0) {
       if (this.options.changePerPage) {
         const page = this.getCurrentPage();
@@ -272,6 +303,16 @@ class Swiper {
   }
 
   public showNext(): void {
+    if (this.options.loop && this.index === this.lastIndexToShow) {
+      this.animate(0, 0);
+      this.index = 0;
+      this.activateBullets();
+      this.activateControls();
+      this.showNext();
+
+      return;
+    }
+
     if (this.index + 1 <= this.lastIndexToShow) {
       if (this.options.changePerPage) {
         const page = this.getCurrentPage();
@@ -309,6 +350,10 @@ class Swiper {
 
     if (this.options.showBullets) {
       this.createBullets();
+    }
+
+    if (this.options.loop) {
+      this.createClones();
     }
 
     this.setSwiperWidth();
@@ -544,6 +589,45 @@ class Swiper {
         itemIndex = itemIndex + this.itemsPerPage[i];
       }
     }
+  }
+
+  public autoplay(): void {
+    this.interval = window.setInterval(() => {
+      this.showNext();
+    }, this.options.autoplayMs);
+  }
+
+  public stopAutoplay(): void {
+    clearInterval(this.interval);
+  }
+
+  public createClones(): void {
+    let clonedAmount = this.items.length - 1 - this.lastIndexToShow;
+    const last = this.items[this.items.length - 1] as HTMLElement;
+    const clons = this.container
+      .querySelectorAll(`.${ Swiper.CLONED_CLASS }`);
+
+    if (last.offsetWidth < this.container.offsetWidth && clonedAmount === 0) {
+      ++clonedAmount;
+    }
+
+    for (let i = 0; i <= clonedAmount; i++) {
+      const currentItem = this.items[i] as HTMLElement;
+
+      if (currentItem.offsetLeft > this.container.offsetWidth) {
+        break;
+      }
+
+      const clonedItem = currentItem.cloneNode(true) as HTMLElement;
+
+      DOMUtils.addClass(clonedItem, Swiper.CLONED_CLASS);
+      this.container.appendChild(clonedItem);
+    }
+
+    DOMUtils.removeElements(clons);
+    this.items = this.container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
+    this.lastIndexToShow = this.lastToShow();
+    this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
   }
 }
 
