@@ -6,6 +6,7 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 
 module.exports = function makeWebpackConfig () {
 
@@ -107,7 +108,16 @@ module.exports = function makeWebpackConfig () {
 				comments: false,
  				compress: { warnings: false },
 				beautify: false
- 			})
+ 			}),
+			new TypedocWebpackPlugin({
+				out: '../docs',
+				name: 'OlivaJs',
+	      mode: 'file',
+	      includeDeclarations: false,
+	      ignoreCompilerErrors: true
+			}, [
+				'./app/scripts'
+			])
     );
 	}
 
