@@ -7,6 +7,12 @@ class DOMUtils {
     }
   }
 
+  static dispatchCustomEvent(eventName: string, element: Element) {
+    const event = new CustomEvent(eventName);
+
+    element.dispatchEvent(event);
+  }
+
   static addClassToItems(
     elements: NodeListOf<Element>,
     className: string
