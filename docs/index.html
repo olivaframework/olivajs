@@ -62,26 +62,36 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="typescript-webpack-2-karma-sass">Typescript, Webpack 2, Karma, Sass</h1>
-				<h3 id="requirements">Requirements</h3>
+				<h1 id="olivajs">OlivaJs</h1>
+				<p>A framework based on Typescript and Sass.</p>
+				<p><strong>NOTE:</strong> This package doesn&#39;t need nothing extra library to work.</p>
+				<h2 id="quick-start">Quick start</h2>
+				<h3 id="install">Install</h3>
+				<p>This package can be installed with:</p>
 				<ul>
-					<li>UNIX O.S. like Mac OSX or Linux.</li>
-					<li>NodeJs v7.0.</li>
+					<li><a href="https://www.npmjs.com/package/olivajs">npm</a>: <code>npm install --save olivajs</code></li>
 				</ul>
-				<h3 id="to-watch-this-project-in-action-you-need-">To watch this project in action you need:</h3>
-				<ol>
-					<li>npm install -g yarn</li>
-					<li>yarn install</li>
-					<li>npm run build</li>
-					<li>cd dist</li>
-					<li>open index.html on your browser</li>
-				</ol>
-				<h3 id="to-start-developing-on-this-project-you-need-">To start developing on this project you need:</h3>
-				<ol>
-					<li>npm install -g yarn</li>
-					<li>yarn install</li>
-					<li>npm start</li>
-				</ol>
+				<h3 id="how-to-use-it">How to use it</h3>
+				<p><code>var oliva = require (&#39;olivajs&#39;);</code></p>
+				<h3 id="static-html">Static HTML</h3>
+				<p>Put the required stylesheet at the top of your markup:</p>
+				<p><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/node_modules/olivajs/dist/css/oliva.css&quot; /&gt;</code></p>
+				<p>Put the script at the bottom of your markup:</p>
+				<p><code>&lt;script src=&quot;/node_modules/olivajs/dist/js/oliva.js&quot;&gt;&lt;/script&gt;</code></p>
+				<h2 id="documentation">Documentation</h2>
+				<p>The documentation and demos are available at <a href="https://olivaframework.github.io/olivajs/">https://olivaframework.github.io/olivajs/</a>.</p>
+				<h2 id="building">Building</h2>
+				<p>This package comes with Webpack 2 and the following tasks are available:</p>
+				<ul>
+					<li><p><code>build</code> compiles the CSS and JS into <code>/dist</code> and builds the doc.</p>
+					</li>
+					<li><p><code>start</code> watches source files and builds them automatically with eval.</p>
+					</li>
+					<li><p><code>test</code> runs unit tests in PhantomJS.</p>
+					</li>
+					<li><p><code>coverage</code> runs unit tests and generate coverage html files on <code>/app/tests/coverage</code>.</p>
+					</li>
+				</ul>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
