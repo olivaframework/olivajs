@@ -177,7 +177,7 @@
     ],
     "max-lines": [
       "warn", {
-        "max": 500,
+        "max": 1000,
         "skipComments": true,
         "skipBlankLines": true
       }
@@ -192,7 +192,7 @@
       }
     ],
     "max-statements": [
-      "warn", 20
+      "warn", 25
     ],
     "new-cap": [
       "warn", {

@@ -12,14 +12,19 @@ interface SwiperEvents {
 interface SwiperOptions {
   activateTumbnails: boolean;
   animationMs: number;
+  autoplay: boolean;
+  autoplayMs: number;
   changePerPage: boolean;
   createControls: boolean;
+  loop: boolean;
   nextCtrlClasses: string[];
   prevCtrlClasses: string[];
   showBullets: boolean;
 }
 
 class Swiper {
+  static readonly SWIPER_UID_ATTR = 'data-swiper-uid';
+  static readonly CLONED_CLASS = 'clone';
   static readonly ACTIVE_EVENT: string = 'click';
   static readonly THUMBNAILS_CONTAINER_CLASS: string = 'thumbnails-container';
   static readonly THUMBNAIL_ITEM_CLASS: string = 'thumbnail-item';
@@ -67,12 +72,15 @@ class Swiper {
   public bulletsContainer: DOMElement;
   public lastIndexToShow: number;
   public itemsPerPage: number[];
+  public interval: number;
+  public uid: string;
 
   constructor(swiper: Element, options: SwiperOptions) {
     this.actionDown = this.actionDown.bind(this);
     this.actionUp = this.actionUp.bind(this);
     this.activateSwipe = this.activateSwipe.bind(this);
     this.animate = this.animate.bind(this);
+    this.updateByEvent = this.updateByEvent.bind(this);
     this.showByIndex = this.showByIndex.bind(this);
     this.showPrev = this.showPrev.bind(this);
     this.showNext = this.showNext.bind(this);
@@ -80,6 +88,9 @@ class Swiper {
     this.swipe = this.swipe.bind(this);
     this.update = this.update.bind(this);
     this.cancelRedirect = this.cancelRedirect.bind(this);
+    this.stopAutoplay = this.stopAutoplay.bind(this);
+    this.autoplay = this.autoplay.bind(this);
+
     this.init(swiper);
     this.initFeatures(swiper, options);
   }
@@ -92,6 +103,7 @@ class Swiper {
     this.index = 0;
     this.initDistance = 0;
     this.traveledDistance = 0;
+    this.uid = `swiper-${ new Date().valueOf().toString() }`;
 
     this.swiper = swiper
       .querySelector(`.${ Swiper.SWIPER_CLASS }`) as HTMLElement;
@@ -101,23 +113,12 @@ class Swiper {
     this.lastIndexToShow = this.lastToShow();
     this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
 
+    this.swiper.setAttribute(Swiper.SWIPER_UID_ATTR, this.uid);
+    this.swiper.addEventListener(this.uid, this.updateByEvent);
     this.swiper.addEventListener(this.supportEvents.down, this.actionDown);
     this.swiper.addEventListener(this.supportEvents.click, this.cancelRedirect);
 
     window.onEvent(Swiper.WINDOW_EVENT, this.update, 100);
-  }
-
-  public cancelRedirect(event: any) {
-    const distanceEvent = (this.supportEvents.up === Swiper.TOUCH_EVENTS.up)
-      ? event.changedTouches[0].clientX
-      : event.screenX;
-
-    this.traveledDistance = this.firstPointX - distanceEvent;
-
-    if (this.traveledDistance !== 0
-      && this.supportEvents.down === Swiper.MOUSE_EVENTS.down) {
-      event.preventDefault();
-    }
   }
 
   public initFeatures(swiper: Element, options: SwiperOptions): void {
@@ -148,7 +149,65 @@ class Swiper {
       }
     }
 
+    if (this.options.loop) {
+      this.createClones();
+      this.goToPage(1, 0);
+    }
+
+    if (this.options.autoplay) {
+      this.container.addEventListener(
+        this.supportEvents.move, this.stopAutoplay
+      );
+      this.container.addEventListener('mouseout', this.autoplay);
+      this.autoplay();
+    }
+
     this.setControls();
+  }
+
+  public updateByEvent(): void {
+    this.setSwiperWidth();
+    this.lastIndexToShow = this.lastToShow();
+    this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
+
+    if (this.options.loop) {
+      const amountFirstPage = this.itemsPerPage[0];
+
+      this.index = (amountFirstPage > 1) ? this.itemsPerPage[0] : 1;
+
+      const currentItem = this.items[this.index] as HTMLElement;
+
+      if (currentItem) {
+        this.animate(currentItem.offsetLeft, 0);
+      }
+    } else {
+      this.index = 0;
+      this.animate(0, 0);
+    }
+
+    if (this.options.showBullets) {
+      this.createBullets();
+    }
+
+    if (this.options.loop) {
+      this.createClones();
+    }
+
+    this.activateBullets();
+    this.activateControls();
+  }
+
+  public cancelRedirect(event: any) {
+    const distanceEvent = (this.supportEvents.up === Swiper.TOUCH_EVENTS.up)
+      ? event.changedTouches[0].clientX
+      : event.screenX;
+
+    this.traveledDistance = this.firstPointX - distanceEvent;
+
+    if (this.traveledDistance !== 0
+      && this.supportEvents.down === Swiper.MOUSE_EVENTS.down) {
+      event.preventDefault();
+    }
   }
 
   public animate(distance: number, velocity: number): void {
@@ -161,7 +220,15 @@ class Swiper {
   public createBullets(): void {
     this.bulletsContainer.removeAllChildren();
 
-    for (let i = 0; i < this.itemsPerPage.length; i++) {
+    let init = 0;
+    let end = this.itemsPerPage.length;
+
+    if (this.options.loop) {
+      ++init;
+      --end;
+    }
+
+    for (let i = init; i < end; i++) {
       const bullet = new DOMElement('div');
 
       bullet.addClasses([Swiper.BULLET_CLASS]);
@@ -254,11 +321,23 @@ class Swiper {
   }
 
   public showPrev(): void {
+    const amountFirstPage = this.itemsPerPage[0];
+
+    if (this.options.loop && this.index === amountFirstPage) {
+      this.animate(this.containerFullWidth(), 0);
+      this.index = this.lastIndexToShow;
+      this.activateBullets();
+      this.activateControls();
+      this.showPrev();
+
+      return;
+    }
+
     if (this.index > 0) {
       if (this.options.changePerPage) {
         const page = this.getCurrentPage();
 
-        this.goToPage(page - 1);
+        this.goToPage(page - 1, this.options.animationMs);
       } else {
         this.index = --this.index;
         const currentItem = this.items[this.index] as HTMLElement;
@@ -272,11 +351,24 @@ class Swiper {
   }
 
   public showNext(): void {
+    const amountLastPage = this.itemsPerPage[this.itemsPerPage.length - 1];
+
+    if (this.options.loop
+      && this.index >= (this.items.length - (amountLastPage * 2))) {
+      this.animate(0, 0);
+      this.index = 0;
+      this.activateBullets();
+      this.activateControls();
+      this.showNext();
+
+      return;
+    }
+
     if (this.index + 1 <= this.lastIndexToShow) {
       if (this.options.changePerPage) {
         const page = this.getCurrentPage();
 
-        this.goToPage(page + 1);
+        this.goToPage(page + 1, this.options.animationMs);
       } else {
         ++this.index;
 
@@ -309,6 +401,10 @@ class Swiper {
 
     if (this.options.showBullets) {
       this.createBullets();
+    }
+
+    if (this.options.loop) {
+      this.createClones();
     }
 
     this.setSwiperWidth();
@@ -484,7 +580,7 @@ class Swiper {
     const target = event.target as Element;
     const pageNumber = parseInt(target.getAttribute(Swiper.BULLET_ATTR));
 
-    this.goToPage(pageNumber);
+    this.goToPage(pageNumber, this.options.animationMs);
   }
 
   public getCurrentPage(): number {
@@ -504,7 +600,7 @@ class Swiper {
     return page;
   }
 
-  public goToPage(pageNumber: number): void {
+  public goToPage(pageNumber: number, velocity: number): void {
     let itemIndex = 0;
 
     for (let i = 0; i < pageNumber; i++) {
@@ -514,10 +610,10 @@ class Swiper {
     if (itemIndex + 1 <= this.lastIndexToShow) {
       const lastPageItem = this.items[itemIndex] as HTMLElement;
 
-      this.animate(lastPageItem.offsetLeft, this.options.animationMs);
+      this.animate(lastPageItem.offsetLeft, velocity);
       this.index = itemIndex;
     } else {
-      this.animate(this.containerFullWidth(), this.options.animationMs);
+      this.animate(this.containerFullWidth(), velocity);
       this.index = this.lastIndexToShow;
     }
 
@@ -525,25 +621,61 @@ class Swiper {
     this.activateControls();
   }
 
-  public activateBullets() {
+  public activateBullets(): void {
     if (this.options.showBullets) {
-      let itemIndex = 0;
       const bullets = this.bulletsContainer.getElement().children;
+      const page = this.options.loop
+        ? this.getCurrentPage() - 1
+        : this.getCurrentPage();
 
       DOMUtils.removeClassToItems(bullets, 'active');
 
-      for (let i = 0; i < this.itemsPerPage.length; i++) {
-        if (itemIndex >= this.index) {
-          const bullet = bullets[i];
-
-          DOMUtils.addClass(bullet, 'active');
-
-          break;
-        }
-
-        itemIndex = itemIndex + this.itemsPerPage[i];
+      if (bullets[page]) {
+        DOMUtils.addClass(bullets[page], 'active');
       }
     }
+  }
+
+  public autoplay(): void {
+    this.interval = window.setInterval(() => {
+      this.showNext();
+    }, this.options.autoplayMs);
+  }
+
+  public stopAutoplay(): void {
+    clearInterval(this.interval);
+  }
+
+  public createClones(): void {
+    const amountFirstPage = this.itemsPerPage[0];
+    const amountLastPage = this.itemsPerPage[this.itemsPerPage.length - 1];
+    const clons = this.container.querySelectorAll(`.${ Swiper.CLONED_CLASS }`);
+
+    for (let i = 0; i < amountFirstPage; i++) {
+      const currentItem = this.items[i] as HTMLElement;
+      const clonedItem = currentItem.cloneNode(true) as HTMLElement;
+
+      DOMUtils.addClass(clonedItem, Swiper.CLONED_CLASS);
+      this.container.appendChild(clonedItem);
+    }
+
+    const lastItem = this.items.length - 1;
+    const lastItemToClone = lastItem - amountLastPage;
+
+    for (let i = lastItem; i > lastItemToClone; i--) {
+      const currentItem = this.items[i] as HTMLElement;
+      const clonedItem = currentItem.cloneNode(true) as HTMLElement;
+
+      DOMUtils.addClass(clonedItem, Swiper.CLONED_CLASS);
+      this.container.insertBefore(clonedItem, this.container.firstChild);
+    }
+
+    DOMUtils.removeElements(clons);
+    this.items = this.container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
+    this.lastIndexToShow = this.lastToShow();
+    this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
+    this.activateBullets();
+    this.createBullets();
   }
 }
 
