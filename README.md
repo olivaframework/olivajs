@@ -1,8 +1,8 @@
 # OlivaJs
 
-A framework based on Typescript and Sass.
+A frontend framework made using Typescript and Sass.
 
-**NOTE:** This package doesn't need nothing extra library to work.
+**NOTE:** This package is made using Vanilla JS only and doesn't need extra libraries to work.
 
 ## Quick start
 
