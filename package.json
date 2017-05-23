@@ -1,6 +1,6 @@
 {
   "name": "olivajs",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "A framework based on Typescript and Sass.",
   "main": "index.js",
   "scripts": {

@@ -17,6 +17,7 @@ interface SwiperOptions {
   changePerPage: boolean;
   createControls: boolean;
   loop: boolean;
+  onChange: (index: number) => void;
   nextCtrlClasses: string[];
   prevCtrlClasses: string[];
   showBullets: boolean;
@@ -32,6 +33,7 @@ class Swiper {
   static readonly SWIPER_CLASS: string = 'swiper-section';
   static readonly CONTAINER_CLASS: string = 'swiper-container';
   static readonly ITEM_CLASS: string = 'swiper-item';
+  static readonly ITEM_ACTIVE_CLASS: string = 'active';
   static readonly CTRLS_CONTAINER_CLASS: string = 'swiper-controls-container';
   static readonly NEXT_CTRL_ATTR: string = 'data-swiper-next-control';
   static readonly PREV_CTRL_ATTR: string = 'data-swiper-prev-control';
@@ -110,6 +112,9 @@ class Swiper {
     this.container = swiper
       .querySelector(`.${ Swiper.CONTAINER_CLASS }`) as HTMLElement;
     this.items = this.container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
+
+    DOMUtils.addClass(this.items[this.index], Swiper.ITEM_ACTIVE_CLASS);
+
     this.lastIndexToShow = this.lastToShow();
     this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
 
@@ -165,6 +170,22 @@ class Swiper {
     this.setControls();
   }
 
+  public updateIndex(index: number) {
+    if (this.index !== index) {
+      this.index = index;
+
+      DOMUtils.removeClassToItems(this.items, Swiper.ITEM_ACTIVE_CLASS);
+
+      window.setTimeout(() => {
+        DOMUtils.addClass(this.items[this.index], Swiper.ITEM_ACTIVE_CLASS);
+
+        if (this.options.onChange !== null) {
+          this.options.onChange(this.index);
+        }
+      }, this.options.animationMs);
+    }
+  }
+
   public updateByEvent(): void {
     this.setSwiperWidth();
     this.lastIndexToShow = this.lastToShow();
@@ -172,16 +193,16 @@ class Swiper {
 
     if (this.options.loop) {
       const amountFirstPage = this.itemsPerPage[0];
+      const newIndex = (amountFirstPage > 1) ? this.itemsPerPage[0] : 1;
+      const currentItem = this.items[newIndex] as HTMLElement;
 
-      this.index = (amountFirstPage > 1) ? this.itemsPerPage[0] : 1;
-
-      const currentItem = this.items[this.index] as HTMLElement;
+      this.updateIndex(newIndex);
 
       if (currentItem) {
         this.animate(currentItem.offsetLeft, 0);
       }
     } else {
-      this.index = 0;
+      this.updateIndex(0);
       this.animate(0, 0);
     }
 
@@ -325,7 +346,7 @@ class Swiper {
 
     if (this.options.loop && this.index === amountFirstPage) {
       this.animate(this.containerFullWidth(), 0);
-      this.index = this.lastIndexToShow;
+      this.updateIndex(this.lastIndexToShow);
       this.activateBullets();
       this.activateControls();
       this.showPrev();
@@ -339,9 +360,10 @@ class Swiper {
 
         this.goToPage(page - 1, this.options.animationMs);
       } else {
-        this.index = --this.index;
-        const currentItem = this.items[this.index] as HTMLElement;
+        const newIndex = this.index - 1;
+        const currentItem = this.items[newIndex] as HTMLElement;
 
+        this.updateIndex(newIndex);
         this.animate(currentItem.offsetLeft, this.options.animationMs);
       }
     }
@@ -356,7 +378,7 @@ class Swiper {
     if (this.options.loop
       && this.index >= (this.items.length - (amountLastPage * 2))) {
       this.animate(0, 0);
-      this.index = 0;
+      this.updateIndex(0);
       this.activateBullets();
       this.activateControls();
       this.showNext();
@@ -364,16 +386,18 @@ class Swiper {
       return;
     }
 
-    if (this.index + 1 <= this.lastIndexToShow) {
+    const newIndex = this.index + 1;
+
+    if (newIndex <= this.lastIndexToShow) {
       if (this.options.changePerPage) {
         const page = this.getCurrentPage();
 
         this.goToPage(page + 1, this.options.animationMs);
       } else {
-        ++this.index;
+        this.updateIndex(newIndex);
 
-        if (this.index < this.lastIndexToShow) {
-          const currentItem = this.items[this.index] as HTMLElement;
+        if (newIndex < this.lastIndexToShow) {
+          const currentItem = this.items[newIndex] as HTMLElement;
 
           this.animate(currentItem.offsetLeft, this.options.animationMs);
         } else {
@@ -395,7 +419,7 @@ class Swiper {
 
       this.animate(currentItem.offsetLeft, 0);
     } else {
-      this.index = this.lastIndexToShow;
+      this.updateIndex(this.lastIndexToShow);
       this.animate(this.containerFullWidth(), 0);
     }
 
@@ -514,12 +538,12 @@ class Swiper {
 
       if (i < this.lastIndexToShow && minDistance > distance) {
         this.animate(item.offsetLeft, this.options.animationMs);
-        this.index = i;
+        this.updateIndex(i);
 
         break;
       } else if (i === this.lastIndexToShow) {
         this.animate(this.containerFullWidth(), this.options.animationMs);
-        this.index = this.lastIndexToShow;
+        this.updateIndex(this.lastIndexToShow);
       }
     }
 
@@ -566,7 +590,7 @@ class Swiper {
       if (this.thumbnails[i] === thumbnail) {
         const itemToShow = this.items[i] as HTMLElement;
 
-        this.index = i;
+        this.updateIndex(i);
         this.activateBullets();
         this.activateControls();
         this.animate(itemToShow.offsetLeft, this.options.animationMs);
@@ -586,11 +610,12 @@ class Swiper {
   public getCurrentPage(): number {
     let page = 0;
     let itemsPerPage = 0;
+    const newIndex = this.index + 1;
 
     for (let i = 0; i < this.items.length; i++) {
       itemsPerPage = itemsPerPage + this.itemsPerPage[i];
 
-      if (itemsPerPage >= this.index + 1) {
+      if (itemsPerPage >= newIndex) {
         page = i;
 
         break;
@@ -611,10 +636,10 @@ class Swiper {
       const lastPageItem = this.items[itemIndex] as HTMLElement;
 
       this.animate(lastPageItem.offsetLeft, velocity);
-      this.index = itemIndex;
+      this.updateIndex(itemIndex);
     } else {
       this.animate(this.containerFullWidth(), velocity);
-      this.index = this.lastIndexToShow;
+      this.updateIndex(this.lastIndexToShow);
     }
 
     this.activateBullets();
