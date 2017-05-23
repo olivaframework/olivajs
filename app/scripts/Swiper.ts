@@ -196,7 +196,6 @@ class Swiper {
       const newIndex = (amountFirstPage > 1) ? this.itemsPerPage[0] : 1;
       const currentItem = this.items[newIndex] as HTMLElement;
 
-      console.log(newIndex);
       this.updateIndex(newIndex);
 
       if (currentItem) {
