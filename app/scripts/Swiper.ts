@@ -178,11 +178,11 @@ class Swiper {
 
       window.setTimeout(() => {
         DOMUtils.addClass(this.items[this.index], Swiper.ITEM_ACTIVE_CLASS);
-      }, this.options.animationMs);
 
-      if (this.options.onChange !== null) {
-        this.options.onChange(this.index);
-      }
+        if (this.options.onChange !== null) {
+          this.options.onChange(this.index);
+        }
+      }, this.options.animationMs);
     }
   }
 
