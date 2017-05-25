@@ -10,13 +10,13 @@ node_modules
 .DS_Store
 
 # TypeScript Compiled Files
-app/scripts/*.js
-app/scripts/*.js.map
-app/entry.js
-app/entry.js.map
+src/scripts/*.js
+src/scripts/*.js.map
+src/entry.js
+src/entry.js.map
 
 # Coverage Test Files
-app/tests/coverage
+src/tests/coverage
 
 # JetBrains Files
 .idea
