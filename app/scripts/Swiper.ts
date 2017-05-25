@@ -129,8 +129,6 @@ class Swiper {
   public initFeatures(swiper: Element, options: SwiperOptions): void {
     this.options = options;
 
-    this.setSwiperWidth();
-
     if (this.options.activateTumbnails) {
       this.activateControlsByIndexes(swiper);
     }
@@ -187,7 +185,6 @@ class Swiper {
   }
 
   public updateByEvent(): void {
-    this.setSwiperWidth();
     this.lastIndexToShow = this.lastToShow();
     this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
 
@@ -431,18 +428,8 @@ class Swiper {
       this.createClones();
     }
 
-    this.setSwiperWidth();
     this.activateBullets();
     this.activateControls();
-  }
-
-  public setSwiperWidth(): void {
-    const offsetLeft = DOMUtils.getOffsetLeft(this.swiper);
-    const scrollBarWidth = DOMUtils.getScrollbarWidth();
-    const lateralSpace = offsetLeft * 2;
-    const swiperWidth = window.getInnerWidth() - lateralSpace - scrollBarWidth;
-
-    this.swiper.style.width = `${ swiperWidth }px`;
   }
 
   public swipe(moveEvent: any): void {
