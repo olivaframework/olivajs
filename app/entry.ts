@@ -1,5 +1,4 @@
 import './main.scss';
-import { Carousel } from './scripts/Carousel';
 import { Counter } from './scripts/Counter';
 import { DOMElement } from './scripts/DOMElement';
 import { DOMUtils } from './scripts/DOMUtils';
@@ -22,8 +21,7 @@ import { ScrollSpy } from './scripts/ScrollSpy';
 import { Swiper } from './scripts/Swiper';
 import { Tab } from './scripts/Tab';
 
-export {
-  Carousel,
+module.exports = {
   Counter,
   DOMElement,
   DOMUtils,
@@ -45,4 +43,4 @@ export {
   ScrollSpy,
   Swiper,
   Tab
- };
+};
