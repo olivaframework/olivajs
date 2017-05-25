@@ -5,7 +5,9 @@ import { DOMUtils } from './DOMUtils';
 interface SwiperEvents {
   click: string;
   down: string;
+  enter: string;
   move: string;
+  out: string;
   up: string;
 }
 
@@ -47,13 +49,17 @@ class Swiper {
   static readonly TOUCH_EVENTS: SwiperEvents = {
     click: 'touchend',
     down: 'touchstart',
+    enter: 'touchstart',
     move: 'touchmove',
+    out: 'touchend',
     up: 'touchend'
   };
   static readonly MOUSE_EVENTS: SwiperEvents = {
     click: 'click',
     down: 'mousedown',
+    enter: 'mouseenter',
     move: 'mousemove',
+    out: 'mouseout',
     up: 'mouseup'
   };
 
@@ -158,11 +164,11 @@ class Swiper {
     }
 
     if (this.options.autoplay) {
-      this.container.addEventListener(
-        this.supportEvents.move, this.stopAutoplay
-      );
-      this.container.addEventListener('mouseout', this.autoplay);
       this.autoplay();
+
+      this.container.addEventListener(
+        this.supportEvents.enter, this.stopAutoplay
+      );
     }
 
     this.setControls();
@@ -649,6 +655,8 @@ class Swiper {
   }
 
   public autoplay(): void {
+    this.container.removeEventListener(this.supportEvents.out, this.autoplay);
+
     this.interval = window.setInterval(() => {
       this.showNext();
     }, this.options.autoplayMs);
@@ -656,6 +664,7 @@ class Swiper {
 
   public stopAutoplay(): void {
     clearInterval(this.interval);
+    this.container.addEventListener(this.supportEvents.out, this.autoplay);
   }
 
   public createClones(): void {
