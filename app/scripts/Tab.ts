@@ -19,10 +19,10 @@ class Tab {
 
   public updateSwipers() {
     const swipers = this.content
-      .querySelectorAll(`[${ Swiper.SWIPER_UID_ATTR }]`);
+      .querySelectorAll(`[${ Swiper.UID_ATTR }]`);
 
     DOMUtils.syncForEach(swiper => {
-      const uId = swiper.getAttribute(Swiper.SWIPER_UID_ATTR);
+      const uId = swiper.getAttribute(Swiper.UID_ATTR);
 
       DOMUtils.dispatchCustomEvent(uId, swiper);
     }, swipers);

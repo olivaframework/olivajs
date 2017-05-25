@@ -24,7 +24,7 @@ interface SwiperOptions {
 }
 
 class Swiper {
-  static readonly SWIPER_UID_ATTR = 'data-swiper-uid';
+  static readonly UID_ATTR = 'data-swiper-uid';
   static readonly CLONED_CLASS = 'clone';
   static readonly ACTIVE_EVENT: string = 'click';
   static readonly THUMBNAILS_CONTAINER_CLASS: string = 'thumbnails-container';
@@ -118,7 +118,7 @@ class Swiper {
     this.lastIndexToShow = this.lastToShow();
     this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
 
-    this.swiper.setAttribute(Swiper.SWIPER_UID_ATTR, this.uid);
+    this.swiper.setAttribute(Swiper.UID_ATTR, this.uid);
     this.swiper.addEventListener(this.uid, this.updateByEvent);
     this.swiper.addEventListener(this.supportEvents.down, this.actionDown);
     this.swiper.addEventListener(this.supportEvents.click, this.cancelRedirect);
