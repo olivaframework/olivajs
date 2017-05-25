@@ -16,14 +16,15 @@ module.exports = function makeWebpackConfig () {
 
 	config.devtool = isProd ? 'cheap-module-source-map': 'eval';
 
-	config.entry = { oliva: './app/entry.ts' };
+	config.entry = { oliva: './src/entry.ts' };
 
 	config.output = {
 		filename: 'js/[name].js',
 		path: __dirname + '/dist',
 		publicPath: '/',
 		library: 'olivajs',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
+		umdNamedDefine: true
 	};
 
 	config.resolve = { extensions: ['.ts', '.js'] };
@@ -92,7 +93,7 @@ module.exports = function makeWebpackConfig () {
 		}),
 		new StyleLintPlugin({
 			configFile: '.stylelintrc',
-			context: './app/styles',
+			context: './src/styles',
 			failOnError: false,
 			files: ['*.s?(a|c)ss'],
 			ignorePlugins: ['extract-text-webpack-plugin'],
@@ -116,13 +117,13 @@ module.exports = function makeWebpackConfig () {
 	      includeDeclarations: false,
 	      ignoreCompilerErrors: true
 			}, [
-				'./app/scripts'
+				'./src/scripts'
 			])
     );
 	}
 
 	config.devServer = {
-    contentBase: __dirname + '/app',
+    contentBase: __dirname + '/src',
     stats: {
 	    hash: false,
 	    version: false,

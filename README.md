@@ -16,6 +16,10 @@ This package can be installed with:
 
 `var oliva = require ('olivajs');`
 
+#### Also you can use ES6 syntax
+
+`import { Counter, DOMElement, DOMElement, ... } from 'olivajs';`
+
 ### Static HTML
 
 Put the required stylesheet at the top of your markup:
