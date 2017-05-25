@@ -655,14 +655,16 @@ class Swiper {
   }
 
   public autoplay(): void {
+    this.container.removeEventListener(this.supportEvents.out, this.autoplay);
+
     this.interval = window.setInterval(() => {
       this.showNext();
     }, this.options.autoplayMs);
   }
 
   public stopAutoplay(): void {
-    this.container.addEventListener(this.supportEvents.out, this.autoplay);
     clearInterval(this.interval);
+    this.container.addEventListener(this.supportEvents.out, this.autoplay);
   }
 
   public createClones(): void {
