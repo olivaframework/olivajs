@@ -16,7 +16,7 @@ app/entry.js
 app/entry.js.map
 
 # Coverage Test Files
-/app/tests/coverage
+app/tests/coverage
 
 # JetBrains Files
 .idea
