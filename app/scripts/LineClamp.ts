@@ -17,7 +17,6 @@ class LineClamp {
     ) || this.maxLines;
     this.elemHeight = this.element.offsetHeight;
     this.elementStyles = window.getComputedStyle(this.element);
-    this.element.style.height = 'auto';
     this.update = this.update.bind(this);
 
     window.onEvent('resize', this.update, 100);
@@ -54,6 +53,8 @@ class LineClamp {
         throw (new Error('Too many iterations'));
       }
     }
+
+    this.element.style.height = `${ maxHeight }px`;
   }
 }
 

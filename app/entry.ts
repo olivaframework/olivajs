@@ -1,5 +1,6 @@
 import './main.scss';
 import { Carousel } from './scripts/Carousel';
+import { Counter } from './scripts/Counter';
 import { DOMElement } from './scripts/DOMElement';
 import { DOMUtils } from './scripts/DOMUtils';
 import { Dropdown } from './scripts/Dropdown';
@@ -23,6 +24,7 @@ import { Tab } from './scripts/Tab';
 
 export {
   Carousel,
+  Counter,
   DOMElement,
   DOMUtils,
   Dropdown,
