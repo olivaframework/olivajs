@@ -1,6 +1,6 @@
-import './Window';
 import { DOMElement } from './DOMElement';
 import { DOMUtils } from './DOMUtils';
+import { WindowUtils } from './WindowUtils';
 
 interface SwiperEvents {
   click: string;
@@ -101,7 +101,7 @@ class Swiper {
   }
 
   private init(swiper: Element): void {
-    this.supportEvents = window.supportTouchEvents()
+    this.supportEvents = WindowUtils.supportTouchEvents()
       ? Swiper.TOUCH_EVENTS
       : Swiper.MOUSE_EVENTS;
 
@@ -125,7 +125,7 @@ class Swiper {
     this.swiper.addEventListener(this.supportEvents.down, this.actionDown);
     this.swiper.addEventListener(this.supportEvents.click, this.cancelRedirect);
 
-    window.onEvent(Swiper.WINDOW_EVENT, this.update, 100);
+    WindowUtils.onEvent(Swiper.WINDOW_EVENT, this.update, 100);
   }
 
   private initFeatures(swiper: Element, options: SwiperOptions): void {

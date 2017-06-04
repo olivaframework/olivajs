@@ -1,6 +1,7 @@
 import { DOMElement } from './DOMElement';
 import { DOMUtils } from './DOMUtils';
 import { Overlay } from './Overlay';
+import { WindowUtils } from './WindowUtils';
 
 /**
  * Menu responsive class.
@@ -62,7 +63,7 @@ class MenuResponsive {
     this.renderHamburgerBtn();
     this.update();
 
-    window.onEvent('resize', this.update, 200);
+    WindowUtils.onEvent('resize', this.update, 200);
   }
 
   protected renderHamburgerBtn(): void {
@@ -87,7 +88,7 @@ class MenuResponsive {
   }
 
   private update(): void {
-    if (window.isMobile()) {
+    if (WindowUtils.isMobile()) {
       this.openButton.addEventListener(MenuResponsive.EVENT, this.open);
     } else {
       this.openButton.removeEventListener(MenuResponsive.EVENT, this.open);

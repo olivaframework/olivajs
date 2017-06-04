@@ -1,4 +1,5 @@
 import { DOMUtils } from './DOMUtils';
+import { WindowUtils } from './WindowUtils';
 
 interface CollapserEvents {
   click: string;
@@ -50,16 +51,16 @@ class MenuCollapser {
     DOMUtils.addClass(this.menu, MenuCollapser.COLLAPSER_CLASS);
     DOMUtils.addClass(this.collapsableMenu, MenuCollapser.COLLAPSABLE_CLASS);
 
-    this.events = window.supportTouchEvents()
+    this.events = WindowUtils.supportTouchEvents()
       ? MenuCollapser.TOUCH_EVENTS
       : MenuCollapser.MOUSE_EVENTS;
 
     this.update();
     this.updateDefaultActive();
-    window.onEvent('resize', this.update, 200);
+    WindowUtils.onEvent('resize', this.update, 200);
 
     if (this.defaultActive) {
-      window.onEvent('resize', this.updateDefaultActive, 200);
+      WindowUtils.onEvent('resize', this.updateDefaultActive, 200);
     }
   }
 
@@ -74,7 +75,7 @@ class MenuCollapser {
   }
 
   private updateDefaultActive() {
-    if (this.defaultActive && !window.isMobile()) {
+    if (this.defaultActive && !WindowUtils.isMobile()) {
       DOMUtils.addClass(this.collapsableMenu, MenuCollapser.ACTIVE_CLASS);
       this.isOpen = true;
     } else {
@@ -86,7 +87,7 @@ class MenuCollapser {
   private open() {
     DOMUtils.addClass(this.collapsableMenu, MenuCollapser.ACTIVE_CLASS);
     this.menu.removeEventListener(this.events.inside, this.openAttempt);
-    if (window.isMobile() || window.supportTouchEvents()) {
+    if (WindowUtils.isMobile() || WindowUtils.supportTouchEvents()) {
       document.body.addEventListener(this.events.outside, this.closeAttempt);
     } else {
       this.menu.addEventListener(this.events.outside, this.closeAttempt);
@@ -97,7 +98,7 @@ class MenuCollapser {
   }
 
   private openAttempt() {
-    const timer = window.isMobile() || window.supportTouchEvents()
+    const timer = WindowUtils.isMobile() || WindowUtils.supportTouchEvents()
       ? 0
       : MenuCollapser.OPEN_TIMER;
 
@@ -122,8 +123,9 @@ class MenuCollapser {
 
   private closeAttempt(event): void {
     event.stopPropagation();
-    const isInside = (!window.isMobile() && window.supportTouchEvents())
-      || window.isMobile()
+    const isInside = (!WindowUtils.isMobile()
+      && WindowUtils.supportTouchEvents())
+      || WindowUtils.isMobile()
       ? this.collapsableMenu.contains(event.target)
       : this.collapsableMenu.contains(event.relatedTarget);
 

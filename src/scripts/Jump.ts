@@ -1,4 +1,5 @@
 import { DOMUtils } from './DOMUtils';
+import { WindowUtils } from './WindowUtils';
 
 class Jump {
   static readonly ATTR: string = 'data-jump-content-id';
@@ -21,7 +22,7 @@ class Jump {
 
     const elementOffset = DOMUtils.getOffset(this.element);
     const elementOffsetTop = elementOffset.top;
-    const handlerTop = window.scrollTop();
+    const handlerTop = WindowUtils.scrollTop();
 
     if (handlerTop < elementOffsetTop) {
       this.scrollDown(handlerTop, elementOffsetTop);
@@ -44,7 +45,7 @@ class Jump {
 
   private scrollDown(init: number, end: number): void {
     let top = init;
-    const maxEnd = document.body.offsetHeight - window.getInnerHeight();
+    const maxEnd = document.body.offsetHeight - WindowUtils.getInnerHeight();
     const finalEnd = (end > maxEnd) ? maxEnd : end;
 
     setTimeout(() => {

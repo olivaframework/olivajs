@@ -1,4 +1,4 @@
-import './Window';
+import { WindowUtils } from './WindowUtils';
 
 class LineClamp {
   static readonly LINE_CLAMP_CLASS = 'line-clamp-text';
@@ -19,14 +19,16 @@ class LineClamp {
     this.elementStyles = window.getComputedStyle(this.element);
     this.update = this.update.bind(this);
 
-    window.onEvent('resize', this.update, 100);
+    WindowUtils.onEvent('resize', this.update, 100);
     this.update();
   }
 
   private update() {
     const maxIterations = 50;
     const lastWord = new RegExp(/\W*\s(\S)*$/);
-    const maxLines = window.isMobile() ? this.maxLinesMobile : this.maxLines;
+    const maxLines = WindowUtils.isMobile()
+      ? this.maxLinesMobile
+      : this.maxLines;
     const lineHeight = parseInt(
       this.elementStyles.getPropertyValue('line-height')
     );

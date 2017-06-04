@@ -1,6 +1,6 @@
-import './Window';
 import { DOMElement } from './DOMElement';
 import { DOMUtils } from './DOMUtils';
+import { WindowUtils } from './WindowUtils';
 
 class Mosaic {
   static readonly WINDOW_EVENT: string = 'resize';
@@ -39,7 +39,7 @@ class Mosaic {
     this.renderDetail = this.renderDetail.bind(this);
     this.renderDetail();
 
-    const activeEvent = window.supportTouchEvents()
+    const activeEvent = WindowUtils.supportTouchEvents()
       ? Mosaic.TOUCH_EVENT
       : Mosaic.MOUSE_EVENT;
 
@@ -47,7 +47,7 @@ class Mosaic {
       item.addEventListener(activeEvent, this.showDetail);
     }, this.items);
 
-    window.onEvent(Mosaic.WINDOW_EVENT, this.renderDetail, 1);
+    WindowUtils.onEvent(Mosaic.WINDOW_EVENT, this.renderDetail, 1);
   }
 
   private showDetail(event): void {

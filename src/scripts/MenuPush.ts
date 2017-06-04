@@ -4,7 +4,7 @@ import { MenuResponsive } from './MenuResponsive';
  * Menu Push
  *
  * Converts any DOMElement in a mobile menu when the viewport width matches
- * the window.isMobile() condition (default: 768px).
+ * the WindowUtils.isMobile() condition (default: 768px).
  *
  * Behaviour:
  * The menu comes from the desired edge of the screen and pushes the body to

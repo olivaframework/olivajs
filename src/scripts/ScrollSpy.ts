@@ -1,5 +1,5 @@
-import './Window';
 import { DOMUtils } from './DOMUtils';
+import { WindowUtils } from './WindowUtils';
 
 class ScrollSpy {
   static readonly ACTIVE_CLASS: string = 'active';
@@ -12,13 +12,13 @@ class ScrollSpy {
     this.handler = handler;
     this.validatePosition = this.validatePosition.bind(this);
 
-    window.onEvent(ScrollSpy.EVENT_ACTIVE, this.validatePosition, 1);
+    WindowUtils.onEvent(ScrollSpy.EVENT_ACTIVE, this.validatePosition, 1);
   }
 
   private validatePosition(): void {
     const scrollLimit = (window.innerHeight * ScrollSpy.SCROLL_PERCENT) / 100;
 
-    if (window.scrollTop() > scrollLimit) {
+    if (WindowUtils.scrollTop() > scrollLimit) {
       DOMUtils.addClass(this.handler, ScrollSpy.ACTIVE_CLASS);
     } else {
       DOMUtils.removeClass(this.handler, ScrollSpy.ACTIVE_CLASS);
