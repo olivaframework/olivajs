@@ -166,22 +166,24 @@ describe('DOMUtils component specification', () => {
     expect(DOMUtils.containsClass(container, className)).to.be.false;
   });
 
-  it('should top getBoundingClientRect to be equals than getOffsetTop', () => {
+  it('should top getBoundingClientRect to be equals than getOffset', () => {
     container.style.marginTop = '10px';
     container.style.marginLeft = '10px';
 
     let containerRect = container.getBoundingClientRect();
+    let offset = DOMUtils.getOffset(container);
 
-    expect(DOMUtils.getOffsetTop(container)).to.be.equals(containerRect.top);
-    expect(DOMUtils.getOffsetLeft(container)).to.be.equals(containerRect.left);
+    expect(offset.top).to.be.equals(containerRect.top);
+    expect(offset.left).to.be.equals(containerRect.left);
 
     container.style.marginTop = '120px';
     container.style.marginLeft = '120px';
 
     containerRect = container.getBoundingClientRect();
+    offset = DOMUtils.getOffset(container);
 
-    expect(DOMUtils.getOffsetTop(container)).to.be.equals(containerRect.top);
-    expect(DOMUtils.getOffsetLeft(container)).to.be.equals(containerRect.left);
+    expect(offset.top).to.be.equals(containerRect.top);
+    expect(offset.left).to.be.equals(containerRect.left);
   });
 
   afterEach(() => {
