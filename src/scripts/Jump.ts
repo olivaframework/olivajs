@@ -19,13 +19,14 @@ class Jump {
   private jump(event): void {
     event.preventDefault();
 
-    const elementTop = DOMUtils.getOffsetTop(this.element);
+    const elementOffset = DOMUtils.getOffset(this.element);
+    const elementOffsetTop = elementOffset.top;
     const handlerTop = window.scrollTop();
 
-    if (handlerTop < elementTop) {
-      this.scrollDown(handlerTop, elementTop);
+    if (handlerTop < elementOffsetTop) {
+      this.scrollDown(handlerTop, elementOffsetTop);
     } else {
-      this.scrollUp(handlerTop, elementTop);
+      this.scrollUp(handlerTop, elementOffsetTop);
     }
   }
 
