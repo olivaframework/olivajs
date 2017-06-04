@@ -695,8 +695,6 @@ class Swiper {
     this.items = this.container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
     this.lastIndexToShow = this.lastToShow();
     this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
-    this.activateBullets();
-    this.createBullets();
   }
 }
 
