@@ -5,7 +5,6 @@ import { DOMUtils } from './DOMUtils';
 interface SwiperEvents {
   click: string;
   down: string;
-  enter: string;
   move: string;
   out: string;
   up: string;
@@ -49,7 +48,6 @@ class Swiper {
   static readonly TOUCH_EVENTS: SwiperEvents = {
     click: 'touchend',
     down: 'touchstart',
-    enter: 'touchstart',
     move: 'touchmove',
     out: 'touchend',
     up: 'touchend'
@@ -57,7 +55,6 @@ class Swiper {
   static readonly MOUSE_EVENTS: SwiperEvents = {
     click: 'click',
     down: 'mousedown',
-    enter: 'mouseenter',
     move: 'mousemove',
     out: 'mouseout',
     up: 'mouseup'
@@ -113,8 +110,7 @@ class Swiper {
     this.traveledDistance = 0;
     this.uid = `swiper-${ new Date().valueOf().toString() }`;
 
-    this.swiper = swiper
-      .querySelector(`.${ Swiper.SWIPER_CLASS }`) as HTMLElement;
+    this.swiper = swiper as HTMLElement;
     this.container = swiper
       .querySelector(`.${ Swiper.CONTAINER_CLASS }`) as HTMLElement;
     this.items = this.container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
@@ -142,7 +138,7 @@ class Swiper {
     if (this.options.createControls || this.options.showBullets) {
       this.controlsContainer = new DOMElement('div');
       this.controlsContainer.addClasses([Swiper.CTRLS_CONTAINER_CLASS]);
-      this.controlsContainer.render(this.swiper.parentNode);
+      this.controlsContainer.render(this.swiper);
 
       if (this.options.createControls) {
         this.createControls();
@@ -165,10 +161,7 @@ class Swiper {
 
     if (this.options.autoplay) {
       this.autoplay();
-
-      this.container.addEventListener(
-        this.supportEvents.enter, this.stopAutoplay
-      );
+      this.swiper.addEventListener(this.supportEvents.move, this.stopAutoplay);
     }
 
     this.setControls();
@@ -285,10 +278,10 @@ class Swiper {
   }
 
   public setControls(): void {
-    const swiper = this.swiper.parentNode as HTMLElement;
-
-    this.nextCtrls = swiper.querySelectorAll(`[${ Swiper.NEXT_CTRL_ATTR }]`);
-    this.prevCtrls = swiper.querySelectorAll(`[${ Swiper.PREV_CTRL_ATTR }]`);
+    this.nextCtrls = this.swiper
+      .querySelectorAll(`[${ Swiper.NEXT_CTRL_ATTR }]`);
+    this.prevCtrls = this.swiper
+      .querySelectorAll(`[${ Swiper.PREV_CTRL_ATTR }]`);
 
     for (let i = 0; i < this.nextCtrls.length; i++) {
       this.nextCtrls[i]
@@ -344,7 +337,13 @@ class Swiper {
     return totalItems;
   }
 
-  public showPrev(): void {
+  public showPrev(event?: Event): void {
+    if (event && this.options.loop
+      && this.supportEvents.move === Swiper.TOUCH_EVENTS.move) {
+      clearInterval(this.interval);
+      this.autoplay();
+    }
+
     const amountFirstPage = this.itemsPerPage[0];
 
     if (this.options.loop && this.index === amountFirstPage) {
@@ -375,7 +374,13 @@ class Swiper {
     this.activateControls();
   }
 
-  public showNext(): void {
+  public showNext(event?: Event): void {
+    if (event && this.options.loop
+      && this.supportEvents.move === Swiper.TOUCH_EVENTS.move) {
+      clearInterval(this.interval);
+      this.autoplay();
+    }
+
     const amountLastPage = this.itemsPerPage[this.itemsPerPage.length - 1];
 
     if (this.options.loop
@@ -655,7 +660,7 @@ class Swiper {
   }
 
   public autoplay(): void {
-    this.container.removeEventListener(this.supportEvents.out, this.autoplay);
+    this.swiper.removeEventListener(this.supportEvents.out, this.autoplay);
 
     this.interval = window.setInterval(() => {
       this.showNext();
@@ -664,7 +669,7 @@ class Swiper {
 
   public stopAutoplay(): void {
     clearInterval(this.interval);
-    this.container.addEventListener(this.supportEvents.out, this.autoplay);
+    this.swiper.addEventListener(this.supportEvents.out, this.autoplay);
   }
 
   public createClones(): void {
