@@ -6,9 +6,9 @@ class Tab {
   static readonly EVENT_ACTIVE: string = 'click';
   static readonly ATTR: string = 'data-tab-content-id';
 
-  public handler: HTMLAnchorElement;
-  public content: Element;
-  public swipers: NodeListOf<Element>;
+  private handler: HTMLAnchorElement;
+  private content: Element;
+  private swipers: NodeListOf<Element>;
 
   constructor(handler: HTMLAnchorElement) {
     this.handler = handler;
@@ -17,7 +17,7 @@ class Tab {
     this.handler.addEventListener(Tab.EVENT_ACTIVE, this.toggle);
   }
 
-  public updateSwipers() {
+  private updateSwipers() {
     const swipers = this.content
       .querySelectorAll(`[${ Swiper.UID_ATTR }]`);
 
@@ -28,7 +28,7 @@ class Tab {
     }, swipers);
   }
 
-  public toggle(event): void {
+  private toggle(event): void {
     event.preventDefault();
 
     if (!DOMUtils.containsClass(this.handler, Tab.ACTIVE_CLASS)) {

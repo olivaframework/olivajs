@@ -18,13 +18,13 @@ class Menu {
   static readonly MENU_OPEN_ATTR = 'data-menu-open';
   static readonly MENU_OPEN_ACTIVE_CLASS = 'active';
 
-  public buttonOpen: HTMLElement;
-  public menu: HTMLElement;
-  public menuContainer: HTMLElement;
-  public submenus: NodeListOf<Element>;
-  public items: NodeListOf<Element>;
-  public openedSubmenu: HTMLElement;
-  public options: MenuOptions;
+  private buttonOpen: HTMLElement;
+  private menu: HTMLElement;
+  private menuContainer: HTMLElement;
+  private submenus: NodeListOf<Element>;
+  private items: NodeListOf<Element>;
+  private openedSubmenu: HTMLElement;
+  private options: MenuOptions;
 
   constructor(menu: HTMLElement, options: MenuOptions) {
     this.menu = menu;
@@ -60,7 +60,7 @@ class Menu {
     DOMUtils.addClass(document.body, Menu.BODY_MENU_CLASS);
   }
 
-  public addEventListeners(): void {
+  private addEventListeners(): void {
     const closeElements = this.menuContainer.querySelectorAll(
       `[${ Menu.SUBMENU_CLOSE_ATTR }]`
     );
@@ -74,7 +74,7 @@ class Menu {
     }, this.items);
   }
 
-  public openMenu(): void {
+  private openMenu(): void {
     event.stopPropagation();
 
     DOMUtils.removeClassToItems(this.submenus, Menu.SUBMENU_ACTIVE_CLASS);
@@ -87,7 +87,7 @@ class Menu {
     }
   }
 
-  public openSubMenu(event): void {
+  private openSubMenu(event): void {
     const handler = event.target;
 
     if ((DOMUtils.containsClass(handler, Menu.MENU_ITEM_CLASS)
@@ -104,7 +104,7 @@ class Menu {
     }
   }
 
-  public closeSubMenus(event): void {
+  private closeSubMenus(event): void {
     event.stopPropagation();
 
     const handler = event.target;

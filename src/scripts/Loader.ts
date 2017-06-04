@@ -31,21 +31,21 @@ class Loader {
     Loader.loaderIcon.render(Loader.loader.getElement());
   }
 
-  public static getInstance(): Loader {
+  private static getInstance(): Loader {
     return Loader.instance;
   }
 
-  public show(): void {
+  private show(): void {
     Loader.loader.addClasses([Loader.ACTIVE_CLASS]);
     this.overlay.show();
   }
 
-  public hide(): void {
+  private hide(): void {
     Loader.loader.removeClasses([Loader.ACTIVE_CLASS]);
     this.overlay.hide();
   }
 
-  public getLoader(): DOMElement {
+  private getLoader(): DOMElement {
     return Loader.loader;
   }
 }

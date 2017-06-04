@@ -4,7 +4,7 @@ class Dropdown {
   static readonly ACTIVE_CLASS: string = 'open';
   static readonly EVENT_ACTIVE: string = 'click';
 
-  public handler: HTMLElement;
+  private handler: HTMLElement;
 
   constructor(handler) {
     this.handler = handler;
@@ -14,7 +14,7 @@ class Dropdown {
     window.addEventListener(Dropdown.EVENT_ACTIVE, this.close);
   }
 
-  public close(event): void {
+  private close(event): void {
     const isClickInside = this.handler.contains(event.target);
 
     if (!isClickInside) {
@@ -22,7 +22,7 @@ class Dropdown {
     }
   }
 
-  public toggle(): void {
+  private toggle(): void {
     DOMUtils.toggleClass(this.handler, Dropdown.ACTIVE_CLASS);
   }
 }

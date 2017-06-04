@@ -6,8 +6,8 @@ class Jump {
   static readonly SCROLL_VELOCITY_PX: number = 35;
   static readonly SCROLL_VELOCITY_MS: number = 1;
 
-  public handler: HTMLAnchorElement;
-  public element: HTMLElement;
+  private handler: HTMLAnchorElement;
+  private element: HTMLElement;
 
   constructor(handler: HTMLAnchorElement) {
     this.handler = handler;
@@ -16,7 +16,7 @@ class Jump {
     this.handler.addEventListener(Jump.EVENT_ACTIVE, this.jump);
   }
 
-  public jump(event): void {
+  private jump(event): void {
     event.preventDefault();
 
     const elementTop = DOMUtils.getOffsetTop(this.element);
@@ -29,7 +29,7 @@ class Jump {
     }
   }
 
-  public scrollUp(init, end): void {
+  private scrollUp(init, end): void {
     let bottom = init;
 
     setTimeout(() => {
@@ -41,7 +41,7 @@ class Jump {
     }, Jump.SCROLL_VELOCITY_MS);
   }
 
-  public scrollDown(init: number, end: number): void {
+  private scrollDown(init: number, end: number): void {
     let top = init;
     const maxEnd = document.body.offsetHeight - window.getInnerHeight();
     const finalEnd = (end > maxEnd) ? maxEnd : end;
@@ -55,7 +55,7 @@ class Jump {
     }, Jump.SCROLL_VELOCITY_MS);
   }
 
-  public scrollVelocity(from: number, to: number): number {
+  private scrollVelocity(from: number, to: number): number {
     const distance = to - from;
     const velocity = distance / Jump.SCROLL_VELOCITY_PX;
     const finalVelocity = (velocity > 1) ? Math.round(velocity) : 1;

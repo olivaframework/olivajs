@@ -9,9 +9,9 @@ class Modal {
   static readonly EVENT_ACTIVE: string = 'click';
   static readonly EVENT_CLOSE: string = 'click';
 
-  public handler: Element;
-  public modal: Element;
-  public overlay: Overlay;
+  private handler: Element;
+  private modal: Element;
+  private overlay: Overlay;
 
   constructor(handler: Element) {
     this.handler = handler;
@@ -24,7 +24,7 @@ class Modal {
     this.setFunctionClose();
   }
 
-  public setFunctionClose(): void {
+  private setFunctionClose(): void {
     const closeElements = this.modal
       .querySelectorAll(`[${ Modal.ATTR_CLOSE }]`);
 
@@ -39,13 +39,13 @@ class Modal {
     }
   }
 
-  public show(event: Event): void {
+  private show(event: Event): void {
     event.preventDefault();
     DOMUtils.addClass(this.modal, Modal.ACTIVE_CLASS);
     this.overlay.show();
   }
 
-  public hide(): void {
+  private hide(): void {
     DOMUtils.removeClass(this.modal, Modal.ACTIVE_CLASS);
     this.overlay.hide();
   }

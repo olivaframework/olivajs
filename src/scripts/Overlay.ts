@@ -5,8 +5,8 @@ class Overlay {
   static readonly STYLE_CLASS: string = 'overlay';
   static readonly TYPE_HTML_ELEMENT: string = 'div';
 
-  private static instance: Overlay = new Overlay();
-  private static overlay: DOMElement;
+  public static instance: Overlay = new Overlay();
+  public static overlay: DOMElement;
 
   constructor() {
     if (Overlay.instance) {

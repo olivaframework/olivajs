@@ -93,19 +93,19 @@ class Http {
     this.xhr.send(JSON.stringify(data));
   }
 
-  public get(httpCallbacks: HttpCallbacks): void {
+  private get(httpCallbacks: HttpCallbacks): void {
     this.processRequest('GET', httpCallbacks);
   }
 
-  public post(data: any, httpCallbacks: HttpCallbacks): void {
+  private post(data: any, httpCallbacks: HttpCallbacks): void {
     this.processRequest('POST', httpCallbacks, data);
   }
 
-  public put(data: any, httpCallbacks: HttpCallbacks): void {
+  private put(data: any, httpCallbacks: HttpCallbacks): void {
     this.processRequest('PUT', httpCallbacks, data);
   }
 
-  public delete(httpCallbacks: HttpCallbacks): void {
+  private delete(httpCallbacks: HttpCallbacks): void {
     this.processRequest('DELETE', httpCallbacks);
   }
 }
