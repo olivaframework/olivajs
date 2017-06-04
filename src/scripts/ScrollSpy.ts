@@ -6,7 +6,7 @@ class ScrollSpy {
   static readonly EVENT_ACTIVE: string = 'scroll';
   static readonly SCROLL_PERCENT: number = 25;
 
-  public handler: HTMLElement;
+  private handler: HTMLElement;
 
   constructor(handler: HTMLElement) {
     this.handler = handler;
@@ -15,7 +15,7 @@ class ScrollSpy {
     window.onEvent(ScrollSpy.EVENT_ACTIVE, this.validatePosition, 1);
   }
 
-  public validatePosition(): void {
+  private validatePosition(): void {
     const scrollLimit = (window.innerHeight * ScrollSpy.SCROLL_PERCENT) / 100;
 
     if (window.scrollTop() > scrollLimit) {

@@ -66,7 +66,7 @@ class LoaderBar {
     LoaderBar.loaderbar.removeClasses([LoaderBar.ACTIVE_CLASS]);
   }
 
-  public static getInstance(): LoaderBar {
+  private static getInstance(): LoaderBar {
     return LoaderBar.instance;
   }
 }

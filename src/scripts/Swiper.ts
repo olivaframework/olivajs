@@ -60,25 +60,25 @@ class Swiper {
     up: 'mouseup'
   };
 
-  public container: HTMLElement;
-  public firstPointX: number;
-  public firstPointY: number;
-  public index: number;
-  public initDistance: number;
-  public traveledDistance: number;
-  public items: NodeListOf<Element>;
-  public nextCtrls: NodeListOf<Element>;
-  public prevCtrls: NodeListOf<Element>;
-  public controlsContainer: DOMElement;
-  public swiper: HTMLElement;
-  public supportEvents: SwiperEvents;
-  public thumbnails: NodeListOf<Element>;
-  public options: SwiperOptions;
-  public bulletsContainer: DOMElement;
-  public lastIndexToShow: number;
-  public itemsPerPage: number[];
-  public interval: number;
-  public uid: string;
+  private container: HTMLElement;
+  private firstPointX: number;
+  private firstPointY: number;
+  private index: number;
+  private initDistance: number;
+  private traveledDistance: number;
+  private items: NodeListOf<Element>;
+  private nextCtrls: NodeListOf<Element>;
+  private prevCtrls: NodeListOf<Element>;
+  private controlsContainer: DOMElement;
+  private swiper: HTMLElement;
+  private supportEvents: SwiperEvents;
+  private thumbnails: NodeListOf<Element>;
+  private options: SwiperOptions;
+  private bulletsContainer: DOMElement;
+  private lastIndexToShow: number;
+  private itemsPerPage: number[];
+  private interval: number;
+  private uid: string;
 
   constructor(swiper: Element, options: SwiperOptions) {
     this.actionDown = this.actionDown.bind(this);
@@ -100,7 +100,7 @@ class Swiper {
     this.initFeatures(swiper, options);
   }
 
-  public init(swiper: Element): void {
+  private init(swiper: Element): void {
     this.supportEvents = window.supportTouchEvents()
       ? Swiper.TOUCH_EVENTS
       : Swiper.MOUSE_EVENTS;
@@ -128,7 +128,7 @@ class Swiper {
     window.onEvent(Swiper.WINDOW_EVENT, this.update, 100);
   }
 
-  public initFeatures(swiper: Element, options: SwiperOptions): void {
+  private initFeatures(swiper: Element, options: SwiperOptions): void {
     this.options = options;
 
     if (this.options.activateTumbnails) {
@@ -167,7 +167,7 @@ class Swiper {
     this.setControls();
   }
 
-  public updateIndex(index: number) {
+  private updateIndex(index: number) {
     if (this.index !== index) {
       this.index = index;
 
@@ -183,7 +183,7 @@ class Swiper {
     }
   }
 
-  public updateByEvent(): void {
+  private updateByEvent(): void {
     this.lastIndexToShow = this.lastToShow();
     this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
 
@@ -214,7 +214,7 @@ class Swiper {
     this.activateControls();
   }
 
-  public cancelRedirect(event: any) {
+  private cancelRedirect(event: any) {
     const distanceEvent = (this.supportEvents.up === Swiper.TOUCH_EVENTS.up)
       ? event.changedTouches[0].clientX
       : event.screenX;
@@ -227,14 +227,14 @@ class Swiper {
     }
   }
 
-  public animate(distance: number, velocity: number): void {
+  private animate(distance: number, velocity: number): void {
     const translate = `translate3d(${ -1 * distance }px, 0px, 0px)`;
 
     this.container.style.transform = translate;
     this.container.style.transitionDuration = `${ velocity }ms`;
   }
 
-  public createBullets(): void {
+  private createBullets(): void {
     this.bulletsContainer.removeAllChildren();
 
     let init = 0;
@@ -261,7 +261,7 @@ class Swiper {
     }
   }
 
-  public activateControls(): void {
+  private activateControls(): void {
     if (this.nextCtrls && this.prevCtrls) {
       if (this.index > 0) {
         DOMUtils.addClassToItems(this.prevCtrls, Swiper.ACTIVE_CTRL_CLASS);
@@ -277,7 +277,7 @@ class Swiper {
     }
   }
 
-  public setControls(): void {
+  private setControls(): void {
     this.nextCtrls = this.swiper
       .querySelectorAll(`[${ Swiper.NEXT_CTRL_ATTR }]`);
     this.prevCtrls = this.swiper
@@ -294,7 +294,7 @@ class Swiper {
     }
   }
 
-  public createControls(): void {
+  private createControls(): void {
     const prevCtrl = new DOMElement('div');
     const nextCtrl = new DOMElement('div');
 
@@ -312,11 +312,11 @@ class Swiper {
     nextCtrl.render(this.controlsContainer.getElement());
   }
 
-  public containerFullWidth(): number {
+  private containerFullWidth(): number {
     return this.container.scrollWidth - this.container.offsetWidth;
   }
 
-  public lastToShow(): number {
+  private lastToShow(): number {
     let distance = 0;
     const totalItems = this.items.length - 1;
 
@@ -337,7 +337,7 @@ class Swiper {
     return totalItems;
   }
 
-  public showPrev(event?: Event): void {
+  private showPrev(event?: Event): void {
     if (event && this.options.loop
       && this.supportEvents.move === Swiper.TOUCH_EVENTS.move) {
       clearInterval(this.interval);
@@ -374,7 +374,7 @@ class Swiper {
     this.activateControls();
   }
 
-  public showNext(event?: Event): void {
+  private showNext(event?: Event): void {
     if (event && this.options.loop
       && this.supportEvents.move === Swiper.TOUCH_EVENTS.move) {
       clearInterval(this.interval);
@@ -418,7 +418,7 @@ class Swiper {
     this.activateControls();
   }
 
-  public update(): void {
+  private update(): void {
     this.lastIndexToShow = this.lastToShow();
     this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
 
@@ -443,7 +443,7 @@ class Swiper {
     this.activateControls();
   }
 
-  public swipe(moveEvent: any): void {
+  private swipe(moveEvent: any): void {
     moveEvent.preventDefault();
     moveEvent.stopPropagation();
 
@@ -466,7 +466,7 @@ class Swiper {
     this.animate(distance, 0);
   }
 
-  public actionDown(downEvent: any): void {
+  private actionDown(downEvent: any): void {
     if (this.supportEvents.down === Swiper.MOUSE_EVENTS.down) {
       downEvent.preventDefault();
     }
@@ -500,7 +500,7 @@ class Swiper {
     });
   }
 
-  public activateSwipe(moveEvent: any): void {
+  private activateSwipe(moveEvent: any): void {
     const distanceY = (this.supportEvents.move === Swiper.TOUCH_EVENTS.move)
       ? moveEvent.touches[0].clientY
       : moveEvent.screenY;
@@ -517,7 +517,7 @@ class Swiper {
     );
   }
 
-  public actionUp(upEvent: any): void {
+  private actionUp(upEvent: any): void {
     const distanceEvent = (this.supportEvents.up === Swiper.TOUCH_EVENTS.up)
       ? upEvent.changedTouches[0].clientX
       : upEvent.screenX;
@@ -553,7 +553,7 @@ class Swiper {
     window.removeEventListener(this.supportEvents.up, this.actionUp);
   }
 
-  public activateControlsByIndexes(swiper): void {
+  private activateControlsByIndexes(swiper): void {
     const thumbsContainer = swiper
       .querySelector(`.${ Swiper.THUMBNAILS_CONTAINER_CLASS }`);
 
@@ -576,7 +576,7 @@ class Swiper {
     }
   }
 
-  public showByIndex(event: Event): void {
+  private showByIndex(event: Event): void {
     const target = event.target as HTMLElement;
     const thumbnailsSize = this.thumbnails.length;
     const thumbnail = DOMUtils.findParentElementByClass(
@@ -598,14 +598,14 @@ class Swiper {
     }
   }
 
-  public changePageByBullet(event: Event): void {
+  private changePageByBullet(event: Event): void {
     const target = event.target as Element;
     const pageNumber = parseInt(target.getAttribute(Swiper.BULLET_ATTR));
 
     this.goToPage(pageNumber, this.options.animationMs);
   }
 
-  public getCurrentPage(): number {
+  private getCurrentPage(): number {
     let page = 0;
     let itemsPerPage = 0;
     const newIndex = this.index + 1;
@@ -623,7 +623,7 @@ class Swiper {
     return page;
   }
 
-  public goToPage(pageNumber: number, velocity: number): void {
+  private goToPage(pageNumber: number, velocity: number): void {
     let itemIndex = 0;
 
     for (let i = 0; i < pageNumber; i++) {
@@ -644,7 +644,7 @@ class Swiper {
     this.activateControls();
   }
 
-  public activateBullets(): void {
+  private activateBullets(): void {
     if (this.options.showBullets) {
       const bullets = this.bulletsContainer.getElement().children;
       const page = this.options.loop
@@ -659,7 +659,7 @@ class Swiper {
     }
   }
 
-  public autoplay(): void {
+  private autoplay(): void {
     this.swiper.removeEventListener(this.supportEvents.out, this.autoplay);
 
     this.interval = window.setInterval(() => {
@@ -667,12 +667,12 @@ class Swiper {
     }, this.options.autoplayMs);
   }
 
-  public stopAutoplay(): void {
+  private stopAutoplay(): void {
     clearInterval(this.interval);
     this.swiper.addEventListener(this.supportEvents.out, this.autoplay);
   }
 
-  public createClones(): void {
+  private createClones(): void {
     const amountFirstPage = this.itemsPerPage[0];
     const amountLastPage = this.itemsPerPage[this.itemsPerPage.length - 1];
     const clons = this.container.querySelectorAll(`.${ Swiper.CLONED_CLASS }`);

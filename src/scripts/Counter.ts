@@ -9,13 +9,13 @@ class Counter {
   static readonly ATTR_MIN = 'data-counter-min';
   static readonly ATTR_MAX = 'data-counter-max';
 
-  public element: HTMLElement;
-  public min: number;
-  public max: number;
-  public uid: string;
-  public isActivated: boolean;
-  public animationMs: number;
-  public options: CounterOptions;
+  private element: HTMLElement;
+  private min: number;
+  private max: number;
+  private uid: string;
+  private isActivated: boolean;
+  private animationMs: number;
+  private options: CounterOptions;
 
   constructor(element: HTMLElement, options: CounterOptions) {
     this.element = element;
@@ -38,26 +38,26 @@ class Counter {
     }
   }
 
-  public animate(): void {
+  private animate(): void {
     if (!this.isActivated) {
       this.isActivated = true;
       this.increment();
     }
   }
 
-  public easeIn(counter):number {
+  private easeIn(counter):number {
     const time = counter / this.max;
 
     return -this.animationMs * time * (time - 2);
   }
 
-  public easeOut(counter): number {
+  private easeOut(counter): number {
     const time = counter / this.max;
 
     return this.animationMs * time * time;
   }
 
-  public easeInOut(counter): number {
+  private easeInOut(counter): number {
     let time = counter / this.max;
 
     if ((time / 2) < 1) {
@@ -67,7 +67,7 @@ class Counter {
     return -this.animationMs / 2 * (((--time) * (time - 2)) - 1);
   }
 
-  public increment(): void {
+  private increment(): void {
     for (let i = this.min; i <= this.max; i++) {
       let durationTime = 0;
 

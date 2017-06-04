@@ -22,12 +22,12 @@ class Mosaic {
       <img src="[${ Mosaic.ATTRS_TO_RENDER[2] }]">
     </div`;
 
-  public items: NodeListOf<Element>;
-  public activedItem: HTMLElement;
-  public detailContainer: DOMElement;
-  public itemsContainer: HTMLElement;
-  public mosaic: HTMLElement;
-  public supportEvents: string;
+  private items: NodeListOf<Element>;
+  private activedItem: HTMLElement;
+  private detailContainer: DOMElement;
+  private itemsContainer: HTMLElement;
+  private mosaic: HTMLElement;
+  private supportEvents: string;
 
   constructor(mosaic) {
     this.mosaic = mosaic;
@@ -50,7 +50,7 @@ class Mosaic {
     window.onEvent(Mosaic.WINDOW_EVENT, this.renderDetail, 1);
   }
 
-  public showDetail(event): void {
+  private showDetail(event): void {
     const target = event.target;
     const item = DOMUtils.findParentElementByClass(target, Mosaic.ITEM_CLASS);
 
@@ -59,7 +59,7 @@ class Mosaic {
     this.renderDetail();
   }
 
-  public renderDetail(): void {
+  private renderDetail(): void {
     this.detailContainer.destroy();
     this.createDetailContainer();
 
@@ -84,7 +84,7 @@ class Mosaic {
     }
   }
 
-  public createDetailContainer(): void {
+  private createDetailContainer(): void {
     let template = Mosaic.DETAIL_TEMPLATE;
 
     for (let i = 0; i < Mosaic.ATTRS_TO_RENDER.length; i++) {
@@ -100,7 +100,7 @@ class Mosaic {
     this.detailContainer.addClasses(Mosaic.DETAIL_CONTAINER_CLASSES);
   }
 
-  public lastItemOfActivedRow(): number {
+  private lastItemOfActivedRow(): number {
     let item = 0;
     const indexElement = DOMUtils.getIndexNode(this.activedItem);
     const itemsPerRow = DOMUtils.itemsPerSection(
