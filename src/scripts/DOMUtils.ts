@@ -1,3 +1,8 @@
+interface Offset {
+  left: number;
+  top: number;
+}
+
 class DOMUtils {
   private static instance: DOMUtils = new DOMUtils();
 
@@ -117,30 +122,24 @@ class DOMUtils {
     return regex.test(nodeElement.className);
   }
 
-  static getOffsetTop(element: HTMLElement): number {
+  static getOffset(element: HTMLElement): Offset {
+    let offsetLeft = 0;
     let offsetTop = 0;
     let currentElement = element;
 
     do {
-      if (!isNaN(currentElement.offsetTop)) {
+      if (currentElement
+      && !isNaN(currentElement.offsetTop)
+      && !isNaN(currentElement.offsetLeft)) {
+        offsetLeft += currentElement.offsetLeft;
         offsetTop += currentElement.offsetTop;
       }
     } while (currentElement = currentElement.offsetParent as HTMLElement);
 
-    return offsetTop;
-  }
-
-  static getOffsetLeft(element: HTMLElement): number {
-    let offsetLeft = 0;
-    let currentElement = element;
-
-    do {
-      if (!isNaN(currentElement.offsetLeft)) {
-        offsetLeft += currentElement.offsetLeft;
-      }
-    } while (currentElement = currentElement.offsetParent as HTMLElement);
-
-    return offsetLeft;
+    return {
+      left: offsetLeft,
+      top: offsetTop
+    };
   }
 
   static itemsPerSection(
