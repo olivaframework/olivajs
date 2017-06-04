@@ -1,5 +1,5 @@
-import './Window';
 import { DOMUtils } from './DOMUtils';
+import { WindowUtils } from './WindowUtils';
 
 interface MenuOptions {
   keepOpenedSubmenu: boolean;
@@ -92,7 +92,7 @@ class Menu {
 
     if ((DOMUtils.containsClass(handler, Menu.MENU_ITEM_CLASS)
       || DOMUtils.containsClass(handler.parentNode, Menu.MENU_ITEM_CLASS))
-      && window.isMobile()) {
+      && WindowUtils.isMobile()) {
       event.preventDefault();
 
       const item = DOMUtils.findParentElementByClass(

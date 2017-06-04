@@ -1,4 +1,5 @@
 import { Jump } from '../scripts/Jump';
+import { WindowUtils } from '../scripts/WindowUtils';
 
 describe('Jump component specification', () => {
   let jumpHandler;
@@ -65,7 +66,7 @@ describe('Jump component specification', () => {
 
     const jumpComponent = new Jump(jumpHandler);
     const spy = sinon.spy(jumpComponent, 'scrollDown');
-    const stub = sinon.stub(window, 'getInnerHeight');
+    const stub = sinon.stub(WindowUtils, 'getInnerHeight');
 
     stub.onFirstCall().returns(0);
     stub.onSecondCall().returns(-100);

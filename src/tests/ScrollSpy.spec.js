@@ -1,4 +1,5 @@
 import { ScrollSpy } from '../scripts/ScrollSpy';
+import { WindowUtils } from '../scripts/WindowUtils';
 
 describe('ScrollSpy component specification', () => {
   let scrollSpyHandler;
@@ -9,7 +10,7 @@ describe('ScrollSpy component specification', () => {
   });
 
   it('should create a ScrollSpy component with correct properties', () => {
-    const spy = sinon.spy(window, 'onEvent');
+    const spy = sinon.spy(WindowUtils, 'onEvent');
     const scrollSpyComponent = new ScrollSpy(scrollSpyHandler);
     const calledFunction = scrollSpyComponent.validatePosition;
     const calledTime = 1;
@@ -22,7 +23,7 @@ describe('ScrollSpy component specification', () => {
 
   it('should active or desactivate class on validatePosition method', () => {
     const scrollSpyComponent = new ScrollSpy(scrollSpyHandler);
-    const stub = sinon.stub(window, 'scrollTop');
+    const stub = sinon.stub(WindowUtils, 'scrollTop');
 
     stub.onFirstCall().returns(1000);
     stub.onSecondCall().returns(0);
