@@ -20,6 +20,7 @@ import { Overlay } from './scripts/Overlay';
 import { ScrollSpy } from './scripts/ScrollSpy';
 import { Swiper } from './scripts/Swiper';
 import { Tab } from './scripts/Tab';
+import { WindowUtils } from './scripts/WindowUtils';
 
 module.exports = {
   Counter,
@@ -42,5 +43,6 @@ module.exports = {
   Overlay,
   ScrollSpy,
   Swiper,
-  Tab
+  Tab,
+  WindowUtils
 };
