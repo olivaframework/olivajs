@@ -149,8 +149,11 @@ class Swiper {
         this.bulletsContainer = new DOMElement('div');
         this.bulletsContainer.addClasses(['swiper-bullets-container']);
         this.bulletsContainer.render(this.controlsContainer.getElement());
-        this.createBullets();
-        this.activateBullets();
+
+        setTimeout(() => {
+          this.createBullets();
+          this.activateBullets();
+        }, 0);
       }
     }
 
