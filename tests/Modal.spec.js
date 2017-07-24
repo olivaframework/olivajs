@@ -1,4 +1,4 @@
-import { Modal } from '../scripts/Modal';
+import { Modal } from '../src/scripts/Modal';
 
 describe('Modal component specification', () => {
   let modalHandler;

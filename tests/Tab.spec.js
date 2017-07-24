@@ -1,4 +1,4 @@
-import { Tab } from '../scripts/Tab';
+import { Tab } from '../src/scripts/Tab';
 
 describe('Tab component specification', () => {
   let tabsContainer;

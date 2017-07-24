@@ -1,4 +1,4 @@
-import { Swiper } from '../scripts/Swiper';
+import { Swiper } from '../src/scripts/Swiper';
 
 describe('Swiper component specification', () => {
   let swiper;

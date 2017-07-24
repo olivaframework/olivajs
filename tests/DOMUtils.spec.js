@@ -1,4 +1,4 @@
-import { DOMUtils } from '../scripts/DOMUtils';
+import { DOMUtils } from '../src/scripts/DOMUtils';
 
 describe('DOMUtils component specification', () => {
   let container;

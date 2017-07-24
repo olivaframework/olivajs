@@ -20,14 +20,14 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['mocha', 'chai', 'sinon', 'source-map-support'],
     files: [{
-      pattern: 'src/tests/*.spec.js',
+      pattern: 'tests/*.spec.js',
       watched: false
     }],
     exclude: [
     ],
     preprocessors: {
       'src/scripts/*.ts': ['webpack'],
-      'src/tests/*.js': ['webpack']
+      'tests/*.js': ['webpack']
     },
     webpack: webpackConfig,
     webpackMiddleware: {
@@ -43,7 +43,7 @@ module.exports = function (config) {
     reporters: reporters,
     coverageReporter: {
       type: 'json',
-      dir: 'src/tests/coverage',
+      dir: 'tests/coverage',
       subdir: '.'
     },
     port: 9876,

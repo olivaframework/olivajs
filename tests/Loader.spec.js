@@ -1,4 +1,4 @@
-import { Loader } from '../scripts/Loader';
+import { Loader } from '../src/scripts/Loader';
 
 describe('Loader component specification', () => {
   it('should create a Loader component on DOM', () => {

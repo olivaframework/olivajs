@@ -1,4 +1,4 @@
-import { Overlay } from '../scripts/Overlay';
+import { Overlay } from '../src/scripts/Overlay';
 
 describe('Overlay component specification', () => {
   it('should create a Overlay component on DOM', () => {

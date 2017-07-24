@@ -1,4 +1,4 @@
-import { DOMElement } from '../scripts/DOMElement';
+import { DOMElement } from '../src/scripts/DOMElement';
 
 describe('DOMElement component specification', () => {
   let domElement;
