@@ -42,7 +42,7 @@ class Loader {
   }
 
   private hide(): void {
-    Loader.loader.removeClasses([Loader.ACTIVE_CLASS]);
+    DOMUtils.removeClass(Loader.loader.getElement(), Loader.ACTIVE_CLASS);
     this.overlay.hide();
   }
 

@@ -15,7 +15,7 @@ class Overlay {
     }
 
     Overlay.overlay = new DOMElement(Overlay.TYPE_HTML_ELEMENT);
-    DOMUtils.addClasses(Overlay.overlay.getElement(), [Overlay.STYLE_CLASS]);
+    DOMUtils.addClass(Overlay.overlay.getElement(), Overlay.STYLE_CLASS);
     Overlay.overlay.render(document.body);
   }
 
@@ -24,11 +24,11 @@ class Overlay {
   }
 
   public hide(): void {
-    Overlay.overlay.removeClasses([Overlay.ACTIVE_CLASS]);
+    DOMUtils.removeClass(Overlay.overlay.getElement(), Overlay.ACTIVE_CLASS);
   }
 
   public show(): void {
-    DOMUtils.addClasses(Overlay.overlay.getElement(), [Overlay.ACTIVE_CLASS]);
+    DOMUtils.addClass(Overlay.overlay.getElement(), Overlay.ACTIVE_CLASS);
   }
 
   public getOverlay(): DOMElement {

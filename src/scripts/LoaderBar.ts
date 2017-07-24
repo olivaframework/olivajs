@@ -67,7 +67,10 @@ class LoaderBar {
 
   private static hide(): void {
     LoaderBar.changeWidth(100);
-    LoaderBar.loaderbar.removeClasses([LoaderBar.ACTIVE_CLASS]);
+    DOMUtils.removeClass(
+      LoaderBar.loaderbar.getElement(),
+      LoaderBar.ACTIVE_CLASS
+    );
   }
 
   private static getInstance(): LoaderBar {

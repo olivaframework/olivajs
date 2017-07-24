@@ -114,6 +114,12 @@ class DOMUtils {
     nodeElement.className = nodeElement.className.replace(regex, '');
   }
 
+  static removeClasses(nodeElement: Element, classes: string[]): void {
+    for (const className of classes) {
+      this.removeClass(nodeElement, className);
+    }
+  }
+
   static toggleClass(nodeElement: Element, className: string): void {
     if (this.containsClass(nodeElement, className)) {
       this.removeClass(nodeElement, className);
