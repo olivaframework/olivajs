@@ -55,6 +55,33 @@ describe('DOMElement component specification', () => {
     expect(domElement.getElement().classList.length).to.be.equals(classesSize);
   });
 
+  it('should toggle specific classes to element', () => {
+    const class1 = 'class1';
+    const class2 = 'class2';
+    const class3 = 'class3';
+
+    domElement.render(document.body);
+    domElement.addClasses([class1, class2, class3]);
+
+    const element = domElement.getElement();
+    const elementClassList = element.classList;
+
+    expect(elementClassList[0]).to.be.equals(class1);
+    expect(elementClassList[1]).to.be.equals(class2);
+    expect(elementClassList[2]).to.be.equals(class3);
+
+    domElement.toggleClasses([class1, class3]);
+
+    expect(elementClassList.length).to.be.equals(1);
+    expect(elementClassList[0]).to.be.equals(class2);
+
+    domElement.toggleClasses([class1, class3]);
+
+    expect(elementClassList[0]).to.be.equals(class2);
+    expect(elementClassList[1]).to.be.equals(class1);
+    expect(elementClassList[2]).to.be.equals(class3);
+  });
+
   it('should create a div element with correct content', () => {
     const content = 'this is a content';
 
@@ -154,6 +181,24 @@ describe('DOMElement component specification', () => {
         expect(element.id).to.not.equals(item.id);
       }
     }
+  });
+
+  it('should set right attributes with them values to element', () => {
+    const attribute1 = {
+      name: 'data-attribute-1',
+      value: 'attribute-1'
+    };
+    const attribute2 = {
+      name: 'data-attribute-2',
+      value: 'attribute-2'
+    };
+
+    domElement.setAttributes([attribute1, attribute2]);
+
+    const element = domElement.getElement();
+
+    expect(element.getAttribute(attribute1.name)).equals(attribute1.value);
+    expect(element.getAttribute(attribute2.name)).equals(attribute2.value);
   });
 
   afterEach(() => {

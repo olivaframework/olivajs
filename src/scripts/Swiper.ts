@@ -238,7 +238,7 @@ class Swiper {
   }
 
   private createBullets(): void {
-    this.bulletsContainer.removeAllChildren();
+    DOMUtils.removeAllChildren(this.bulletsContainer.getElement());
 
     let init = 0;
     let end = this.itemsPerPage.length;
