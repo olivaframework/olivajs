@@ -102,6 +102,12 @@ class DOMUtils {
     }
   }
 
+  static addClasses(nodeElement: Element, classes: string[]): void {
+    for (const className of classes) {
+      this.addClass(nodeElement, className);
+    }
+  }
+
   static removeClass(nodeElement: Element, className: string): void {
     const regex = new RegExp('(^|\\s+)' + className);
 

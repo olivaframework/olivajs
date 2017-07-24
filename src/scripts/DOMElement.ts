@@ -35,12 +35,6 @@ class DOMElement {
     }
   }
 
-  public addClasses(classes: string[]): void {
-    for (const item of classes) {
-      DOMUtils.addClass(this.element, item);
-    }
-  }
-
   public removeClasses(classes: string[]): void {
     for (const item of classes) {
       DOMUtils.removeClass(this.element, item);

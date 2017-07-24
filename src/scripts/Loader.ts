@@ -1,4 +1,5 @@
 import { DOMElement } from './DOMElement';
+import { DOMUtils } from './DOMUtils';
 import { Overlay } from './Overlay';
 
 class Loader {
@@ -23,11 +24,11 @@ class Loader {
     this.overlay = Overlay.getInstance();
 
     Loader.loader = new DOMElement(Loader.TYPE_HTML_ELEMENT);
-    Loader.loader.addClasses([Loader.STYLE_CLASS]);
+    DOMUtils.addClass(Loader.loader.getElement(), Loader.STYLE_CLASS);
     Loader.loader.render(document.body);
 
     Loader.loaderIcon = new DOMElement(Loader.ICON_ELEMENT);
-    Loader.loaderIcon.addClasses(Loader.ICON_CLASSES);
+    DOMUtils.addClasses(Loader.loader.getElement(), Loader.ICON_CLASSES);
     Loader.loaderIcon.render(Loader.loader.getElement());
   }
 
@@ -36,7 +37,7 @@ class Loader {
   }
 
   private show(): void {
-    Loader.loader.addClasses([Loader.ACTIVE_CLASS]);
+    DOMUtils.addClass(Loader.loader.getElement(), Loader.ACTIVE_CLASS);
     this.overlay.show();
   }
 

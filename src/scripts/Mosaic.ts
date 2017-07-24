@@ -10,7 +10,7 @@ class Mosaic {
   static readonly ITEM_CLASS: string = 'mosaic-item';
   static readonly DETAIL_CLASS: string = 'mosaic-detail';
   static readonly DETAIL_CONTAINER_HTML_TYPE: string = 'div';
-  static readonly DETAIL_CONTAINER_CLASSES: string[] = ['mosaic-detail'];
+  static readonly DETAIL_CONTAINER_CLASS: string = 'mosaic-detail';
   static readonly KEY_ATRRS_TO_RENDER: string = 'data-mosaic-[]';
   static readonly CONTAINER_CLASS: string = 'mosaic-container';
   static readonly MIN_CONTAINER_PERCENT: number = 25;
@@ -97,7 +97,10 @@ class Mosaic {
 
     this.detailContainer = new DOMElement(Mosaic.DETAIL_CONTAINER_HTML_TYPE);
     this.detailContainer.setContent(template);
-    this.detailContainer.addClasses(Mosaic.DETAIL_CONTAINER_CLASSES);
+    DOMUtils.addClass(
+      this.detailContainer.getElement(),
+      Mosaic.DETAIL_CONTAINER_CLASS
+    );
   }
 
   private lastItemOfActivedRow(): number {

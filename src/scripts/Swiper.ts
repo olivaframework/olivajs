@@ -42,6 +42,7 @@ class Swiper {
   static readonly ACTIVE_EVENT_CTRL: string = 'click';
   static readonly BULLET_ATTR: string = 'data-swiper-go-page';
   static readonly BULLET_CLASS: string = 'swiper-bullet';
+  static readonly BULLETS_CONTAINER_CLASS: string = 'swiper-bullets-container';
   static readonly SWIPE_OUT_PERCENT: number = 10;
   static readonly SWIPE_PERCENT_ADJUST: number = 10;
   static readonly WINDOW_EVENT: string = 'resize';
@@ -137,7 +138,10 @@ class Swiper {
 
     if (this.options.createControls || this.options.showBullets) {
       this.controlsContainer = new DOMElement('div');
-      this.controlsContainer.addClasses([Swiper.CTRLS_CONTAINER_CLASS]);
+      DOMUtils.addClass(
+        this.controlsContainer.getElement(),
+        Swiper.CTRLS_CONTAINER_CLASS
+      );
       this.controlsContainer.render(this.swiper);
 
       if (this.options.createControls) {
@@ -147,7 +151,10 @@ class Swiper {
 
       if (this.options.showBullets) {
         this.bulletsContainer = new DOMElement('div');
-        this.bulletsContainer.addClasses(['swiper-bullets-container']);
+        DOMUtils.addClass(
+          this.bulletsContainer.getElement(),
+          Swiper.BULLETS_CONTAINER_CLASS
+        );
         this.bulletsContainer.render(this.controlsContainer.getElement());
 
         setTimeout(() => {
@@ -251,7 +258,7 @@ class Swiper {
     for (let i = init; i < end; i++) {
       const bullet = new DOMElement('div');
 
-      bullet.addClasses([Swiper.BULLET_CLASS]);
+      DOMUtils.addClass(bullet.getElement(), Swiper.BULLET_CLASS);
       bullet.render(this.bulletsContainer.getElement());
       bullet.addEvents([{
         callback: this.changePageByBullet,
@@ -301,8 +308,8 @@ class Swiper {
     const prevCtrl = new DOMElement('div');
     const nextCtrl = new DOMElement('div');
 
-    prevCtrl.addClasses(this.options.prevCtrlClasses);
-    nextCtrl.addClasses(this.options.nextCtrlClasses);
+    DOMUtils.addClasses(prevCtrl.getElement(), this.options.prevCtrlClasses);
+    DOMUtils.addClasses(nextCtrl.getElement(), this.options.nextCtrlClasses);
     nextCtrl.setAttributes([{
       name: Swiper.NEXT_CTRL_ATTR,
       value: ''

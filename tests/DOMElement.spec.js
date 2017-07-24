@@ -17,71 +17,6 @@ describe('DOMElement component specification', () => {
     expect(document.querySelector('#dom_element')).to.be.equals(element);
   });
 
-  it('should create a div element on body with correct classes', () => {
-    const classes = [
-      'class1', 'class2'
-    ];
-
-    domElement.render(document.body);
-    domElement.addClasses(classes);
-
-    expect(domElement.getElement().classList[0]).to.be
-    .equals(classes[0]);
-
-    expect(domElement.getElement().classList[1]).to.be
-    .equals(classes[1]);
-
-    expect(domElement.getElement().classList.length).to.be
-    .equals(classes.length);
-  });
-
-  it('should remove element specific classes', () => {
-    const classes = [
-      'class1', 'class2', 'class3'
-    ];
-
-    const removedClasses = [
-      'class1', 'class3'
-    ];
-
-    domElement.render(document.body);
-    domElement.addClasses(classes);
-    domElement.removeClasses(removedClasses);
-
-    expect(domElement.getElement().classList[0]).to.be.equals(classes[1]);
-
-    const classesSize = classes.length - removedClasses.length;
-
-    expect(domElement.getElement().classList.length).to.be.equals(classesSize);
-  });
-
-  it('should toggle specific classes to element', () => {
-    const class1 = 'class1';
-    const class2 = 'class2';
-    const class3 = 'class3';
-
-    domElement.render(document.body);
-    domElement.addClasses([class1, class2, class3]);
-
-    const element = domElement.getElement();
-    const elementClassList = element.classList;
-
-    expect(elementClassList[0]).to.be.equals(class1);
-    expect(elementClassList[1]).to.be.equals(class2);
-    expect(elementClassList[2]).to.be.equals(class3);
-
-    domElement.toggleClasses([class1, class3]);
-
-    expect(elementClassList.length).to.be.equals(1);
-    expect(elementClassList[0]).to.be.equals(class2);
-
-    domElement.toggleClasses([class1, class3]);
-
-    expect(elementClassList[0]).to.be.equals(class2);
-    expect(elementClassList[1]).to.be.equals(class1);
-    expect(elementClassList[2]).to.be.equals(class3);
-  });
-
   it('should create a div element with correct content', () => {
     const content = 'this is a content';
 
@@ -161,12 +96,12 @@ describe('DOMElement component specification', () => {
     for (let i = 0; i < 5; i++) {
       const item = new DOMElement('div');
 
-      item.addClasses(['item']);
+      item.getElement().classList.add('item');
       item.render(container);
     }
 
     domElement.setId('id');
-    domElement.addClasses(['item']);
+    domElement.getElement().classList.add('item');
     domElement.renderBefore(container, positionToInsert);
 
     const items = document.querySelectorAll('.item');
