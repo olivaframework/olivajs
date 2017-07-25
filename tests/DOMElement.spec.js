@@ -118,7 +118,7 @@ describe('DOMElement component specification', () => {
     }
   });
 
-  it('should set right attributes with them values to element', () => {
+  it('should set correct attributes with their values to element', () => {
     const attribute1 = {
       name: 'data-attribute-1',
       value: 'attribute-1'
