@@ -119,7 +119,7 @@ class Swiper {
     DOMUtils.addClass(this.items[this.index], Swiper.ITEM_ACTIVE_CLASS);
 
     this.lastIndexToShow = this.lastToShow();
-    this.itemsPerPage = DOMUtils.itemsPerSection(
+    this.itemsPerPage = DOMUtils.itemsPerRowSection(
       this.container,
       Swiper.ITEM_CLASS
     );
@@ -198,7 +198,7 @@ class Swiper {
 
   private updateByEvent(): void {
     this.lastIndexToShow = this.lastToShow();
-    this.itemsPerPage = DOMUtils.itemsPerSection(
+    this.itemsPerPage = DOMUtils.itemsPerRowSection(
       this.container,
       Swiper.ITEM_CLASS
     );
@@ -436,7 +436,7 @@ class Swiper {
 
   private update(): void {
     this.lastIndexToShow = this.lastToShow();
-    this.itemsPerPage = DOMUtils.itemsPerSection(
+    this.itemsPerPage = DOMUtils.itemsPerRowSection(
       this.container,
       Swiper.ITEM_CLASS
     );
@@ -718,7 +718,7 @@ class Swiper {
     DOMUtils.removeElements(clons);
     this.items = this.container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
     this.lastIndexToShow = this.lastToShow();
-    this.itemsPerPage = DOMUtils.itemsPerSection(
+    this.itemsPerPage = DOMUtils.itemsPerRowSection(
       this.container,
       Swiper.ITEM_CLASS
     );

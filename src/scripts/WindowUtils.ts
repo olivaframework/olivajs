@@ -64,11 +64,11 @@ class WindowUtils {
     inner.style.width = '100%';
     outer.appendChild(inner);
 
-    const withScroll = widthNoScroll - inner.offsetWidth;
+    const scrollBarWidth = widthNoScroll - inner.offsetWidth;
 
     outer.parentNode.removeChild(outer);
 
-    return withScroll;
+    return scrollBarWidth;
   }
 }
 

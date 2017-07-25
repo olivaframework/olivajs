@@ -269,11 +269,11 @@ describe('DOMUtils component specification', () => {
     container.appendChild(item3);
     container.appendChild(item4);
 
-    const itemsPerSection = DOMUtils.itemsPerSection(container, 'item');
+    const itemsPerRow = DOMUtils.itemsPerRowSection(container, 'item');
 
-    expect(itemsPerSection[0]).to.equals(2);
-    expect(itemsPerSection[1]).to.equals(1);
-    expect(itemsPerSection[2]).to.equals(1);
+    expect(itemsPerRow[0]).to.equals(2);
+    expect(itemsPerRow[1]).to.equals(1);
+    expect(itemsPerRow[2]).to.equals(1);
   });
 
   it('should dispatch custom event on dispatchCustomEvent method', () => {

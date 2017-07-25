@@ -152,7 +152,10 @@ class DOMUtils {
     };
   }
 
-  static itemsPerSection(container: HTMLElement, className: string): number[] {
+  static itemsPerRowSection(
+    container: HTMLElement,
+    className: string
+  ): number[] {
     let distance = 0;
     let itemsCount = 1;
     const itemsPerSection = [];

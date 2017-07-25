@@ -106,7 +106,7 @@ class Mosaic {
   private lastItemOfActivedRow(): number {
     let item = 0;
     const indexElement = DOMUtils.getIndexNode(this.activedItem);
-    const itemsPerRow = DOMUtils.itemsPerSection(
+    const itemsPerRow = DOMUtils.itemsPerRowSection(
       this.itemsContainer,
       Mosaic.ITEM_CLASS
     );
