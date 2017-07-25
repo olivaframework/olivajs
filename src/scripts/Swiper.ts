@@ -119,7 +119,10 @@ class Swiper {
     DOMUtils.addClass(this.items[this.index], Swiper.ITEM_ACTIVE_CLASS);
 
     this.lastIndexToShow = this.lastToShow();
-    this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
+    this.itemsPerPage = DOMUtils.itemsPerSection(
+      this.container,
+      Swiper.ITEM_CLASS
+    );
 
     this.swiper.setAttribute(Swiper.UID_ATTR, this.uid);
     this.swiper.addEventListener(this.uid, this.updateByEvent);
@@ -195,7 +198,10 @@ class Swiper {
 
   private updateByEvent(): void {
     this.lastIndexToShow = this.lastToShow();
-    this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
+    this.itemsPerPage = DOMUtils.itemsPerSection(
+      this.container,
+      Swiper.ITEM_CLASS
+    );
 
     if (this.options.loop) {
       const amountFirstPage = this.itemsPerPage[0];
@@ -430,7 +436,10 @@ class Swiper {
 
   private update(): void {
     this.lastIndexToShow = this.lastToShow();
-    this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
+    this.itemsPerPage = DOMUtils.itemsPerSection(
+      this.container,
+      Swiper.ITEM_CLASS
+    );
 
     if (this.index < this.lastIndexToShow) {
       const currentItem = this.items[this.index] as HTMLElement;
@@ -709,7 +718,10 @@ class Swiper {
     DOMUtils.removeElements(clons);
     this.items = this.container.querySelectorAll(`.${ Swiper.ITEM_CLASS }`);
     this.lastIndexToShow = this.lastToShow();
-    this.itemsPerPage = DOMUtils.itemsPerSection(this.items, this.container);
+    this.itemsPerPage = DOMUtils.itemsPerSection(
+      this.container,
+      Swiper.ITEM_CLASS
+    );
   }
 }
 

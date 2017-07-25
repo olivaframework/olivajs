@@ -18,13 +18,12 @@ class Tab {
   }
 
   private updateSwipers() {
-    const swipers = this.content
-      .querySelectorAll(`[${ Swiper.UID_ATTR }]`);
+    const swipers = this.content.querySelectorAll(`[${ Swiper.UID_ATTR }]`);
 
     DOMUtils.syncForEach(swiper => {
-      const uId = swiper.getAttribute(Swiper.UID_ATTR);
+      const swiperUid = swiper.getAttribute(Swiper.UID_ATTR);
 
-      DOMUtils.dispatchCustomEvent(uId, swiper);
+      DOMUtils.dispatchCustomEvent(swiper, swiperUid);
     }, swipers);
   }
 

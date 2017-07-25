@@ -107,7 +107,8 @@ class Mosaic {
     let item = 0;
     const indexElement = DOMUtils.getIndexNode(this.activedItem);
     const itemsPerRow = DOMUtils.itemsPerSection(
-      this.items, this.itemsContainer
+      this.itemsContainer,
+      Mosaic.ITEM_CLASS
     );
 
     for (let i = 0; i < itemsPerRow.length; i++) {

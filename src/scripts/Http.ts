@@ -5,7 +5,7 @@ interface HttpHeader {
 
 interface HttpConfig {
   url: string;
-  headers?: Array<HttpHeader>
+  headers?: HttpHeader[]
 }
 
 interface HttpCallbacks {
