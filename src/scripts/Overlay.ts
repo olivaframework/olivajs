@@ -1,4 +1,5 @@
 import { DOMElement } from './DOMElement';
+import { DOMUtils } from './DOMUtils';
 
 class Overlay {
   static readonly ACTIVE_CLASS: string = 'active';
@@ -14,7 +15,7 @@ class Overlay {
     }
 
     Overlay.overlay = new DOMElement(Overlay.TYPE_HTML_ELEMENT);
-    Overlay.overlay.addClasses([Overlay.STYLE_CLASS]);
+    DOMUtils.addClass(Overlay.overlay.getElement(), Overlay.STYLE_CLASS);
     Overlay.overlay.render(document.body);
   }
 
@@ -23,11 +24,11 @@ class Overlay {
   }
 
   public hide(): void {
-    Overlay.overlay.removeClasses([Overlay.ACTIVE_CLASS]);
+    DOMUtils.removeClass(Overlay.overlay.getElement(), Overlay.ACTIVE_CLASS);
   }
 
   public show(): void {
-    Overlay.overlay.addClasses([Overlay.ACTIVE_CLASS]);
+    DOMUtils.addClass(Overlay.overlay.getElement(), Overlay.ACTIVE_CLASS);
   }
 
   public getOverlay(): DOMElement {

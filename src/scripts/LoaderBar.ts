@@ -1,4 +1,5 @@
 import { DOMElement } from './DOMElement';
+import { DOMUtils } from './DOMUtils';
 
 class LoaderBar {
   private static readonly ACTIVE_CLASS: string = 'loading';
@@ -20,14 +21,17 @@ class LoaderBar {
     }
 
     window.addEventListener('http-sent', LoaderBar.addRequest);
-
     window.addEventListener('http-loading', LoaderBar.changeProgress);
-
     window.addEventListener('http-finished', LoaderBar.removeRequest);
 
     LoaderBar.loaderbar = new DOMElement(LoaderBar.LOADERBAR_ELEMENT);
-    LoaderBar.loaderbar.addClasses([LoaderBar.LOADERBAR_CLASS]);
-    LoaderBar.loaderbar.addClasses([LoaderBar.ACTIVE_CLASS]);
+
+    DOMUtils.addClasses(
+      LoaderBar.loaderbar.getElement(), [
+        LoaderBar.LOADERBAR_CLASS,
+        LoaderBar.ACTIVE_CLASS
+      ]
+    );
     LoaderBar.loaderbar.render(document.body);
   }
 
@@ -48,7 +52,7 @@ class LoaderBar {
   }
 
   private static show(): void {
-    LoaderBar.loaderbar.addClasses([LoaderBar.ACTIVE_CLASS]);
+    DOMUtils.addClass(LoaderBar.loaderbar.getElement(), LoaderBar.ACTIVE_CLASS);
   }
 
   private static changeProgress(): void {
@@ -63,7 +67,10 @@ class LoaderBar {
 
   private static hide(): void {
     LoaderBar.changeWidth(100);
-    LoaderBar.loaderbar.removeClasses([LoaderBar.ACTIVE_CLASS]);
+    DOMUtils.removeClass(
+      LoaderBar.loaderbar.getElement(),
+      LoaderBar.ACTIVE_CLASS
+    );
   }
 
   private static getInstance(): LoaderBar {

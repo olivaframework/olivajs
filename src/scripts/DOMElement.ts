@@ -1,5 +1,3 @@
-import { DOMUtils } from './DOMUtils';
-
 interface Events {
   callback: (event?: any) => void;
   name: string;
@@ -32,28 +30,6 @@ class DOMElement {
   public setAttributes(atributes: Attributes[]): void {
     for (const item of atributes) {
       this.element.setAttribute(item.name, item.value);
-    }
-  }
-
-  public removeAllChildren(): void {
-    DOMUtils.removeAllChildren(this.element);
-  }
-
-  public addClasses(classes: string[]): void {
-    for (const item of classes) {
-      DOMUtils.addClass(this.element, item);
-    }
-  }
-
-  public removeClasses(classes: string[]): void {
-    for (const item of classes) {
-      DOMUtils.removeClass(this.element, item);
-    }
-  }
-
-  public toggleClasses(classes: string[]): void {
-    for (const item of classes) {
-      DOMUtils.toggleClass(this.element, item);
     }
   }
 

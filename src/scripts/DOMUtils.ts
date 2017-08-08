@@ -12,21 +12,10 @@ class DOMUtils {
     }
   }
 
-  static dispatchCustomEvent(eventName: string, element: Element) {
+  static dispatchCustomEvent(element: Element, eventName: string) {
     const event = new CustomEvent(eventName);
 
     element.dispatchEvent(event);
-  }
-
-  static addClassToItems(
-    elements: NodeListOf<Element>,
-    className: string
-  ): void {
-    const elementsSize = elements.length;
-
-    for (let i = 0; i < elementsSize; i++) {
-      this.addClass(elements[i], className);
-    }
   }
 
   static removeClassToItems(
@@ -102,10 +91,33 @@ class DOMUtils {
     }
   }
 
+  static addClasses(nodeElement: Element, classes: string[]): void {
+    for (const className of classes) {
+      this.addClass(nodeElement, className);
+    }
+  }
+
+  static addClassToItems(
+    elements: NodeListOf<Element>,
+    className: string
+  ): void {
+    const elementsSize = elements.length;
+
+    for (let i = 0; i < elementsSize; i++) {
+      this.addClass(elements[i], className);
+    }
+  }
+
   static removeClass(nodeElement: Element, className: string): void {
     const regex = new RegExp('(^|\\s+)' + className);
 
     nodeElement.className = nodeElement.className.replace(regex, '');
+  }
+
+  static removeClasses(nodeElement: Element, classes: string[]): void {
+    for (const className of classes) {
+      this.removeClass(nodeElement, className);
+    }
   }
 
   static toggleClass(nodeElement: Element, className: string): void {
@@ -127,14 +139,12 @@ class DOMUtils {
     let offsetTop = 0;
     let currentElement = element;
 
-    do {
-      if (currentElement
-      && !isNaN(currentElement.offsetTop)
-      && !isNaN(currentElement.offsetLeft)) {
-        offsetLeft += currentElement.offsetLeft;
-        offsetTop += currentElement.offsetTop;
-      }
-    } while (currentElement = currentElement.offsetParent as HTMLElement);
+    while (currentElement.offsetParent) {
+      offsetLeft += currentElement.offsetLeft;
+      offsetTop += currentElement.offsetTop;
+
+      currentElement = currentElement.offsetParent as HTMLElement;
+    }
 
     return {
       left: offsetLeft,
@@ -142,13 +152,14 @@ class DOMUtils {
     };
   }
 
-  static itemsPerSection(
-    elements: NodeListOf<Element>,
-    elementsContainer: HTMLElement
-  ): Array<number> {
+  static itemsPerRowSection(
+    container: HTMLElement,
+    className: string
+  ): number[] {
     let distance = 0;
     let itemsCount = 1;
     const itemsPerSection = [];
+    const elements = container.querySelectorAll(`.${ className }`);
     const itemsSize = elements.length;
 
     for (let i = 0; i < itemsSize; i++) {
@@ -156,8 +167,8 @@ class DOMUtils {
 
       distance = distance + item.offsetWidth;
 
-      if (distance > elementsContainer.offsetWidth) {
-        if (distance < elementsContainer.offsetWidth + itemsSize) {
+      if (distance > container.offsetWidth) {
+        if (distance < container.offsetWidth + itemsSize) {
           itemsPerSection.push(itemsCount);
           distance = 0;
           itemsCount = 0;
@@ -176,29 +187,6 @@ class DOMUtils {
     }
 
     return itemsPerSection;
-  }
-
-  static getScrollbarWidth() {
-    const outer = document.createElement('div');
-    const inner = document.createElement('div');
-
-    outer.style.visibility = 'hidden';
-    outer.style.width = '100px';
-    outer.style.msOverflowStyle = 'scrollbar';
-
-    document.body.appendChild(outer);
-
-    const widthNoScroll = outer.offsetWidth;
-
-    outer.style.overflow = 'scroll';
-    inner.style.width = '100%';
-    outer.appendChild(inner);
-
-    const withScroll = widthNoScroll - inner.offsetWidth;
-
-    outer.parentNode.removeChild(outer);
-
-    return withScroll;
   }
 }
 

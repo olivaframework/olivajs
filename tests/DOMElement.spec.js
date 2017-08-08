@@ -1,4 +1,4 @@
-import { DOMElement } from '../scripts/DOMElement';
+import { DOMElement } from '../src/scripts/DOMElement';
 
 describe('DOMElement component specification', () => {
   let domElement;
@@ -15,44 +15,6 @@ describe('DOMElement component specification', () => {
     const element = domElement.getElement();
 
     expect(document.querySelector('#dom_element')).to.be.equals(element);
-  });
-
-  it('should create a div element on body with correct classes', () => {
-    const classes = [
-      'class1', 'class2'
-    ];
-
-    domElement.render(document.body);
-    domElement.addClasses(classes);
-
-    expect(domElement.getElement().classList[0]).to.be
-    .equals(classes[0]);
-
-    expect(domElement.getElement().classList[1]).to.be
-    .equals(classes[1]);
-
-    expect(domElement.getElement().classList.length).to.be
-    .equals(classes.length);
-  });
-
-  it('should remove element specific classes', () => {
-    const classes = [
-      'class1', 'class2', 'class3'
-    ];
-
-    const removedClasses = [
-      'class1', 'class3'
-    ];
-
-    domElement.render(document.body);
-    domElement.addClasses(classes);
-    domElement.removeClasses(removedClasses);
-
-    expect(domElement.getElement().classList[0]).to.be.equals(classes[1]);
-
-    const classesSize = classes.length - removedClasses.length;
-
-    expect(domElement.getElement().classList.length).to.be.equals(classesSize);
   });
 
   it('should create a div element with correct content', () => {
@@ -134,12 +96,12 @@ describe('DOMElement component specification', () => {
     for (let i = 0; i < 5; i++) {
       const item = new DOMElement('div');
 
-      item.addClasses(['item']);
+      item.getElement().classList.add('item');
       item.render(container);
     }
 
     domElement.setId('id');
-    domElement.addClasses(['item']);
+    domElement.getElement().classList.add('item');
     domElement.renderBefore(container, positionToInsert);
 
     const items = document.querySelectorAll('.item');
@@ -154,6 +116,24 @@ describe('DOMElement component specification', () => {
         expect(element.id).to.not.equals(item.id);
       }
     }
+  });
+
+  it('should set correct attributes with their values to element', () => {
+    const attribute1 = {
+      name: 'data-attribute-1',
+      value: 'attribute-1'
+    };
+    const attribute2 = {
+      name: 'data-attribute-2',
+      value: 'attribute-2'
+    };
+
+    domElement.setAttributes([attribute1, attribute2]);
+
+    const element = domElement.getElement();
+
+    expect(element.getAttribute(attribute1.name)).equals(attribute1.value);
+    expect(element.getAttribute(attribute2.name)).equals(attribute2.value);
   });
 
   afterEach(() => {

@@ -1,5 +1,5 @@
-import { Jump } from '../scripts/Jump';
-import { WindowUtils } from '../scripts/WindowUtils';
+import { Jump } from '../src/scripts/Jump';
+import { WindowUtils } from '../src/scripts/WindowUtils';
 
 describe('Jump component specification', () => {
   let jumpHandler;

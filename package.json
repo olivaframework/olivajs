@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rimraf dist && webpack --progress --hide-modules",
     "coverage": "karma start && npm run coverage:html",
-    "coverage:html": "remap-istanbul -i app/tests/coverage/coverage-final.json -o app/tests/coverage/html -t html",
+    "coverage:html": "remap-istanbul -i tests/coverage/coverage-final.json -o tests/coverage/html -t html",
     "prepare": "karma start && npm run build",
     "start": "webpack-dev-server --progress",
     "test": "karma start"

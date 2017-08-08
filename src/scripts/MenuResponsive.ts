@@ -70,18 +70,22 @@ class MenuResponsive {
     if (this.isMainMenu) {
       this.openButton.innerHTML = null;
       this.hamburgerButton = new DOMElement('div');
-      this.hamburgerButton.addClasses([
-        MenuResponsive.BUTTON_OUTER_CLASS,
-        this.position,
-        this.type
-      ]);
+      DOMUtils.addClasses(
+        this.hamburgerButton.getElement(), [
+          MenuResponsive.BUTTON_OUTER_CLASS,
+          this.position,
+          this.type
+        ]
+      );
       this.hamburgerButtonElement = this.hamburgerButton.getElement();
       this.hamburgerButton.render(this.openButton);
       this.hamburgerButtonContent = new DOMElement('span');
-      this.hamburgerButtonContent.addClasses([
-        MenuResponsive.BUTTON_INNER_CLASS,
-        this.buttonType
-      ]);
+      DOMUtils.addClasses(
+        this.hamburgerButtonContent.getElement(), [
+          MenuResponsive.BUTTON_INNER_CLASS,
+          this.buttonType
+        ]
+      );
       this.hamburgerButtonElement = this.hamburgerButton.getElement();
       this.hamburgerButtonContent.render(this.hamburgerButtonElement);
     }

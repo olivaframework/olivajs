@@ -1,4 +1,4 @@
-import { Http } from '../scripts/Http';
+import { Http } from '../src/scripts/Http';
 
 describe('Http component specification', () => {
   let requests = [];

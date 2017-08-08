@@ -1,5 +1,5 @@
-import { ScrollSpy } from '../scripts/ScrollSpy';
-import { WindowUtils } from '../scripts/WindowUtils';
+import { ScrollSpy } from '../src/scripts/ScrollSpy';
+import { WindowUtils } from '../src/scripts/WindowUtils';
 
 describe('ScrollSpy component specification', () => {
   let scrollSpyHandler;

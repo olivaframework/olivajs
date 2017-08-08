@@ -16,8 +16,11 @@ src/entry.js
 src/entry.js.map
 
 # Coverage Test Files
-src/tests/coverage
+tests/coverage
 
 # JetBrains Files
 .idea
 *.iml
+
+# Docs
+docs

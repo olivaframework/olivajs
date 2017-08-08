@@ -1,4 +1,4 @@
-import { Loader } from '../scripts/Loader';
+import { Loader } from '../src/scripts/Loader';
 
 describe('Loader component specification', () => {
   it('should create a Loader component on DOM', () => {
@@ -26,7 +26,7 @@ describe('Loader component specification', () => {
     expect(loaderElement.classList.contains(Loader.ACTIVE_CLASS)).to.be.true;
   });
 
-  it('should remov class active when Loader is hidden', () => {
+  it('should remove class active when Loader is hidden', () => {
     const loaderComponent = Loader.getInstance();
     const loaderElement = loaderComponent.getLoader().getElement();
 

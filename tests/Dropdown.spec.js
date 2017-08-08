@@ -1,4 +1,4 @@
-import { Dropdown } from '../scripts/Dropdown';
+import { Dropdown } from '../src/scripts/Dropdown';
 
 describe('Dropdown component specification', () => {
   let handler;
