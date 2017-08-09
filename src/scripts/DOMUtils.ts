@@ -46,11 +46,15 @@ class DOMUtils {
   ): HTMLElement {
     let element = nodeElement;
 
-    while (!this.containsClass(element, className) && element) {
+    while (element) {
+      if (this.containsClass(element, className)) {
+        return element;
+      }
+
       element = element.parentNode as HTMLElement;
     }
 
-    return element;
+    return null;
   }
 
   static removeElements(elements: NodeListOf<Element>): void {
