@@ -72,6 +72,28 @@ describe('DOMUtils component specification', () => {
     expect(container).to.be.equals(foundParent);
   });
 
+  it('should return null when doesn´t exist parent with specific class', () => {
+    const childClass = 'childClass';
+    const parentClass = 'parentClass';
+    const child = document.createElement('div');
+    const parent = document.createElement('div');
+
+    child.classList.add(childClass);
+    parent.appendChild(child);
+    container.classList.add(parentClass);
+    container.appendChild(parent);
+
+    let foundParent = DOMUtils.findParentElementByClass(child, parentClass);
+
+    expect(foundParent).to.be.equals(container);
+
+    container.classList.remove(parentClass);
+
+    foundParent = DOMUtils.findParentElementByClass(child, parentClass);
+
+    expect(foundParent).to.be.null;
+  });
+
   it('should remove specific elements on removeElements method', () => {
     const item1 = document.createElement('div');
     const item2 = document.createElement('div');
