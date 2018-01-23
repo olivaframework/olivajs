@@ -74,7 +74,7 @@ class Menu {
     }, this.items);
   }
 
-  private openMenu(): void {
+  private openMenu(event): void {
     event.stopPropagation();
 
     DOMUtils.removeClassToItems(this.submenus, Menu.SUBMENU_ACTIVE_CLASS);
